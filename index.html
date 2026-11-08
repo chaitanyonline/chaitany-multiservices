@@ -5,27 +5,27 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CHAITANY MULTISERVICES</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 *{box-sizing:border-box}
 body{margin:0;font-family:Arial,sans-serif;background:#f2f5fa;color:#17233b}
-header{background:#102b55;color:white;padding:25px 15px;text-align:center}
-header h1{margin:0;font-size:27px;letter-spacing:1px}
+header{background:#102b55;color:white;padding:24px 12px;text-align:center}
+header h1{margin:0;font-size:25px}
 header p{margin:8px 0 0;color:#d8e7ff}
 nav{background:#173e70;padding:13px;text-align:center}
-nav a{color:white;text-decoration:none;margin:0 12px;font-size:14px}
-.hero{text-align:center;padding:38px 15px;background:#e2edff}
-.hero h2{font-size:25px;margin:0 0 10px;color:#12366a}
-.hero p{margin:0;color:#465875}
-.container{max-width:1050px;margin:30px auto;padding:0 15px}
-.container h2{text-align:center;color:#173e70}
-.services{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:17px}
-.card{background:white;padding:23px 15px;border-radius:13px;text-align:center;box-shadow:0 3px 12px #00000012}
-.card .symbol{font-size:35px}
-.card h3{color:#173e70;margin:12px 0 8px}
-.card p{font-size:14px;color:#65718a;min-height:35px}
-.card button{background:#1763bd;color:white;border:0;border-radius:7px;padding:10px 18px}
-.support{margin-top:30px;background:#173e70;color:white;text-align:center;padding:25px;border-radius:12px}
-footer{text-align:center;padding:20px;color:#65718a;font-size:13px}
+nav button{background:none;border:0;color:white;margin:5px;font-size:15px;cursor:pointer}
+.container{max-width:850px;margin:25px auto;padding:15px}
+.panel{background:white;padding:22px;border-radius:13px;box-shadow:0 3px 12px #0001;margin-bottom:20px}
+h2{text-align:center;color:#173e70}
+input{width:100%;padding:13px;margin:7px 0 13px;border:1px solid #ccd5e3;border-radius:7px;font-size:15px}
+button.action{width:100%;background:#1763bd;color:white;border:0;border-radius:7px;padding:13px;font-size:16px;cursor:pointer}
+button.secondary{background:#173e70}
+.hidden{display:none}
+.message{text-align:center;padding:10px;font-size:14px;white-space:pre-wrap}
+.services{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
+.card{background:white;padding:18px;border-radius:12px;text-align:center;box-shadow:0 2px 10px #0001}
+.card h3{color:#173e70}
+footer{text-align:center;padding:20px;color:#65718a}
 </style>
 </head>
 <body>
@@ -36,80 +36,194 @@ footer{text-align:center;padding:20px;color:#65718a;font-size:13px}
 </header>
 
 <nav>
-<a href="#">Home</a>
-<a href="#services">Our Services</a>
-<a href="#support">Customer Support</a>
+<button onclick="showPage('home')">Home</button>
+<button onclick="showPage('login')">Login</button>
+<button onclick="showPage('register')">Registration</button>
 </nav>
 
-<section class="hero">
+<div class="container">
+
+<section id="home" class="panel">
 <h2>Welcome to Our Online Service Portal</h2>
-<p>सर्व डिजिटल सेवा एकाच ठिकाणी</p>
+<p style="text-align:center">सर्व डिजिटल सेवा एकाच ठिकाणी</p>
+<button class="action" onclick="showPage('login')">Customer Login</button>
 </section>
 
-<div class="container" id="services">
+<section id="login" class="panel hidden">
+<h2>Customer Login</h2>
+<form id="loginForm">
+<label>Username</label>
+<input id="loginUsername" required maxlength="100" autocomplete="username">
+<label>Password</label>
+<input id="loginPassword" type="password" required maxlength="256" autocomplete="current-password">
+<button class="action" type="submit">Login</button>
+</form>
+<div id="loginMessage" class="message"></div>
+<p style="text-align:center">नवीन ग्राहक आहात? <a href="#" onclick="showPage('register')">Registration करा</a></p>
+</section>
+
+<section id="register" class="panel hidden">
+<h2>Customer Registration</h2>
+<form id="registerForm">
+<label>Username</label>
+<input id="regUsername" required maxlength="100" autocomplete="username">
+<label>पूर्ण नाव</label>
+<input id="regName" required maxlength="150" autocomplete="name">
+<label>Email</label>
+<input id="regEmail" type="email" required autocomplete="email">
+<label>मोबाईल नंबर</label>
+<input id="regMobile" type="tel" required maxlength="15" autocomplete="tel">
+<label>Password</label>
+<input id="regPassword" type="password" required minlength="8" autocomplete="new-password">
+<label>Confirm Password</label>
+<input id="regConfirm" type="password" required minlength="8" autocomplete="new-password">
+<button class="action" type="submit">Register</button>
+</form>
+<div id="registerMessage" class="message"></div>
+</section>
+
+<section id="dashboard" class="hidden">
+<div class="panel">
+<h2>Customer Dashboard</h2>
+<p id="welcomeUser" style="text-align:center"></p>
+<button class="action secondary" onclick="logout()">Logout</button>
+</div>
 <h2>OUR SERVICES</h2>
 <div class="services">
-
-<div class="card">
-<div class="symbol">🔎</div>
-<h3>PAN Find</h3>
-<p>आधारच्या मदतीने स्वतःचा PAN शोधण्यासाठी मार्गदर्शन</p>
-<button>लवकरच सुरू</button>
+<div class="card"><h3>🔎 PAN Find</h3><p>स्वतःचा PAN शोधण्यासाठी मार्गदर्शन</p></div>
+<div class="card"><h3>📄 PAN e-PDF</h3><p>PAN कार्डची डिजिटल PDF</p></div>
+<div class="card"><h3>🪪 PAN Reprint</h3><p>PAN कार्ड Reprint सेवा</p></div>
+<div class="card"><h3>📱 PAN Mobile & Email Update</h3><p>मोबाईल नंबर आणि ईमेल अपडेट</p></div>
+<div class="card"><h3>🚗 Driving Licence Print</h3><p>Driving Licence डिजिटल प्रत</p></div>
+<div class="card"><h3>🚘 RC Book Print</h3><p>RC Book डिजिटल प्रत</p></div>
+<div class="card"><h3>🌾 AgriStack Print</h3><p>AgriStack संबंधित कागदपत्रे</p></div>
 </div>
-
-<div class="card">
-<div class="symbol">📄</div>
-<h3>PAN e-PDF</h3>
-<p>PAN कार्डची डिजिटल PDF मिळवण्यासाठी सेवा</p>
-<button>लवकरच सुरू</button>
-</div>
-
-<div class="card">
-<div class="symbol">🪪</div>
-<h3>PAN Reprint</h3>
-<p>PAN कार्ड Reprint करण्यासाठी सेवा</p>
-<button>लवकरच सुरू</button>
-</div>
-
-<div class="card">
-<div class="symbol">📱</div>
-<h3>PAN Mobile & Email Update</h3>
-<p>PAN वरील मोबाईल नंबर आणि ईमेल अपडेट मार्गदर्शन</p>
-<button>लवकरच सुरू</button>
-</div>
-
-<div class="card">
-<div class="symbol">🚗</div>
-<h3>Driving Licence Print</h3>
-<p>Driving Licence डिजिटल प्रत मिळवण्यासाठी सेवा</p>
-<button>लवकरच सुरू</button>
-</div>
-
-<div class="card">
-<div class="symbol">🚘</div>
-<h3>RC Book Print</h3>
-<p>वाहनाच्या RC ची डिजिटल प्रत मिळवण्यासाठी सेवा</p>
-<button>लवकरच सुरू</button>
-</div>
-
-<div class="card">
-<div class="symbol">🌾</div>
-<h3>AgriStack Print</h3>
-<p>AgriStack संबंधित कागदपत्रांसाठी सेवा</p>
-<button>लवकरच सुरू</button>
-</div>
+</section>
 
 </div>
 
-<div class="support" id="support">
-<h2>Customer Support</h2>
-<p>आपल्या सेवेसाठी लवकरच संपर्क सुविधा उपलब्ध होईल.</p>
-</div>
-</div>
+<footer>© 2026 CHAITANY MULTISERVICES. All Rights Reserved.</footer>
 
-<footer>
-© 2026 CHAITANY MULTISERVICES. All Rights Reserved.
-</footer>
+<script>
+const SUPABASE_URL = "https://uzlqlyzcweivflauacyz.supabase.co";
+
+const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_U4H72DvhmAG3gZIUbMjmNQ_6t2PCOVR";
+
+const db = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_PUBLISHABLE_KEY
+);
+
+function showPage(page) {
+  ["home","login","register","dashboard"].forEach(id => {
+    document.getElementById(id).classList.add("hidden");
+  });
+  document.getElementById(page).classList.remove("hidden");
+}
+
+function message(id, text) {
+  document.getElementById(id).textContent = text;
+}
+
+async function showDashboard(user) {
+  showPage("dashboard");
+  const name = user.user_metadata?.full_name || "ग्राहक";
+  document.getElementById("welcomeUser").textContent =
+    "नमस्कार, " + name;
+}
+
+document.getElementById("registerForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  message("registerMessage", "Registration सुरू आहे...");
+
+  const username = document.getElementById("regUsername").value.trim().toLowerCase();
+  const fullName = document.getElementById("regName").value.trim();
+  const email = document.getElementById("regEmail").value.trim();
+  const mobile = document.getElementById("regMobile").value.trim();
+  const password = document.getElementById("regPassword").value;
+  const confirm = document.getElementById("regConfirm").value;
+
+  if (password !== confirm) {
+    message("registerMessage", "दोन्ही Password सारखे असणे आवश्यक आहे.");
+    return;
+  }
+
+  if (!/^[a-z0-9._-]{3,30}$/.test(username)) {
+    message("registerMessage", "Username 3 ते 30 अक्षरांचा असावा. इंग्रजी अक्षरे, अंक, dot, _ किंवा - वापरा.");
+    return;
+  }
+
+  try {
+    const { data, error } = await db.auth.signUp({
+      email,
+      password,
+      options: {
+        data: {
+          username: username,
+          full_name: fullName,
+          mobile_number: mobile
+        },
+        emailRedirectTo: window.location.origin + window.location.pathname
+      }
+    });
+
+    if (error) throw error;
+
+    if (data.session) {
+      await showDashboard(data.user);
+    } else {
+      message("registerMessage", "Registration यशस्वी! कृपया तुमच्या Email वर आलेली Confirmation Link उघडा. त्यानंतर Login करा.");
+    }
+  } catch (error) {
+    console.error("Registration error:", error);
+    message("registerMessage", error.message || "Registration करताना अडचण आली.");
+  }
+});
+
+document.getElementById("loginForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  message("loginMessage", "Login सुरू आहे...");
+
+  const username = document.getElementById("loginUsername").value.trim().toLowerCase();
+  const password = document.getElementById("loginPassword").value;
+
+  try {
+    const { data, error } = await db.functions.invoke("clever-service", {
+      body: { username, password }
+    });
+
+    if (error) throw error;
+    if (data?.error) throw new Error(data.error);
+    if (!data?.session?.access_token || !data?.session?.refresh_token) {
+      throw new Error("Login Session मिळाली नाही.");
+    }
+
+    const { data: sessionData, error: sessionError } =
+      await db.auth.setSession({
+        access_token: data.session.access_token,
+        refresh_token: data.session.refresh_token
+      });
+
+    if (sessionError) throw sessionError;
+
+    await showDashboard(sessionData.user || data.user);
+
+  } catch (error) {
+    console.error("Login error:", error);
+    message("loginMessage", error.message || "Login करता आले नाही.");
+  }
+});
+
+async function logout() {
+  await db.auth.signOut();
+  showPage("login");
+  message("loginMessage", "तुम्ही Logout झाला आहात.");
+}
+
+db.auth.getSession().then(({ data }) => {
+  if (data.session) showDashboard(data.session.user);
+});
+</script>
 
 </body>
 </html>
