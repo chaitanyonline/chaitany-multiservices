@@ -6,40 +6,124 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CHAITANY MULTISERVICES</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <style>
 *{box-sizing:border-box}
 body{margin:0;font-family:Arial,sans-serif;background:#f2f5fa;color:#17233b}
-header{background:#102b55;color:white;padding:24px 12px;text-align:center}
-header h1{margin:0;font-size:25px}
-header p{margin:8px 0 0;color:#d8e7ff}
-nav{background:#173e70;padding:13px;text-align:center}
-nav button{background:none;border:0;color:white;margin:5px;font-size:15px;cursor:pointer}
+
+/* HEADER */
+.top-header{
+  background:#102b55;
+  color:white;
+  padding:18px 25px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:15px;
+}
+.brand h1{margin:0;font-size:25px}
+.brand p{margin:6px 0 0;color:#d8e7ff;font-size:14px}
+
+/* RIGHT MENU */
+.top-nav{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.top-nav button{
+  background:transparent;
+  border:1px solid #ffffff70;
+  color:white;
+  padding:10px 16px;
+  border-radius:7px;
+  cursor:pointer;
+  font-size:14px;
+}
+.top-nav button:hover{background:#ffffff20}
+
+/* CONTENT */
 .container{max-width:850px;margin:25px auto;padding:15px}
-.panel{background:white;padding:22px;border-radius:13px;box-shadow:0 3px 12px #0001;margin-bottom:20px}
+.panel{
+  background:white;
+  padding:22px;
+  border-radius:13px;
+  box-shadow:0 3px 12px #0001;
+  margin-bottom:20px
+}
 h2{text-align:center;color:#173e70}
-input{width:100%;padding:13px;margin:7px 0 13px;border:1px solid #ccd5e3;border-radius:7px;font-size:15px}
-button.action{width:100%;background:#1763bd;color:white;border:0;border-radius:7px;padding:13px;font-size:16px;cursor:pointer}
+input{
+  width:100%;
+  padding:13px;
+  margin:7px 0 13px;
+  border:1px solid #ccd5e3;
+  border-radius:7px;
+  font-size:15px
+}
+button.action{
+  width:100%;
+  background:#1763bd;
+  color:white;
+  border:0;
+  border-radius:7px;
+  padding:13px;
+  font-size:16px;
+  cursor:pointer
+}
 button.secondary{background:#173e70}
 .hidden{display:none}
-.message{text-align:center;padding:10px;font-size:14px;white-space:pre-wrap}
-.services{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
-.card{background:white;padding:18px;border-radius:12px;text-align:center;box-shadow:0 2px 10px #0001}
+.message{
+  text-align:center;
+  padding:10px;
+  font-size:14px;
+  white-space:pre-wrap
+}
+.services{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:14px
+}
+.card{
+  background:white;
+  padding:18px;
+  border-radius:12px;
+  text-align:center;
+  box-shadow:0 2px 10px #0001
+}
 .card h3{color:#173e70}
 footer{text-align:center;padding:20px;color:#65718a}
+
+/* MOBILE */
+@media(max-width:650px){
+  .top-header{
+    flex-direction:column;
+    align-items:flex-start;
+    padding:17px;
+  }
+  .brand h1{font-size:21px}
+  .top-nav{
+    width:100%;
+    justify-content:flex-end;
+    flex-wrap:wrap;
+  }
+  .top-nav button{padding:9px 12px}
+}
 </style>
 </head>
+
 <body>
 
-<header>
-<h1>CHAITANY MULTISERVICES</h1>
-<p>ONLINE SERVICE PORTAL</p>
-</header>
+<header class="top-header">
+  <div class="brand">
+    <h1>CHAITANY MULTISERVICES</h1>
+    <p>ONLINE SERVICE PORTAL</p>
+  </div>
 
-<nav>
-<button onclick="showPage('home')">Home</button>
-<button onclick="showPage('login')">Login</button>
-<button onclick="showPage('register')">Registration</button>
-</nav>
+  <nav class="top-nav">
+    <button onclick="showPage('home')">Home</button>
+    <button onclick="showPage('login')">Login</button>
+    <button onclick="showPage('register')">Registration</button>
+  </nav>
+</header>
 
 <div class="container">
 
@@ -54,29 +138,41 @@ footer{text-align:center;padding:20px;color:#65718a}
 <form id="loginForm">
 <label>Username</label>
 <input id="loginUsername" required maxlength="100" autocomplete="username">
+
 <label>Password</label>
 <input id="loginPassword" type="password" required maxlength="256" autocomplete="current-password">
+
 <button class="action" type="submit">Login</button>
 </form>
 <div id="loginMessage" class="message"></div>
-<p style="text-align:center">नवीन ग्राहक आहात? <a href="#" onclick="showPage('register')">Registration करा</a></p>
+<p style="text-align:center">
+नवीन ग्राहक आहात?
+<a href="#" onclick="showPage('register')">Registration करा</a>
+</p>
 </section>
 
 <section id="register" class="panel hidden">
 <h2>Customer Registration</h2>
 <form id="registerForm">
+
 <label>Username</label>
 <input id="regUsername" required maxlength="100" autocomplete="username">
+
 <label>पूर्ण नाव</label>
 <input id="regName" required maxlength="150" autocomplete="name">
+
 <label>Email</label>
 <input id="regEmail" type="email" required autocomplete="email">
+
 <label>मोबाईल नंबर</label>
 <input id="regMobile" type="tel" required maxlength="15" autocomplete="tel">
+
 <label>Password</label>
 <input id="regPassword" type="password" required minlength="8" autocomplete="new-password">
+
 <label>Confirm Password</label>
 <input id="regConfirm" type="password" required minlength="8" autocomplete="new-password">
+
 <button class="action" type="submit">Register</button>
 </form>
 <div id="registerMessage" class="message"></div>
@@ -88,15 +184,45 @@ footer{text-align:center;padding:20px;color:#65718a}
 <p id="welcomeUser" style="text-align:center"></p>
 <button class="action secondary" onclick="logout()">Logout</button>
 </div>
+
 <h2>OUR SERVICES</h2>
 <div class="services">
-<div class="card"><h3>🔎 PAN Find</h3><p>स्वतःचा PAN शोधण्यासाठी मार्गदर्शन</p></div>
-<div class="card"><h3>📄 PAN e-PDF</h3><p>PAN कार्डची डिजिटल PDF</p></div>
-<div class="card"><h3>🪪 PAN Reprint</h3><p>PAN कार्ड Reprint सेवा</p></div>
-<div class="card"><h3>📱 PAN Mobile & Email Update</h3><p>मोबाईल नंबर आणि ईमेल अपडेट</p></div>
-<div class="card"><h3>🚗 Driving Licence Print</h3><p>Driving Licence डिजिटल प्रत</p></div>
-<div class="card"><h3>🚘 RC Book Print</h3><p>RC Book डिजिटल प्रत</p></div>
-<div class="card"><h3>🌾 AgriStack Print</h3><p>AgriStack संबंधित कागदपत्रे</p></div>
+
+<div class="card">
+<h3>🔎 PAN Find</h3>
+<p>स्वतःचा PAN शोधण्यासाठी मार्गदर्शन</p>
+</div>
+
+<div class="card">
+<h3>📄 PAN e-PDF</h3>
+<p>PAN कार्डची डिजिटल PDF</p>
+</div>
+
+<div class="card">
+<h3>🪪 PAN Reprint</h3>
+<p>PAN कार्ड Reprint सेवा</p>
+</div>
+
+<div class="card">
+<h3>📱 PAN Mobile & Email Update</h3>
+<p>मोबाईल नंबर आणि ईमेल अपडेट</p>
+</div>
+
+<div class="card">
+<h3>🚗 Driving Licence Print</h3>
+<p>Driving Licence डिजिटल प्रत</p>
+</div>
+
+<div class="card">
+<h3>🚘 RC Book Print</h3>
+<p>RC Book डिजिटल प्रत</p>
+</div>
+
+<div class="card">
+<h3>🌾 AgriStack Print</h3>
+<p>AgriStack संबंधित कागदपत्रे</p>
+</div>
+
 </div>
 </section>
 
@@ -105,7 +231,8 @@ footer{text-align:center;padding:20px;color:#65718a}
 <footer>© 2026 CHAITANY MULTISERVICES. All Rights Reserved.</footer>
 
 <script>
-const SUPABASE_URL = "https://uzlqlyzcweivflauacyz.supabase.co";
+const SUPABASE_URL =
+"https://uzlqlyzcweivflauacyz.supabase.co";
 
 const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_U4H72DvhmAG3gZIUbMjmNQ_6t2PCOVR";
 
@@ -132,6 +259,7 @@ async function showDashboard(user) {
     "नमस्कार, " + name;
 }
 
+// REGISTRATION
 document.getElementById("registerForm").addEventListener("submit", async (e) => {
   e.preventDefault();
   message("registerMessage", "Registration सुरू आहे...");
@@ -180,6 +308,7 @@ document.getElementById("registerForm").addEventListener("submit", async (e) => 
   }
 });
 
+// LOGIN
 document.getElementById("loginForm").addEventListener("submit", async (e) => {
   e.preventDefault();
   message("loginMessage", "Login सुरू आहे...");
@@ -194,6 +323,7 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
 
     if (error) throw error;
     if (data?.error) throw new Error(data.error);
+
     if (!data?.session?.access_token || !data?.session?.refresh_token) {
       throw new Error("Login Session मिळाली नाही.");
     }
@@ -214,12 +344,14 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
   }
 });
 
+// LOGOUT
 async function logout() {
   await db.auth.signOut();
   showPage("login");
   message("loginMessage", "तुम्ही Logout झाला आहात.");
 }
 
+// EXISTING SESSION
 db.auth.getSession().then(({ data }) => {
   if (data.session) showDashboard(data.session.user);
 });
