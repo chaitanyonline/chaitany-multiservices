@@ -40,16 +40,13 @@ button.action{
   width:100%;background:#1763bd;color:white;border:0;
   border-radius:7px;padding:13px;font-size:16px;cursor:pointer
 }
-button.secondary{background:#173e70}
 .hidden{display:none!important}
 .message{text-align:center;padding:10px;font-size:14px;white-space:pre-wrap}
 footer{text-align:center;padding:20px;color:#65718a}
 
 /* DASHBOARD */
 .dashboard-layout{
-  display:flex;
-  min-height:calc(100vh - 85px);
-  width:100%;
+  display:flex;min-height:calc(100vh - 85px);width:100%;
 }
 .sidebar{
   width:245px;flex-shrink:0;background:#101a30;color:white;
@@ -74,33 +71,37 @@ footer{text-align:center;padding:20px;color:#65718a}
 .dashboard-main{
   flex:1;min-width:0;background:#f4f6fb;padding:25px;
 }
+
+/* TOP BAR + RETAILER PROFILE */
 .dash-top{
   display:flex;justify-content:space-between;align-items:center;
-  margin-bottom:28px;gap:12px;
+  margin-bottom:25px;gap:15px;
 }
 .dash-top h2{text-align:left;margin:0;color:#101a30}
 .dash-subtitle{color:#71809a;font-size:13px;margin-top:5px}
-.quick-grid{
-  display:grid;grid-template-columns:repeat(auto-fit,minmax(175px,1fr));
-  gap:14px;margin:18px 0 24px;
+.retailer-profile{
+  display:flex;align-items:center;gap:11px;
+  background:white;border:1px solid #e0e6f0;
+  border-radius:13px;padding:9px 13px;
+  box-shadow:0 3px 12px #00000008;
+  min-width:190px;
 }
-.quick-card{
-  background:white;border:1px solid #e0e6f0;border-radius:17px;
-  padding:20px;box-shadow:0 5px 18px #14264a0c;
+.profile-avatar{
+  width:43px;height:43px;border-radius:50%;
+  background:#2448b5;color:white;
+  display:flex;align-items:center;justify-content:center;
+  font-size:17px;font-weight:bold;flex-shrink:0;
 }
-.quick-icon{
-  width:48px;height:48px;border-radius:13px;background:#e0f8e9;
-  margin-bottom:16px;display:flex;align-items:center;
-  justify-content:center;font-size:23px;
+.profile-details strong{
+  display:block;font-size:13px;color:#101a30;
+  max-width:155px;overflow:hidden;text-overflow:ellipsis;
+  white-space:nowrap;
 }
-.quick-card h3{font-size:15px;margin:0 0 8px;color:#101a30}
-.quick-card p{
-  color:#71809a;font-size:12px;line-height:1.5;min-height:36px;
+.profile-details small{
+  display:block;color:#71809a;font-size:11px;margin-top:4px;
 }
-.quick-card a{
-  color:#2455df;font-size:13px;font-weight:bold;
-  text-decoration:none;cursor:pointer;
-}
+
+/* WELCOME */
 .welcome-banner{
   background:linear-gradient(110deg,#17368f,#2452df);
   color:white;border-radius:18px;padding:25px;
@@ -115,9 +116,11 @@ footer{text-align:center;padding:20px;color:#65718a}
 }
 .wallet-box small{font-size:11px}
 .wallet-box strong{display:block;font-size:25px;margin:5px 0}
+
+/* STATS */
 .stats-grid{
   display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));
-  gap:14px;margin-bottom:20px;
+  gap:14px;margin-bottom:24px;
 }
 .stat-card{
   background:white;border:1px solid #e0e6f0;
@@ -125,6 +128,41 @@ footer{text-align:center;padding:20px;color:#65718a}
 }
 .stat-card small{color:#71809a;font-size:11px;font-weight:bold}
 .stat-card strong{display:block;font-size:25px;margin-top:8px}
+
+/* SERVICES */
+.section-heading{
+  display:flex;justify-content:space-between;align-items:center;
+  margin:22px 0 5px;
+}
+.section-heading h3{font-size:18px;color:#101a30;margin:0}
+.quick-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(175px,1fr));
+  gap:14px;margin:18px 0 24px;
+}
+.quick-card{
+  background:white;border:1px solid #e0e6f0;border-radius:17px;
+  padding:20px;box-shadow:0 5px 18px #14264a0c;
+  transition:transform .2s,box-shadow .2s;
+}
+.quick-card:hover{
+  transform:translateY(-3px);
+  box-shadow:0 8px 22px #14264a18;
+}
+.quick-icon{
+  width:48px;height:48px;border-radius:13px;background:#e0f8e9;
+  margin-bottom:16px;display:flex;align-items:center;
+  justify-content:center;font-size:23px;
+}
+.quick-card h3{font-size:15px;margin:0 0 8px;color:#101a30}
+.quick-card p{
+  color:#71809a;font-size:12px;line-height:1.5;min-height:36px;
+}
+.quick-card a{
+  color:#2455df;font-size:13px;font-weight:bold;
+  text-decoration:none;cursor:pointer;
+}
+
+/* BOTTOM */
 .bottom-grid{display:grid;grid-template-columns:2fr 1fr;gap:16px}
 .info-card{
   background:white;border:1px solid #e0e6f0;
@@ -148,6 +186,8 @@ footer{text-align:center;padding:20px;color:#65718a}
   .bottom-grid{grid-template-columns:1fr}
   .welcome-banner{flex-direction:column;align-items:flex-start}
   .wallet-box{width:100%}
+  .dash-top{align-items:flex-start;flex-wrap:wrap}
+  .retailer-profile{min-width:0}
 }
 </style>
 </head>
@@ -203,7 +243,6 @@ footer{text-align:center;padding:20px;color:#65718a}
 <section id="register" class="panel hidden">
   <h2>Customer Registration</h2>
   <form id="registerForm">
-
     <label>पूर्ण नाव</label>
     <input id="regName" required maxlength="150"
       autocomplete="name" placeholder="तुमचे पूर्ण नाव">
@@ -257,16 +296,60 @@ footer{text-align:center;padding:20px;color:#65718a}
 
   <main class="dashboard-main">
 
+    <!-- TOP BAR WITH RETAILER PROFILE -->
     <div class="dash-top">
       <div>
         <h2>Retailer Dashboard</h2>
         <div class="dash-subtitle">CHAITANY MULTISERVICES Service Portal</div>
       </div>
-      <button class="side-link" style="color:#e53935;width:auto"
-        onclick="logout()">Logout</button>
+
+      <div class="retailer-profile">
+        <div class="profile-avatar" id="profileAvatar">R</div>
+        <div class="profile-details">
+          <strong id="profileName">Retailer</strong>
+          <small>Retailer Account</small>
+        </div>
+      </div>
     </div>
 
-    <h3>Quick Services</h3>
+    <!-- WELCOME BANNER -->
+    <div class="welcome-banner">
+      <div>
+        <small>WELCOME BACK</small>
+        <h2 id="welcomeUser">CHAITANY MULTISERVICES</h2>
+        <p>Manage your applications and service wallet from one place.</p>
+      </div>
+      <div class="wallet-box">
+        <small>Wallet Balance</small>
+        <strong>₹0.00</strong>
+        <small>View Wallet →</small>
+      </div>
+    </div>
+
+    <!-- STATISTICS -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <small>TOTAL APPLICATIONS</small>
+        <strong>0</strong>
+      </div>
+      <div class="stat-card">
+        <small>PENDING</small>
+        <strong>0</strong>
+      </div>
+      <div class="stat-card">
+        <small>COMPLETED</small>
+        <strong>0</strong>
+      </div>
+      <div class="stat-card">
+        <small>REJECTED</small>
+        <strong>0</strong>
+      </div>
+    </div>
+
+    <!-- QUICK SERVICES -->
+    <div class="section-heading">
+      <h3>Quick Services</h3>
+    </div>
     <div class="dash-subtitle">Select a service to continue</div>
 
     <div class="quick-grid">
@@ -322,38 +405,7 @@ footer{text-align:center;padding:20px;color:#65718a}
 
     </div>
 
-    <div class="welcome-banner">
-      <div>
-        <small>WELCOME BACK</small>
-        <h2 id="welcomeUser">CHAITANY MULTISERVICES</h2>
-        <p>Manage your applications and service wallet from one place.</p>
-      </div>
-      <div class="wallet-box">
-        <small>Wallet Balance</small>
-        <strong>₹0.00</strong>
-        <small>View Wallet →</small>
-      </div>
-    </div>
-
-    <div class="stats-grid">
-      <div class="stat-card">
-        <small>TOTAL APPLICATIONS</small>
-        <strong>0</strong>
-      </div>
-      <div class="stat-card">
-        <small>PENDING</small>
-        <strong>0</strong>
-      </div>
-      <div class="stat-card">
-        <small>COMPLETED</small>
-        <strong>0</strong>
-      </div>
-      <div class="stat-card">
-        <small>REJECTED</small>
-        <strong>0</strong>
-      </div>
-    </div>
-
+    <!-- RECENT ACTIVITY -->
     <div class="bottom-grid">
       <div class="info-card">
         <h3>Recent Applications</h3>
@@ -399,13 +451,24 @@ function message(id, text) {
 async function showDashboard(user) {
   showPage("dashboard");
 
-  const name = user.user_metadata?.full_name || "ग्राहक";
+  const name = user.user_metadata?.full_name || "Retailer";
+  const email = user.email || "";
+  const mobile = user.user_metadata?.mobile_number || "";
+
   document.getElementById("welcomeUser").textContent = name;
+  document.getElementById("profileName").textContent = name;
+
+  const initial = name.trim().charAt(0).toUpperCase() || "R";
+  document.getElementById("profileAvatar").textContent = initial;
+
+  document.getElementById("profileName").title =
+    name + (mobile ? " | " + mobile : "") +
+    (email ? " | " + email : "");
 }
 
 function showDashboardSection(section, button) {
   if (button) {
-    document.querySelectorAll(".side-link").forEach(item => {
+    document.querySelectorAll(".sidebar .side-link").forEach(item => {
       item.classList.remove("active");
     });
     button.classList.add("active");
