@@ -77,7 +77,6 @@ td,th{padding:11px;border-bottom:1px solid #e5eaf0;text-align:left}
 
 <body>
 
-<!-- PUBLIC HEADER -->
 <header class="topbar" id="publicHeader">
   <div class="brand">CHAITANY MULTISERVICES
     <small>RETAILER SERVICE PORTAL</small>
@@ -89,9 +88,7 @@ td,th{padding:11px;border-bottom:1px solid #e5eaf0;text-align:left}
   </nav>
 </header>
 
-<!-- PUBLIC PAGES -->
 <div id="publicContainer" class="container">
-
   <section id="homePage">
     <div class="hero">
       <h1>Welcome to CHAITANY MULTISERVICES</h1>
@@ -129,10 +126,8 @@ td,th{padding:11px;border-bottom:1px solid #e5eaf0;text-align:left}
       <a onclick="showPage('login')" style="color:#145da0;cursor:pointer">Login करा</a>
     </p>
   </section>
-
 </div>
 
-<!-- DASHBOARD HEADER -->
 <header id="dashboardHeader" class="dashboard-header hidden">
   <div class="brand">CHAITANY MULTISERVICES
     <small>RETAILER DASHBOARD</small>
@@ -144,9 +139,7 @@ td,th{padding:11px;border-bottom:1px solid #e5eaf0;text-align:left}
   </div>
 </header>
 
-<!-- DASHBOARD -->
 <div id="dashboard" class="layout hidden">
-
   <aside class="sidebar">
     <h3>RETAILER MENU</h3>
     <button class="menu active" onclick="selectMenu(this,'dashboardHome')">▣ Dashboard</button>
@@ -159,7 +152,6 @@ td,th{padding:11px;border-bottom:1px solid #e5eaf0;text-align:left}
   </aside>
 
   <main class="main">
-
     <section id="dashboardHome">
       <div class="welcome">
         <h2>Welcome, <span id="welcomeName">Retailer</span>!</h2>
@@ -167,7 +159,7 @@ td,th{padding:11px;border-bottom:1px solid #e5eaf0;text-align:left}
       </div>
 
       <div class="cards">
-        <div class="stat"><small>Wallet Balance</small><h2>₹ 0.00</h2></div>
+        <div class="stat"><small>Wallet Balance</small><h2 id="walletBalance">₹ 0.00</h2></div>
         <div class="stat"><small>Total Applications</small><h2 id="totalApplications">0</h2></div>
         <div class="stat"><small>Pending Applications</small><h2 id="pendingApplications">0</h2></div>
         <div class="stat"><small>Completed Applications</small><h2 id="completedApplications">0</h2></div>
@@ -193,7 +185,7 @@ td,th{padding:11px;border-bottom:1px solid #e5eaf0;text-align:left}
         <div class="white-box">
           <h3>Wallet Activity</h3>
           <p>Wallet व्यवहारांची माहिती येथे दिसेल.</p>
-          <div>अद्याप कोणतेही व्यवहार नाहीत.</div>
+          <div id="walletActivity">व्यवहार लोड होत आहेत...</div>
         </div>
       </div>
     </section>
@@ -210,12 +202,15 @@ td,th{padding:11px;border-bottom:1px solid #e5eaf0;text-align:left}
 
     <section id="walletSection" class="hidden">
       <h2 class="section-title">My Wallet</h2>
-      <div class="white-box"><h2>₹ 0.00</h2><p>Wallet सुविधा पुढील टप्प्यात जोडली जाईल.</p></div>
+      <div class="white-box">
+        <h2 id="walletBalancePage">₹ 0.00</h2>
+        <p>आपला उपलब्ध Wallet Balance</p>
+      </div>
     </section>
 
     <section id="transactionsSection" class="hidden">
       <h2 class="section-title">Transactions</h2>
-      <div class="white-box">व्यवहारांची माहिती पुढील टप्प्यात जोडली जाईल.</div>
+      <div class="white-box" id="transactionsList">व्यवहार लोड होत आहेत...</div>
     </section>
 
     <section id="profileSection" class="hidden">
@@ -226,7 +221,6 @@ td,th{padding:11px;border-bottom:1px solid #e5eaf0;text-align:left}
         <p><b>Mobile:</b> <span id="profileMobile"></span></p>
       </div>
     </section>
-
   </main>
 </div>
 
@@ -271,7 +265,87 @@ function serviceMessage(service) {
   alert(service + " सेवा जोडण्याचे काम पुढील टप्प्यात करूया.");
 }
 
+function formatAmount(amount) {
+  return "₹ " + Number(amount || 0).toFixed(2);
+}
+
+function renderTransactions(transactions) {
+  if (!transactions || transactions.length === 0) {
+    return "<p>अद्याप कोणतेही व्यवहार नाहीत.</p>";
+  }
+
+  const rows = transactions.map(t => {
+    const isCredit = t.transaction_type === "credit";
+    const sign = isCredit ? "+" : "-";
+    const date = t.created_at
+      ? new Date(t.created_at).toLocaleString("en-IN")
+      : "-";
+
+    return `<tr>
+      <td>${escapeHTML(t.description || t.transaction_type)}</td>
+      <td>${sign}${formatAmount(t.amount)}</td>
+      <td>${escapeHTML(date)}</td>
+    </tr>`;
+  }).join("");
+
+  return `<table>
+    <tr><th>तपशील</th><th>रक्कम</th><th>तारीख</th></tr>
+    ${rows}
+  </table>`;
+}
+
+async function loadWallet(user) {
+  const balanceHome = document.getElementById("walletBalance");
+  const balancePage = document.getElementById("walletBalancePage");
+  const activity = document.getElementById("walletActivity");
+  const transactionList = document.getElementById("transactionsList");
+
+  balanceHome.textContent = "लोड होत आहे...";
+  balancePage.textContent = "लोड होत आहे...";
+  activity.textContent = "व्यवहार लोड होत आहेत...";
+  transactionList.textContent = "व्यवहार लोड होत आहेत...";
+
+  const {data: wallet, error: walletError} = await db
+    .from("wallets")
+    .select("balance")
+    .eq("customer_id", user.id)
+    .maybeSingle();
+
+  if (walletError) {
+    balanceHome.textContent = "लोड होत नाही";
+    balancePage.textContent = "लोड होत नाही";
+  } else {
+    const balance = formatAmount(wallet?.balance ?? 0);
+    balanceHome.textContent = balance;
+    balancePage.textContent = balance;
+  }
+
+  const {data: transactions, error: transactionError} = await db
+    .from("wallet_transactions")
+    .select("amount, transaction_type, description, created_at")
+    .eq("customer_id", user.id)
+    .order("created_at", {ascending:false})
+    .limit(50);
+
+  if (transactionError) {
+    activity.textContent = "व्यवहार लोड करता आले नाहीत.";
+    transactionList.textContent = "व्यवहार लोड करता आले नाहीत.";
+    console.error("Wallet transaction error:", transactionError);
+  } else {
+    transactionList.innerHTML = renderTransactions(transactions);
+    activity.innerHTML = renderTransactions(
+      (transactions || []).slice(0,10)
+    );
+  }
+
+  if (walletError) {
+    console.error("Wallet balance error:", walletError);
+  }
+}
+
 async function loadDashboard(user) {
+  if (!user) return;
+
   showPage("dashboard");
 
   const name = user.user_metadata?.full_name || "Retailer";
@@ -310,9 +384,13 @@ async function loadDashboard(user) {
       const html=`<table><tr><th>Service</th><th>Status</th></tr>${rows}</table>`;
       document.getElementById("recentApplications").innerHTML=html;
       document.getElementById("allApplications").innerHTML=html;
+    } else {
+      document.getElementById("recentApplications").textContent="अद्याप कोणतेही अर्ज नाहीत.";
+      document.getElementById("allApplications").textContent="अद्याप कोणतेही अर्ज नाहीत.";
     }
   }
 
+  await loadWallet(user);
   showDashboardSection("dashboardHome");
 }
 
