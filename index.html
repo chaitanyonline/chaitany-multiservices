@@ -4,428 +4,234 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CHAITANY MULTISERVICES</title>
+<title>CHAITANY MULTISERVICES - Retailer Portal</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
 *{box-sizing:border-box}
-body{margin:0;font-family:Arial,sans-serif;background:#f2f5fa;color:#17233b}
-
-/* HEADER */
-.top-header{
-  background:#102b55;color:white;padding:18px 25px;
-  display:flex;justify-content:space-between;align-items:center;gap:15px;
-}
-.brand h1{margin:0;font-size:25px}
-.brand p{margin:6px 0 0;color:#d8e7ff;font-size:14px}
-.top-nav{display:flex;align-items:center;gap:10px}
-.top-nav button{
-  background:transparent;border:1px solid #ffffff70;color:white;
-  padding:10px 16px;border-radius:7px;cursor:pointer;font-size:14px;
-}
-.top-nav button:hover{background:#ffffff20}
-
-/* COMMON */
-.container{max-width:850px;margin:25px auto;padding:15px}
-.panel{
-  background:white;padding:22px;border-radius:13px;
-  box-shadow:0 3px 12px #0001;margin-bottom:20px
-}
-h2{text-align:center;color:#173e70}
-input{
-  width:100%;padding:13px;margin:7px 0 13px;
-  border:1px solid #ccd5e3;border-radius:7px;font-size:15px
-}
-button.action{
-  width:100%;background:#1763bd;color:white;border:0;
-  border-radius:7px;padding:13px;font-size:16px;cursor:pointer
-}
+body{margin:0;font-family:Arial,sans-serif;background:#f1f4f9;color:#17233b}
 .hidden{display:none!important}
-.message{text-align:center;padding:10px;font-size:14px;white-space:pre-wrap}
-footer{text-align:center;padding:20px;color:#65718a}
-
-/* DASHBOARD */
-.dashboard-layout{
-  display:flex;min-height:calc(100vh - 85px);width:100%;
+button{cursor:pointer;border:0}
+.topbar{background:#102b55;color:white;padding:17px 25px;border-bottom:4px solid #f4c542;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand{font-size:21px;font-weight:bold;letter-spacing:.5px}
+.brand small{display:block;font-size:11px;color:#f4c542;margin-top:5px}
+.toplinks a{color:white;text-decoration:none;margin-left:18px;font-size:14px;cursor:pointer}
+.container{max-width:1100px;margin:35px auto;padding:15px}
+.hero{background:linear-gradient(120deg,#102b55,#1764a5);color:white;padding:40px 25px;border-radius:12px;text-align:center}
+.hero h1{font-size:30px;margin:0 0 12px}
+.hero p{color:#e2eaf6}
+.btn{background:#f4c542;color:#102b55;padding:12px 22px;border-radius:6px;font-weight:bold;margin:5px}
+.btn-blue{background:#145da0;color:white;padding:12px 22px;border-radius:6px;font-weight:bold}
+.panel{background:white;padding:25px;border-radius:12px;max-width:440px;margin:25px auto;box-shadow:0 4px 18px #0001}
+.panel h2{text-align:center;color:#102b55}
+input{width:100%;padding:13px;margin:8px 0;border:1px solid #ccd4e0;border-radius:6px;font-size:15px}
+.message{font-size:14px;margin-top:12px;color:#c0392b}
+.dashboard-header{background:#102b55;color:white;padding:15px 22px;border-bottom:4px solid #f4c542;display:flex;justify-content:space-between;align-items:center;gap:12px}
+.profile{text-align:right;font-size:13px}
+.profile strong{display:block;color:#f4c542;font-size:15px;margin-bottom:5px}
+.layout{display:flex;min-height:calc(100vh - 70px)}
+.sidebar{width:235px;background:#102b55;color:white;padding:20px 12px;flex-shrink:0}
+.sidebar h3{color:#f4c542;padding:0 12px}
+.menu{display:block;width:100%;text-align:left;padding:13px 15px;color:#e4eaf4;background:transparent;border-radius:7px;margin:5px 0;font-size:14px}
+.menu.active,.menu:hover{background:#f4c542;color:#102b55;font-weight:bold}
+.main{flex:1;padding:25px;min-width:0}
+.welcome{background:linear-gradient(110deg,#15599a,#237ec0);padding:24px;color:white;border-radius:12px;margin-bottom:22px}
+.welcome h2{margin:0 0 8px}
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:15px;margin:18px 0}
+.stat{background:white;padding:18px;border-radius:10px;box-shadow:0 2px 9px #0001;border-left:4px solid #f4c542}
+.stat small{color:#65738a}
+.stat h2{margin:10px 0 0;color:#102b55}
+.section-title{font-size:19px;color:#102b55;margin:25px 0 15px}
+.services{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}
+.service{background:white;padding:20px;border-radius:10px;box-shadow:0 2px 9px #0001;border-top:4px solid #1764a5}
+.service .symbol{font-size:27px}
+.service h3{font-size:16px;color:#102b55}
+.service p{font-size:12px;color:#65738a}
+.service button{background:#145da0;color:white;padding:9px 14px;border-radius:5px}
+.bottom-grid{display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-top:22px}
+.white-box{background:white;padding:20px;border-radius:10px;box-shadow:0 2px 9px #0001;overflow:auto}
+.white-box p{font-size:13px;color:#65738a}
+table{width:100%;border-collapse:collapse;font-size:13px}
+td,th{padding:11px;border-bottom:1px solid #e5eaf0;text-align:left}
+@media(max-width:850px){
+ .layout{display:block}
+ .sidebar{width:100%;display:flex;overflow-x:auto;padding:8px}
+ .sidebar h3{display:none}
+ .menu{white-space:nowrap;width:auto;margin:2px}
+ .cards{grid-template-columns:repeat(2,1fr)}
+ .services{grid-template-columns:repeat(2,1fr)}
 }
-.sidebar{
-  width:245px;flex-shrink:0;background:#101a30;color:white;
-  padding:20px 14px;display:flex;flex-direction:column;
-}
-.side-brand{
-  font-size:21px;font-weight:bold;padding:8px 10px 25px;
-}
-.side-brand small{
-  display:block;font-size:12px;color:#aabbd8;
-  font-weight:normal;margin-top:5px;
-}
-.side-link{
-  display:block;width:100%;text-align:left;background:transparent;
-  color:#dce6f7;border:0;padding:13px 15px;border-radius:9px;
-  margin:4px 0;cursor:pointer;font-size:14px;
-}
-.side-link.active,.side-link:hover{background:#2448b5;color:white}
-.side-bottom{
-  margin-top:auto;padding:15px 5px 5px;color:#aabbd8;font-size:12px;
-}
-.dashboard-main{
-  flex:1;min-width:0;background:#f4f6fb;padding:25px;
-}
-
-/* TOP BAR + RETAILER PROFILE */
-.dash-top{
-  display:flex;justify-content:space-between;align-items:center;
-  margin-bottom:25px;gap:15px;
-}
-.dash-top h2{text-align:left;margin:0;color:#101a30}
-.dash-subtitle{color:#71809a;font-size:13px;margin-top:5px}
-.retailer-profile{
-  display:flex;align-items:center;gap:11px;
-  background:white;border:1px solid #e0e6f0;
-  border-radius:13px;padding:9px 13px;
-  box-shadow:0 3px 12px #00000008;
-  min-width:190px;
-}
-.profile-avatar{
-  width:43px;height:43px;border-radius:50%;
-  background:#2448b5;color:white;
-  display:flex;align-items:center;justify-content:center;
-  font-size:17px;font-weight:bold;flex-shrink:0;
-}
-.profile-details strong{
-  display:block;font-size:13px;color:#101a30;
-  max-width:155px;overflow:hidden;text-overflow:ellipsis;
-  white-space:nowrap;
-}
-.profile-details small{
-  display:block;color:#71809a;font-size:11px;margin-top:4px;
-}
-
-/* WELCOME */
-.welcome-banner{
-  background:linear-gradient(110deg,#17368f,#2452df);
-  color:white;border-radius:18px;padding:25px;
-  display:flex;align-items:center;justify-content:space-between;
-  gap:15px;margin-bottom:20px;
-}
-.welcome-banner h2{color:white;text-align:left;margin:8px 0}
-.welcome-banner p{font-size:13px;margin:0}
-.wallet-box{
-  background:#ffffff20;border:1px solid #ffffff35;
-  border-radius:14px;padding:15px;min-width:180px;
-}
-.wallet-box small{font-size:11px}
-.wallet-box strong{display:block;font-size:25px;margin:5px 0}
-
-/* STATS */
-.stats-grid{
-  display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));
-  gap:14px;margin-bottom:24px;
-}
-.stat-card{
-  background:white;border:1px solid #e0e6f0;
-  border-radius:15px;padding:18px;
-}
-.stat-card small{color:#71809a;font-size:11px;font-weight:bold}
-.stat-card strong{display:block;font-size:25px;margin-top:8px}
-
-/* SERVICES */
-.section-heading{
-  display:flex;justify-content:space-between;align-items:center;
-  margin:22px 0 5px;
-}
-.section-heading h3{font-size:18px;color:#101a30;margin:0}
-.quick-grid{
-  display:grid;grid-template-columns:repeat(auto-fit,minmax(175px,1fr));
-  gap:14px;margin:18px 0 24px;
-}
-.quick-card{
-  background:white;border:1px solid #e0e6f0;border-radius:17px;
-  padding:20px;box-shadow:0 5px 18px #14264a0c;
-  transition:transform .2s,box-shadow .2s;
-}
-.quick-card:hover{
-  transform:translateY(-3px);
-  box-shadow:0 8px 22px #14264a18;
-}
-.quick-icon{
-  width:48px;height:48px;border-radius:13px;background:#e0f8e9;
-  margin-bottom:16px;display:flex;align-items:center;
-  justify-content:center;font-size:23px;
-}
-.quick-card h3{font-size:15px;margin:0 0 8px;color:#101a30}
-.quick-card p{
-  color:#71809a;font-size:12px;line-height:1.5;min-height:36px;
-}
-.quick-card a{
-  color:#2455df;font-size:13px;font-weight:bold;
-  text-decoration:none;cursor:pointer;
-}
-
-/* BOTTOM */
-.bottom-grid{display:grid;grid-template-columns:2fr 1fr;gap:16px}
-.info-card{
-  background:white;border:1px solid #e0e6f0;
-  border-radius:16px;padding:20px;min-height:130px;
-}
-.info-card h3{margin:0 0 8px;font-size:16px}
-.info-card p{color:#71809a;font-size:12px}
-
-/* MOBILE */
-@media(max-width:800px){
-  .top-header{flex-direction:column;align-items:flex-start;padding:17px}
-  .brand h1{font-size:21px}
-  .top-nav{width:100%;justify-content:flex-end;flex-wrap:wrap}
-  .top-nav button{padding:9px 12px}
-  .dashboard-layout{display:block}
-  .sidebar{width:100%;padding:12px}
-  .side-brand{padding:5px 8px 12px}
-  .side-link{display:inline-block;width:auto;padding:10px;font-size:12px}
-  .side-bottom{display:none}
-  .dashboard-main{padding:15px}
-  .bottom-grid{grid-template-columns:1fr}
-  .welcome-banner{flex-direction:column;align-items:flex-start}
-  .wallet-box{width:100%}
-  .dash-top{align-items:flex-start;flex-wrap:wrap}
-  .retailer-profile{min-width:0}
+@media(max-width:520px){
+ .topbar{padding:14px;flex-wrap:wrap}
+ .toplinks a{margin-left:8px}
+ .brand{font-size:17px}
+ .main{padding:13px}
+ .services{grid-template-columns:1fr}
+ .bottom-grid{grid-template-columns:1fr}
+ .dashboard-header{padding:12px}
+ .profile{font-size:11px}
+ .welcome h2{font-size:19px}
 }
 </style>
 </head>
 
 <body>
 
-<header class="top-header">
-  <div class="brand">
-    <h1>CHAITANY MULTISERVICES</h1>
-    <p>ONLINE SERVICE PORTAL</p>
+<!-- PUBLIC HEADER -->
+<header class="topbar" id="publicHeader">
+  <div class="brand">CHAITANY MULTISERVICES
+    <small>RETAILER SERVICE PORTAL</small>
   </div>
-  <nav class="top-nav">
-    <button onclick="showPage('home')">Home</button>
-    <button onclick="showPage('login')">Login</button>
-    <button onclick="showPage('register')">Registration</button>
+  <nav class="toplinks">
+    <a onclick="showPage('home')">Home</a>
+    <a onclick="showPage('login')">Login</a>
+    <a onclick="showPage('register')">Registration</a>
   </nav>
 </header>
 
-<!-- HOME, LOGIN, REGISTRATION -->
-<div class="container">
+<!-- PUBLIC PAGES -->
+<div id="publicContainer" class="container">
 
-<section id="home" class="panel">
-  <h2>Welcome to Our Online Service Portal</h2>
-  <p style="text-align:center">सर्व डिजिटल सेवा एकाच ठिकाणी</p>
-  <button class="action" onclick="showPage('login')">Customer Login</button>
-  <p style="text-align:center">
-    नवीन ग्राहक आहात?
-    <a href="#" onclick="showPage('register');return false;">Registration करा</a>
-  </p>
-</section>
+  <section id="homePage">
+    <div class="hero">
+      <h1>Welcome to CHAITANY MULTISERVICES</h1>
+      <p>आपल्या सर्व डिजिटल सेवांसाठी एकच पोर्टल</p>
+      <button class="btn" onclick="showPage('login')">Retailer Login</button>
+      <button class="btn" onclick="showPage('register')">New Registration</button>
+    </div>
+  </section>
 
-<section id="login" class="panel hidden">
-  <h2>Customer Login</h2>
-  <form id="loginForm">
-    <label>Email किंवा मोबाईल नंबर</label>
-    <input id="loginIdentifier" required maxlength="254"
-      autocomplete="username"
-      placeholder="Email किंवा 10 अंकी मोबाईल नंबर">
+  <section id="loginPage" class="panel hidden">
+    <h2>Retailer Login</h2>
+    <form id="loginForm">
+      <input id="loginIdentifier" placeholder="Mobile Number किंवा Email" required>
+      <input id="loginPassword" type="password" placeholder="Password" required>
+      <button class="btn-blue" id="loginButton" style="width:100%">Login</button>
+      <div id="loginMessage" class="message"></div>
+    </form>
+    <p style="text-align:center;font-size:13px">नवीन Retailer आहात?
+      <a onclick="showPage('register')" style="color:#145da0;cursor:pointer">Registration करा</a>
+    </p>
+  </section>
 
-    <label>Password</label>
-    <input id="loginPassword" type="password" required maxlength="256"
-      autocomplete="current-password">
-
-    <button class="action" type="submit">Login</button>
-  </form>
-  <div id="loginMessage" class="message"></div>
-  <p style="text-align:center">
-    नवीन ग्राहक आहात?
-    <a href="#" onclick="showPage('register');return false;">Registration करा</a>
-  </p>
-</section>
-
-<section id="register" class="panel hidden">
-  <h2>Customer Registration</h2>
-  <form id="registerForm">
-    <label>पूर्ण नाव</label>
-    <input id="regName" required maxlength="150"
-      autocomplete="name" placeholder="तुमचे पूर्ण नाव">
-
-    <label>Email</label>
-    <input id="regEmail" type="email" required
-      autocomplete="email" placeholder="तुमचा Email">
-
-    <label>मोबाईल नंबर</label>
-    <input id="regMobile" type="tel" required maxlength="15"
-      autocomplete="tel" placeholder="10 अंकी मोबाईल नंबर">
-
-    <label>Password</label>
-    <input id="regPassword" type="password" required minlength="8"
-      autocomplete="new-password">
-
-    <label>Confirm Password</label>
-    <input id="regConfirm" type="password" required minlength="8"
-      autocomplete="new-password">
-
-    <button class="action" type="submit">Register</button>
-  </form>
-  <div id="registerMessage" class="message"></div>
-</section>
+  <section id="registerPage" class="panel hidden">
+    <h2>Retailer Registration</h2>
+    <form id="registerForm">
+      <input id="regName" placeholder="पूर्ण नाव" required>
+      <input id="regMobile" type="tel" maxlength="10" placeholder="10 अंकी मोबाईल नंबर" required>
+      <input id="regEmail" type="email" placeholder="Email Address" required>
+      <input id="regPassword" type="password" minlength="6" placeholder="Password" required>
+      <input id="regConfirm" type="password" minlength="6" placeholder="Confirm Password" required>
+      <button class="btn-blue" id="registerButton" style="width:100%">Register Now</button>
+      <div id="registerMessage" class="message"></div>
+    </form>
+    <p style="text-align:center;font-size:13px">आधीच खाते आहे?
+      <a onclick="showPage('login')" style="color:#145da0;cursor:pointer">Login करा</a>
+    </p>
+  </section>
 
 </div>
 
-<!-- RETAILER DASHBOARD -->
-<section id="dashboard" class="hidden dashboard-layout">
+<!-- DASHBOARD HEADER -->
+<header id="dashboardHeader" class="dashboard-header hidden">
+  <div class="brand">CHAITANY MULTISERVICES
+    <small>RETAILER DASHBOARD</small>
+  </div>
+  <div class="profile">
+    <strong id="retailerName">Retailer Profile</strong>
+    <span id="retailerEmail"></span>
+    <button onclick="logout()" style="background:#f4c542;padding:7px 12px;border-radius:5px;margin-top:7px">Logout</button>
+  </div>
+</header>
+
+<!-- DASHBOARD -->
+<div id="dashboard" class="layout hidden">
 
   <aside class="sidebar">
-    <div class="side-brand">
-      CM
-      <small>CHAITANY MULTISERVICES</small>
-    </div>
-
-    <button class="side-link active" onclick="showDashboardSection('Dashboard',this)">⌂ &nbsp; Dashboard</button>
-    <button class="side-link" onclick="showDashboardSection('Apply Service',this)">＋ &nbsp; Apply Service</button>
-    <button class="side-link" onclick="showDashboardSection('My Applications',this)">▤ &nbsp; My Applications</button>
-    <button class="side-link" onclick="showDashboardSection('Wallet',this)">₹ &nbsp; Wallet</button>
-    <button class="side-link" onclick="showDashboardSection('Transactions',this)">↔ &nbsp; Transactions</button>
-    <button class="side-link" onclick="showDashboardSection('Profile',this)">◉ &nbsp; Profile</button>
-
-    <div class="side-bottom">
-      Need Help?<br>
-      Contact your administrator for support.
-      <br><br>
-      <button class="side-link" onclick="logout()">↪ Logout</button>
-    </div>
+    <h3>RETAILER MENU</h3>
+    <button class="menu active" onclick="selectMenu(this,'dashboardHome')">▣ Dashboard</button>
+    <button class="menu" onclick="selectMenu(this,'serviceSection')">▣ Apply Service</button>
+    <button class="menu" onclick="selectMenu(this,'applicationsSection')">▣ My Applications</button>
+    <button class="menu" onclick="selectMenu(this,'walletSection')">▣ Wallet</button>
+    <button class="menu" onclick="selectMenu(this,'transactionsSection')">▣ Transactions</button>
+    <button class="menu" onclick="selectMenu(this,'profileSection')">▣ Profile</button>
+    <button class="menu" onclick="logout()">↪ Logout</button>
   </aside>
 
-  <main class="dashboard-main">
+  <main class="main">
 
-    <!-- TOP BAR WITH RETAILER PROFILE -->
-    <div class="dash-top">
-      <div>
-        <h2>Retailer Dashboard</h2>
-        <div class="dash-subtitle">CHAITANY MULTISERVICES Service Portal</div>
+    <section id="dashboardHome">
+      <div class="welcome">
+        <h2>Welcome, <span id="welcomeName">Retailer</span>!</h2>
+        <p>CHAITANY MULTISERVICES Retailer Portal मध्ये आपले स्वागत आहे.</p>
       </div>
 
-      <div class="retailer-profile">
-        <div class="profile-avatar" id="profileAvatar">R</div>
-        <div class="profile-details">
-          <strong id="profileName">Retailer</strong>
-          <small>Retailer Account</small>
+      <div class="cards">
+        <div class="stat"><small>Wallet Balance</small><h2>₹ 0.00</h2></div>
+        <div class="stat"><small>Total Applications</small><h2 id="totalApplications">0</h2></div>
+        <div class="stat"><small>Pending Applications</small><h2 id="pendingApplications">0</h2></div>
+        <div class="stat"><small>Completed Applications</small><h2 id="completedApplications">0</h2></div>
+      </div>
+
+      <h2 class="section-title">Quick Services</h2>
+      <div class="services">
+        <div class="service"><div class="symbol">🪪</div><h3>PAN Find</h3><p>PAN Number Search Service</p><button onclick="serviceMessage('PAN Find')">Apply Now</button></div>
+        <div class="service"><div class="symbol">📄</div><h3>PAN e-PDF</h3><p>PAN PDF Download Service</p><button onclick="serviceMessage('PAN e-PDF Download')">Apply Now</button></div>
+        <div class="service"><div class="symbol">💳</div><h3>PAN Reprint</h3><p>PAN Card Reprint Service</p><button onclick="serviceMessage('PAN Reprint')">Apply Now</button></div>
+        <div class="service"><div class="symbol">📱</div><h3>PAN Mobile & Email Update</h3><p>Mobile Number आणि Email Update</p><button onclick="serviceMessage('PAN Mobile & Email Update')">Apply Now</button></div>
+        <div class="service"><div class="symbol">🚘</div><h3>Driving Licence Print</h3><p>DL Print Service</p><button onclick="serviceMessage('Driving Licence Print')">Apply Now</button></div>
+        <div class="service"><div class="symbol">🚗</div><h3>RC Book Print</h3><p>RC Book Print Service</p><button onclick="serviceMessage('RC Book Print')">Apply Now</button></div>
+        <div class="service"><div class="symbol">🌾</div><h3>AgriStack Print</h3><p>AgriStack Print Service</p><button onclick="serviceMessage('AgriStack Print')">Apply Now</button></div>
+      </div>
+
+      <div class="bottom-grid">
+        <div class="white-box">
+          <h3>Recent Applications</h3>
+          <p>आपले अर्ज येथे दिसतील.</p>
+          <div id="recentApplications">अद्याप कोणतेही अर्ज नाहीत.</div>
+        </div>
+        <div class="white-box">
+          <h3>Wallet Activity</h3>
+          <p>Wallet व्यवहारांची माहिती येथे दिसेल.</p>
+          <div>अद्याप कोणतेही व्यवहार नाहीत.</div>
         </div>
       </div>
-    </div>
+    </section>
 
-    <!-- WELCOME BANNER -->
-    <div class="welcome-banner">
-      <div>
-        <small>WELCOME BACK</small>
-        <h2 id="welcomeUser">CHAITANY MULTISERVICES</h2>
-        <p>Manage your applications and service wallet from one place.</p>
-      </div>
-      <div class="wallet-box">
-        <small>Wallet Balance</small>
-        <strong>₹0.00</strong>
-        <small>View Wallet →</small>
-      </div>
-    </div>
+    <section id="serviceSection" class="hidden">
+      <h2 class="section-title">Apply Service</h2>
+      <p>वरील Quick Services मधून आवश्यक सेवा निवडा.</p>
+    </section>
 
-    <!-- STATISTICS -->
-    <div class="stats-grid">
-      <div class="stat-card">
-        <small>TOTAL APPLICATIONS</small>
-        <strong>0</strong>
-      </div>
-      <div class="stat-card">
-        <small>PENDING</small>
-        <strong>0</strong>
-      </div>
-      <div class="stat-card">
-        <small>COMPLETED</small>
-        <strong>0</strong>
-      </div>
-      <div class="stat-card">
-        <small>REJECTED</small>
-        <strong>0</strong>
-      </div>
-    </div>
+    <section id="applicationsSection" class="hidden">
+      <h2 class="section-title">My Applications</h2>
+      <div class="white-box" id="allApplications">आपले अर्ज येथे दिसतील.</div>
+    </section>
 
-    <!-- QUICK SERVICES -->
-    <div class="section-heading">
-      <h3>Quick Services</h3>
-    </div>
-    <div class="dash-subtitle">Select a service to continue</div>
+    <section id="walletSection" class="hidden">
+      <h2 class="section-title">My Wallet</h2>
+      <div class="white-box"><h2>₹ 0.00</h2><p>Wallet सुविधा पुढील टप्प्यात जोडली जाईल.</p></div>
+    </section>
 
-    <div class="quick-grid">
+    <section id="transactionsSection" class="hidden">
+      <h2 class="section-title">Transactions</h2>
+      <div class="white-box">व्यवहारांची माहिती पुढील टप्प्यात जोडली जाईल.</div>
+    </section>
 
-      <div class="quick-card">
-        <div class="quick-icon">🔎</div>
-        <h3>PAN Find</h3>
-        <p>PAN नंबर शोधण्यासाठी सेवा</p>
-        <a onclick="showDashboardSection('PAN Find')">Open Service →</a>
+    <section id="profileSection" class="hidden">
+      <h2 class="section-title">Retailer Profile</h2>
+      <div class="white-box">
+        <p><b>Name:</b> <span id="profileName"></span></p>
+        <p><b>Email:</b> <span id="profileEmail"></span></p>
+        <p><b>Mobile:</b> <span id="profileMobile"></span></p>
       </div>
-
-      <div class="quick-card">
-        <div class="quick-icon" style="background:#e1e9ff">📄</div>
-        <h3>PAN e-PDF</h3>
-        <p>PAN कार्डची डिजिटल PDF</p>
-        <a onclick="showDashboardSection('PAN e-PDF')">Open Service →</a>
-      </div>
-
-      <div class="quick-card">
-        <div class="quick-icon" style="background:#fff2c9">🪪</div>
-        <h3>PAN Reprint</h3>
-        <p>PAN कार्ड Reprint सेवा</p>
-        <a onclick="showDashboardSection('PAN Reprint')">Open Service →</a>
-      </div>
-
-      <div class="quick-card">
-        <div class="quick-icon" style="background:#fbe5f2">📱</div>
-        <h3>PAN Details</h3>
-        <p>मोबाईल आणि Email अपडेट</p>
-        <a onclick="showDashboardSection('PAN Details')">Open Service →</a>
-      </div>
-
-      <div class="quick-card">
-        <div class="quick-icon" style="background:#dceaff">🚗</div>
-        <h3>DL Print</h3>
-        <p>Driving Licence डिजिटल प्रत</p>
-        <a onclick="showDashboardSection('DL Print')">Open Service →</a>
-      </div>
-
-      <div class="quick-card">
-        <div class="quick-icon">🚘</div>
-        <h3>RC Print</h3>
-        <p>RC Book डिजिटल प्रत</p>
-        <a onclick="showDashboardSection('RC Print')">Open Service →</a>
-      </div>
-
-      <div class="quick-card">
-        <div class="quick-icon" style="background:#e2f5df">🌾</div>
-        <h3>AgriStack Print</h3>
-        <p>AgriStack संबंधित कागदपत्रे</p>
-        <a onclick="showDashboardSection('AgriStack Print')">Open Service →</a>
-      </div>
-
-    </div>
-
-    <!-- RECENT ACTIVITY -->
-    <div class="bottom-grid">
-      <div class="info-card">
-        <h3>Recent Applications</h3>
-        <p>तुमचे अलीकडील अर्ज येथे दिसतील.</p>
-      </div>
-      <div class="info-card">
-        <h3>Wallet Activity</h3>
-        <p>तुमचे Wallet व्यवहार येथे दिसतील.</p>
-      </div>
-    </div>
+    </section>
 
   </main>
-</section>
-
-<footer>© 2026 CHAITANY MULTISERVICES. All Rights Reserved.</footer>
+</div>
 
 <script>
-const SUPABASE_URL =
-"https://uzlqlyzcweivflauacyz.supabase.co";
-
+const SUPABASE_URL = "https://uzlqlyzcweivflauacyz.supabase.co";
 const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_U4H72DvhmAG3gZIUbMjmNQ_6t2PCOVR";
 
 const db = window.supabase.createClient(
@@ -434,179 +240,193 @@ const db = window.supabase.createClient(
 );
 
 function showPage(page) {
-  ["home","login","register","dashboard"].forEach(id => {
-    document.getElementById(id).classList.add("hidden");
+  document.getElementById("homePage").classList.toggle("hidden",page!=="home");
+  document.getElementById("loginPage").classList.toggle("hidden",page!=="login");
+  document.getElementById("registerPage").classList.toggle("hidden",page!=="register");
+
+  const dashboardPage = page==="dashboard";
+  document.getElementById("publicHeader").classList.toggle("hidden",dashboardPage);
+  document.getElementById("publicContainer").classList.toggle("hidden",dashboardPage);
+  document.getElementById("dashboardHeader").classList.toggle("hidden",!dashboardPage);
+  document.getElementById("dashboard").classList.toggle("hidden",!dashboardPage);
+}
+
+function showDashboardSection(sectionId) {
+  const sections = [
+    "dashboardHome","serviceSection","applicationsSection",
+    "walletSection","transactionsSection","profileSection"
+  ];
+  sections.forEach(id => {
+    document.getElementById(id).classList.toggle("hidden",id!==sectionId);
   });
-
-  document.getElementById(page).classList.remove("hidden");
-
-  const container = document.querySelector(".container");
-  container.classList.toggle("hidden", page === "dashboard");
 }
 
-function message(id, text) {
-  document.getElementById(id).textContent = text;
+function selectMenu(button,sectionId) {
+  document.querySelectorAll(".menu").forEach(m=>m.classList.remove("active"));
+  button.classList.add("active");
+  showDashboardSection(sectionId);
 }
 
-async function showDashboard(user) {
+function serviceMessage(service) {
+  alert(service + " सेवा जोडण्याचे काम पुढील टप्प्यात करूया.");
+}
+
+async function loadDashboard(user) {
   showPage("dashboard");
 
   const name = user.user_metadata?.full_name || "Retailer";
-  const email = user.email || "";
-  const mobile = user.user_metadata?.mobile_number || "";
+  document.getElementById("retailerName").textContent=name;
+  document.getElementById("welcomeName").textContent=name;
+  document.getElementById("retailerEmail").textContent=user.email || "";
+  document.getElementById("profileName").textContent=name;
+  document.getElementById("profileEmail").textContent=user.email || "";
 
-  document.getElementById("welcomeUser").textContent = name;
-  document.getElementById("profileName").textContent = name;
+  const {data: customer} = await db
+    .from("customers")
+    .select("mobile_number")
+    .eq("id",user.id)
+    .maybeSingle();
 
-  const initial = name.trim().charAt(0).toUpperCase() || "R";
-  document.getElementById("profileAvatar").textContent = initial;
+  document.getElementById("profileMobile").textContent =
+    customer?.mobile_number || "माहिती उपलब्ध नाही";
 
-  document.getElementById("profileName").title =
-    name + (mobile ? " | " + mobile : "") +
-    (email ? " | " + email : "");
-}
+  const {data: apps,error} = await db
+    .from("applications")
+    .select("id,service_name,status,created_at")
+    .eq("customer_id",user.id)
+    .order("created_at",{ascending:false});
 
-function showDashboardSection(section, button) {
-  if (button) {
-    document.querySelectorAll(".sidebar .side-link").forEach(item => {
-      item.classList.remove("active");
-    });
-    button.classList.add("active");
+  if(!error && apps) {
+    document.getElementById("totalApplications").textContent=apps.length;
+    document.getElementById("pendingApplications").textContent=
+      apps.filter(a=>a.status==="Pending").length;
+    document.getElementById("completedApplications").textContent=
+      apps.filter(a=>a.status==="Completed").length;
+
+    if(apps.length) {
+      const rows=apps.slice(0,5).map(a=>
+        `<tr><td>${escapeHTML(a.service_name)}</td><td>${escapeHTML(a.status)}</td></tr>`
+      ).join("");
+      const html=`<table><tr><th>Service</th><th>Status</th></tr>${rows}</table>`;
+      document.getElementById("recentApplications").innerHTML=html;
+      document.getElementById("allApplications").innerHTML=html;
+    }
   }
 
-  if (section === "Dashboard") {
-    alert("आपण Dashboard वर आहात.");
-  } else {
-    alert(section + " विभाग लवकरच सुरू होईल.");
-  }
+  showDashboardSection("dashboardHome");
 }
 
-function normalizeMobile(value) {
-  const digits = value.replace(/\D/g, "");
-
-  if (digits.length === 10) return "+91" + digits;
-  if (digits.length === 12 && digits.startsWith("91")) return "+" + digits;
-  if (digits.length === 11 && digits.startsWith("0")) {
-    return "+91" + digits.slice(1);
-  }
-
-  return null;
+function escapeHTML(value) {
+  return String(value ?? "").replace(/[&<>"']/g, ch => ({
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+  })[ch]);
 }
 
-// REGISTRATION
-document.getElementById("registerForm").addEventListener("submit", async (e) => {
+document.getElementById("loginForm").addEventListener("submit",async function(e){
   e.preventDefault();
-  message("registerMessage", "Registration सुरू आहे...");
-
-  const fullName = document.getElementById("regName").value.trim();
-  const email = document.getElementById("regEmail").value.trim().toLowerCase();
-  const mobileInput = document.getElementById("regMobile").value.trim();
-  const password = document.getElementById("regPassword").value;
-  const confirm = document.getElementById("regConfirm").value;
-
-  if (password !== confirm) {
-    message("registerMessage", "दोन्ही Password सारखे असणे आवश्यक आहे.");
-    return;
-  }
-
-  const mobile = normalizeMobile(mobileInput);
-
-  if (!mobile) {
-    message("registerMessage", "कृपया योग्य 10 अंकी मोबाईल नंबर टाका.");
-    return;
-  }
-
-  if (password.length < 8) {
-    message("registerMessage", "Password किमान 8 अक्षरांचा असावा.");
-    return;
-  }
+  const button=document.getElementById("loginButton");
+  const message=document.getElementById("loginMessage");
+  button.disabled=true;
+  button.textContent="Please wait...";
+  message.textContent="";
 
   try {
-    const hiddenUsername =
-      "retailer_" + crypto.randomUUID().replaceAll("-", "");
+    const identifier=document.getElementById("loginIdentifier").value.trim();
+    const password=document.getElementById("loginPassword").value;
 
-    const { data, error } = await db.auth.signUp({
+    const {data,error}=await db.functions.invoke("clever-service",{
+      body:{identifier,password}
+    });
+
+    if(error) throw error;
+    if(data?.error) throw new Error(data.error);
+    if(!data?.session) throw new Error("Login session मिळाले नाही.");
+
+    const {data:sessionData,error:sessionError}=await db.auth.setSession({
+      access_token:data.session.access_token,
+      refresh_token:data.session.refresh_token
+    });
+
+    if(sessionError) throw sessionError;
+    await loadDashboard(sessionData.user || data.user);
+
+  } catch(err) {
+    message.textContent=err.message || "Login failed. पुन्हा प्रयत्न करा.";
+  } finally {
+    button.disabled=false;
+    button.textContent="Login";
+  }
+});
+
+document.getElementById("registerForm").addEventListener("submit",async function(e){
+  e.preventDefault();
+  const button=document.getElementById("registerButton");
+  const message=document.getElementById("registerMessage");
+
+  const name=document.getElementById("regName").value.trim();
+  const mobile=document.getElementById("regMobile").value.trim();
+  const email=document.getElementById("regEmail").value.trim().toLowerCase();
+  const password=document.getElementById("regPassword").value;
+  const confirm=document.getElementById("regConfirm").value;
+
+  message.textContent="";
+
+  if(!/^[6-9]\d{9}$/.test(mobile)){
+    message.textContent="योग्य 10 अंकी मोबाईल नंबर टाका.";
+    return;
+  }
+  if(password!==confirm){
+    message.textContent="दोन्ही Password जुळत नाहीत.";
+    return;
+  }
+
+  button.disabled=true;
+  button.textContent="Registering...";
+
+  try {
+    const username="retailer_"+crypto.randomUUID().replace(/-/g,"").slice(0,16);
+    const {data,error}=await db.auth.signUp({
       email,
       password,
-      options: {
-        data: {
-          username: hiddenUsername,
-          full_name: fullName,
-          mobile_number: mobile
-        },
-        emailRedirectTo: window.location.origin + window.location.pathname
+      options:{
+        emailRedirectTo:"https://chaitanyonline.github.io/chaitany-multiservices/",
+        data:{
+          username,
+          full_name:name,
+          mobile_number:"+91"+mobile
+        }
       }
     });
 
-    if (error) throw error;
+    if(error) throw error;
 
-    if (data.session) {
-      await showDashboard(data.user);
-    } else {
-      message(
-        "registerMessage",
-        "Registration यशस्वी! कृपया तुमच्या Email वर आलेली Confirmation Link उघडा. त्यानंतर Login करा."
-      );
-    }
+    message.style.color="green";
+    message.textContent="Registration यशस्वी! Email वर आलेली confirmation link उघडा. त्यानंतर Login करा.";
+    document.getElementById("registerForm").reset();
 
-  } catch (error) {
-    console.error("Registration error:", error);
-    message("registerMessage", error.message || "Registration करताना अडचण आली.");
+  } catch(err) {
+    message.style.color="#c0392b";
+    message.textContent=err.message || "Registration अयशस्वी.";
+  } finally {
+    button.disabled=false;
+    button.textContent="Register Now";
   }
 });
 
-// LOGIN - EMAIL किंवा MOBILE
-document.getElementById("loginForm").addEventListener("submit", async (e) => {
-  e.preventDefault();
-  message("loginMessage", "Login सुरू आहे...");
-
-  const identifier =
-    document.getElementById("loginIdentifier").value.trim();
-  const password =
-    document.getElementById("loginPassword").value;
-
-  try {
-    const { data, error } = await db.functions.invoke("clever-service", {
-      body: { identifier, password }
-    });
-
-    if (error) throw error;
-    if (data?.error) throw new Error(data.error);
-
-    if (!data?.session?.access_token || !data?.session?.refresh_token) {
-      throw new Error("Login Session मिळाली नाही.");
-    }
-
-    const { data: sessionData, error: sessionError } =
-      await db.auth.setSession({
-        access_token: data.session.access_token,
-        refresh_token: data.session.refresh_token
-      });
-
-    if (sessionError) throw sessionError;
-
-    await showDashboard(sessionData.user || data.user);
-
-  } catch (error) {
-    console.error("Login error:", error);
-    message("loginMessage", error.message || "Login करता आले नाही.");
-  }
-});
-
-// LOGOUT
 async function logout() {
   await db.auth.signOut();
   showPage("login");
-  message("loginMessage", "तुम्ही Logout झाला आहात.");
+  document.getElementById("loginForm").reset();
 }
 
-// EXISTING SESSION
-db.auth.getSession().then(({ data }) => {
-  if (data.session) {
-    showDashboard(data.session.user);
-  }
+db.auth.getSession().then(({data})=>{
+  if(data.session) loadDashboard(data.session.user);
+  else showPage("home");
+});
+
+db.auth.onAuthStateChange((event,session)=>{
+  if(event==="SIGNED_OUT") showPage("login");
 });
 </script>
-
 </body>
 </html>
