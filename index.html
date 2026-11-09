@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="mr">
 <head>
@@ -72,17 +73,6 @@ td,th{padding:11px;border-bottom:1px solid #e5eaf0;text-align:left}
 }
 .admin-right-column .white-box{
   margin-bottom:18px;
-}
-.admin-profile-box p{
-  font-size:14px;
-  color:#17233b;
-  margin:13px 0;
-  overflow-wrap:anywhere;
-}
-.admin-profile-box b{
-  color:#102b55;
-  display:inline-block;
-  min-width:75px;
 }
 .admin-profile-title{
   font-size:19px;
@@ -244,13 +234,16 @@ td,th{padding:11px;border-bottom:1px solid #e5eaf0;text-align:left}
       </div>
     </section>
 
+    <!-- ADMIN DASHBOARD -->
     <section id="adminSection" class="hidden">
       <h2 class="section-title">Admin Dashboard</h2>
+
       <div class="cards">
         <div class="stat"><small>Total Retailers</small><h2 id="adminTotalRetailers">0</h2></div>
       </div>
 
       <div class="admin-top-grid">
+
         <!-- LEFT SIDE: RETAILER WALLET ADD / DEDUCT -->
         <div class="admin-left-column">
           <div class="white-box admin-form">
@@ -258,26 +251,32 @@ td,th{padding:11px;border-bottom:1px solid #e5eaf0;text-align:left}
             <form id="adminWalletForm">
               <label>Retailer निवडा</label>
               <select id="adminRetailerSelect" required><option value="">Retailer निवडा</option></select>
+
               <label>व्यवहार प्रकार</label>
               <select id="adminTransactionType" required>
                 <option value="credit">पैसे Add करा (Credit)</option>
                 <option value="debit">पैसे Deduct करा (Debit)</option>
               </select>
+
               <label>रक्कम (₹)</label>
               <input id="adminAmount" type="number" min="0.01" step="0.01" placeholder="उदा. 500" required>
+
               <label>व्यवहाराचे कारण</label>
               <textarea id="adminDescription" placeholder="उदा. Wallet Recharge" required></textarea>
+
               <button class="admin-action" id="adminSubmitButton" type="submit">व्यवहार पूर्ण करा</button>
               <div id="adminWalletMessage" class="admin-message"></div>
             </form>
           </div>
         </div>
 
-        <!-- RIGHT SIDE: SERVICE PRICE MANAGEMENT AND RETAILER PROFILE -->
+        <!-- RIGHT SIDE: SERVICE PRICE MANAGEMENT + CURRENT SERVICE RATES -->
         <div class="admin-right-column">
+
           <div class="white-box admin-form">
-            <h3 class="admin-profile-title">Service Price Management</h3>
+            <h3>Service Price Management</h3>
             <p>येथे बदललेला दर सर्व Retailers च्या Dashboard वर दिसेल.</p>
+
             <form id="adminPriceForm">
               <label>Service निवडा</label>
               <select id="adminServiceSelect" required>
@@ -290,24 +289,23 @@ td,th{padding:11px;border-bottom:1px solid #e5eaf0;text-align:left}
                 <option value="RC Book Print">RC Book Print</option>
                 <option value="AgriStack Print">AgriStack Print</option>
               </select>
+
               <label>नवीन दर (₹)</label>
               <input id="adminServicePrice" type="number" min="0" step="0.01" placeholder="नवीन दर टाका" required>
+
               <button class="admin-action" id="adminPriceButton" type="submit">दर Update करा</button>
               <div id="adminPriceMessage" class="admin-message"></div>
             </form>
           </div>
 
-       <!-- ADMIN PROFILE ON RIGHT SIDE -->
-<div class="white-box admin-profile-box">
-  <h3 class="admin-profile-title">Retailer Profile</h3>
-  <p><b>Name:</b> <span id="adminProfileName">-</span></p>
-  <p><b>Email:</b> <span id="adminProfileEmail">-</span></p>
-  <p><b>Mobile:</b> <span id="adminProfileMobile">-</span></p>
-</div>
-      <h2 class="section-title">सध्याचे Service Rates</h2>
-      <div class="white-box">
-        <button class="admin-refresh" onclick="loadAdminServicePrices()">↻ Refresh Rates</button>
-        <div id="adminPricesList" style="margin-top:15px">दर लोड होत आहेत...</div>
+          <!-- CURRENT SERVICE RATES ON RIGHT SIDE -->
+          <div class="white-box">
+            <h3 class="admin-profile-title">सध्याचे Service Rates</h3>
+            <button class="admin-refresh" onclick="loadAdminServicePrices()">↻ Refresh Rates</button>
+            <div id="adminPricesList" style="margin-top:15px">दर लोड होत आहेत...</div>
+          </div>
+
+        </div>
       </div>
 
       <h2 class="section-title">All Retailers</h2>
@@ -388,19 +386,6 @@ async function openAdminPanel(button) {
   selectMenu(button,"adminSection");
   await loadAdminRetailers();
   await loadAdminServicePrices();
-  loadAdminProfile();
-}
-
-function loadAdminProfile() {
-  if(!currentUser)return;
-
-  const name=currentUser.user_metadata?.full_name||"Retailer";
-  const email=currentUser.email||"";
-  const mobile=document.getElementById("profileMobile").textContent||"माहिती उपलब्ध नाही";
-
-  document.getElementById("adminProfileName").textContent=name;
-  document.getElementById("adminProfileEmail").textContent=email;
-  document.getElementById("adminProfileMobile").textContent=mobile;
 }
 
 function serviceMessage(service) {
@@ -702,7 +687,6 @@ async function loadDashboard(user) {
   await loadWallet(user);
   await loadServicePrices();
   await checkAdminAccess();
-  loadAdminProfile();
 
   showDashboardSection("dashboardHome");
 
