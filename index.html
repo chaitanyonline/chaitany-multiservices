@@ -10,101 +10,48 @@
 <style>
 *{box-sizing:border-box}
 body{margin:0;font-family:Arial,sans-serif;background:#f2f5fa;color:#17233b}
-
-/* HEADER */
 .top-header{
-  background:#102b55;
-  color:white;
-  padding:18px 25px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:15px;
+  background:#102b55;color:white;padding:18px 25px;
+  display:flex;justify-content:space-between;align-items:center;gap:15px;
 }
 .brand h1{margin:0;font-size:25px}
 .brand p{margin:6px 0 0;color:#d8e7ff;font-size:14px}
-
-/* RIGHT MENU */
-.top-nav{
-  display:flex;
-  align-items:center;
-  gap:10px;
-}
+.top-nav{display:flex;align-items:center;gap:10px}
 .top-nav button{
-  background:transparent;
-  border:1px solid #ffffff70;
-  color:white;
-  padding:10px 16px;
-  border-radius:7px;
-  cursor:pointer;
-  font-size:14px;
+  background:transparent;border:1px solid #ffffff70;color:white;
+  padding:10px 16px;border-radius:7px;cursor:pointer;font-size:14px;
 }
 .top-nav button:hover{background:#ffffff20}
-
-/* CONTENT */
 .container{max-width:850px;margin:25px auto;padding:15px}
 .panel{
-  background:white;
-  padding:22px;
-  border-radius:13px;
-  box-shadow:0 3px 12px #0001;
-  margin-bottom:20px
+  background:white;padding:22px;border-radius:13px;
+  box-shadow:0 3px 12px #0001;margin-bottom:20px
 }
 h2{text-align:center;color:#173e70}
 input{
-  width:100%;
-  padding:13px;
-  margin:7px 0 13px;
-  border:1px solid #ccd5e3;
-  border-radius:7px;
-  font-size:15px
+  width:100%;padding:13px;margin:7px 0 13px;
+  border:1px solid #ccd5e3;border-radius:7px;font-size:15px
 }
 button.action{
-  width:100%;
-  background:#1763bd;
-  color:white;
-  border:0;
-  border-radius:7px;
-  padding:13px;
-  font-size:16px;
-  cursor:pointer
+  width:100%;background:#1763bd;color:white;border:0;
+  border-radius:7px;padding:13px;font-size:16px;cursor:pointer
 }
 button.secondary{background:#173e70}
 .hidden{display:none}
-.message{
-  text-align:center;
-  padding:10px;
-  font-size:14px;
-  white-space:pre-wrap
-}
+.message{text-align:center;padding:10px;font-size:14px;white-space:pre-wrap}
 .services{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-  gap:14px
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px
 }
 .card{
-  background:white;
-  padding:18px;
-  border-radius:12px;
-  text-align:center;
+  background:white;padding:18px;border-radius:12px;text-align:center;
   box-shadow:0 2px 10px #0001
 }
 .card h3{color:#173e70}
 footer{text-align:center;padding:20px;color:#65718a}
-
-/* MOBILE */
 @media(max-width:650px){
-  .top-header{
-    flex-direction:column;
-    align-items:flex-start;
-    padding:17px;
-  }
+  .top-header{flex-direction:column;align-items:flex-start;padding:17px}
   .brand h1{font-size:21px}
-  .top-nav{
-    width:100%;
-    justify-content:flex-end;
-    flex-wrap:wrap;
-  }
+  .top-nav{width:100%;justify-content:flex-end;flex-wrap:wrap}
   .top-nav button{padding:9px 12px}
 }
 </style>
@@ -117,7 +64,6 @@ footer{text-align:center;padding:20px;color:#65718a}
     <h1>CHAITANY MULTISERVICES</h1>
     <p>ONLINE SERVICE PORTAL</p>
   </div>
-
   <nav class="top-nav">
     <button onclick="showPage('home')">Home</button>
     <button onclick="showPage('login')">Login</button>
@@ -136,18 +82,20 @@ footer{text-align:center;padding:20px;color:#65718a}
 <section id="login" class="panel hidden">
 <h2>Customer Login</h2>
 <form id="loginForm">
-<label>Username</label>
-<input id="loginUsername" required maxlength="100" autocomplete="username">
+<label>Email किंवा मोबाईल नंबर</label>
+<input id="loginIdentifier" required maxlength="254"
+autocomplete="username" placeholder="Email किंवा 10 अंकी मोबाईल नंबर">
 
 <label>Password</label>
-<input id="loginPassword" type="password" required maxlength="256" autocomplete="current-password">
+<input id="loginPassword" type="password" required maxlength="256"
+autocomplete="current-password">
 
 <button class="action" type="submit">Login</button>
 </form>
 <div id="loginMessage" class="message"></div>
 <p style="text-align:center">
 नवीन ग्राहक आहात?
-<a href="#" onclick="showPage('register')">Registration करा</a>
+<a href="#" onclick="showPage('register');return false;">Registration करा</a>
 </p>
 </section>
 
@@ -155,23 +103,25 @@ footer{text-align:center;padding:20px;color:#65718a}
 <h2>Customer Registration</h2>
 <form id="registerForm">
 
-<label>Username</label>
-<input id="regUsername" required maxlength="100" autocomplete="username">
-
 <label>पूर्ण नाव</label>
-<input id="regName" required maxlength="150" autocomplete="name">
+<input id="regName" required maxlength="150" autocomplete="name"
+placeholder="तुमचे पूर्ण नाव">
 
 <label>Email</label>
-<input id="regEmail" type="email" required autocomplete="email">
+<input id="regEmail" type="email" required autocomplete="email"
+placeholder="तुमचा Email">
 
 <label>मोबाईल नंबर</label>
-<input id="regMobile" type="tel" required maxlength="15" autocomplete="tel">
+<input id="regMobile" type="tel" required maxlength="15"
+autocomplete="tel" placeholder="10 अंकी मोबाईल नंबर">
 
 <label>Password</label>
-<input id="regPassword" type="password" required minlength="8" autocomplete="new-password">
+<input id="regPassword" type="password" required minlength="8"
+autocomplete="new-password">
 
 <label>Confirm Password</label>
-<input id="regConfirm" type="password" required minlength="8" autocomplete="new-password">
+<input id="regConfirm" type="password" required minlength="8"
+autocomplete="new-password">
 
 <button class="action" type="submit">Register</button>
 </form>
@@ -259,15 +209,27 @@ async function showDashboard(user) {
     "नमस्कार, " + name;
 }
 
+// मोबाईल नंबर +91 स्वरूपात तयार करणे
+function normalizeMobile(value) {
+  const digits = value.replace(/\D/g, "");
+
+  if (digits.length === 10) return "+91" + digits;
+  if (digits.length === 12 && digits.startsWith("91")) return "+" + digits;
+  if (digits.length === 11 && digits.startsWith("0")) {
+    return "+91" + digits.slice(1);
+  }
+
+  return null;
+}
+
 // REGISTRATION
 document.getElementById("registerForm").addEventListener("submit", async (e) => {
   e.preventDefault();
   message("registerMessage", "Registration सुरू आहे...");
 
-  const username = document.getElementById("regUsername").value.trim().toLowerCase();
   const fullName = document.getElementById("regName").value.trim();
-  const email = document.getElementById("regEmail").value.trim();
-  const mobile = document.getElementById("regMobile").value.trim();
+  const email = document.getElementById("regEmail").value.trim().toLowerCase();
+  const mobileInput = document.getElementById("regMobile").value.trim();
   const password = document.getElementById("regPassword").value;
   const confirm = document.getElementById("regConfirm").value;
 
@@ -276,18 +238,29 @@ document.getElementById("registerForm").addEventListener("submit", async (e) => 
     return;
   }
 
-  if (!/^[a-z0-9._-]{3,30}$/.test(username)) {
-    message("registerMessage", "Username 3 ते 30 अक्षरांचा असावा. इंग्रजी अक्षरे, अंक, dot, _ किंवा - वापरा.");
+  const mobile = normalizeMobile(mobileInput);
+
+  if (!mobile) {
+    message("registerMessage", "कृपया योग्य 10 अंकी मोबाईल नंबर टाका.");
+    return;
+  }
+
+  if (password.length < 8) {
+    message("registerMessage", "Password किमान 8 अक्षरांचा असावा.");
     return;
   }
 
   try {
+    // डेटाबेसमधील जुन्या Trigger साठी सिस्टम Username तयार करते.
+    const hiddenUsername =
+      "retailer_" + crypto.randomUUID().replaceAll("-", "");
+
     const { data, error } = await db.auth.signUp({
       email,
       password,
       options: {
         data: {
-          username: username,
+          username: hiddenUsername,
           full_name: fullName,
           mobile_number: mobile
         },
@@ -300,25 +273,31 @@ document.getElementById("registerForm").addEventListener("submit", async (e) => 
     if (data.session) {
       await showDashboard(data.user);
     } else {
-      message("registerMessage", "Registration यशस्वी! कृपया तुमच्या Email वर आलेली Confirmation Link उघडा. त्यानंतर Login करा.");
+      message(
+        "registerMessage",
+        "Registration यशस्वी! कृपया तुमच्या Email वर आलेली Confirmation Link उघडा. त्यानंतर Login करा."
+      );
     }
+
   } catch (error) {
     console.error("Registration error:", error);
     message("registerMessage", error.message || "Registration करताना अडचण आली.");
   }
 });
 
-// LOGIN
+// LOGIN - EMAIL किंवा MOBILE NUMBER
 document.getElementById("loginForm").addEventListener("submit", async (e) => {
   e.preventDefault();
   message("loginMessage", "Login सुरू आहे...");
 
-  const username = document.getElementById("loginUsername").value.trim().toLowerCase();
-  const password = document.getElementById("loginPassword").value;
+  const identifier =
+    document.getElementById("loginIdentifier").value.trim();
+  const password =
+    document.getElementById("loginPassword").value;
 
   try {
     const { data, error } = await db.functions.invoke("clever-service", {
-      body: { username, password }
+      body: { identifier, password }
     });
 
     if (error) throw error;
