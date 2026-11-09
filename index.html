@@ -54,18 +54,50 @@ textarea{min-height:75px;resize:vertical}
 .white-box p{font-size:13px;color:#65738a}
 table{width:100%;border-collapse:collapse;font-size:13px}
 td,th{padding:11px;border-bottom:1px solid #e5eaf0;text-align:left}
-.admin-form{max-width:550px}
-.admin-form label{display:block;font-size:13px;font-weight:bold;color:#102b55;margin-top:10px}
+.admin-form{max-width:none}
 .admin-action{background:#145da0;color:white;padding:12px 18px;border-radius:6px;font-weight:bold;margin-top:10px}
 .admin-refresh{background:#f4c542;color:#102b55;padding:9px 14px;border-radius:5px;font-weight:bold}
 .admin-message{font-size:14px;margin-top:12px;white-space:pre-wrap}
 .recharge-note{background:#fff8df;border-left:4px solid #f4c542;padding:12px;border-radius:6px;color:#6c5717;font-size:13px;line-height:1.5}
+
+/* ADMIN DASHBOARD TWO-COLUMN DESIGN */
+.admin-top-grid{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+  gap:20px;
+  align-items:start;
+}
+.admin-left-column,.admin-right-column{
+  min-width:0;
+}
+.admin-right-column .white-box{
+  margin-bottom:18px;
+}
+.admin-profile-box p{
+  font-size:14px;
+  color:#17233b;
+  margin:13px 0;
+  overflow-wrap:anywhere;
+}
+.admin-profile-box b{
+  color:#102b55;
+  display:inline-block;
+  min-width:75px;
+}
+.admin-profile-title{
+  font-size:19px;
+  color:#102b55;
+  margin:0 0 15px;
+}
+@media(max-width:1000px){
+ .cards{grid-template-columns:repeat(2,1fr)}
+ .admin-top-grid{grid-template-columns:1fr}
+}
 @media(max-width:850px){
  .layout{display:block}
  .sidebar{width:100%;display:flex;overflow-x:auto;padding:8px}
  .sidebar h3{display:none}
  .menu{white-space:nowrap;width:auto;margin:2px}
- .cards{grid-template-columns:repeat(2,1fr)}
  .services{grid-template-columns:repeat(2,1fr)}
 }
 @media(max-width:520px){
@@ -78,6 +110,7 @@ td,th{padding:11px;border-bottom:1px solid #e5eaf0;text-align:left}
  .dashboard-header{padding:12px}
  .profile{font-size:11px}
  .welcome h2{font-size:19px}
+ .cards{grid-template-columns:repeat(2,1fr)}
 }
 </style>
 </head>
@@ -213,48 +246,65 @@ td,th{padding:11px;border-bottom:1px solid #e5eaf0;text-align:left}
 
     <section id="adminSection" class="hidden">
       <h2 class="section-title">Admin Dashboard</h2>
-      <div class="cards"><div class="stat"><small>Total Retailers</small><h2 id="adminTotalRetailers">0</h2></div></div>
-
-      <div class="white-box admin-form">
-        <h3>Retailer Wallet मध्ये पैसे Add / Deduct</h3>
-        <form id="adminWalletForm">
-          <label>Retailer निवडा</label>
-          <select id="adminRetailerSelect" required><option value="">Retailer निवडा</option></select>
-          <label>व्यवहार प्रकार</label>
-          <select id="adminTransactionType" required>
-            <option value="credit">पैसे Add करा (Credit)</option>
-            <option value="debit">पैसे Deduct करा (Debit)</option>
-          </select>
-          <label>रक्कम (₹)</label>
-          <input id="adminAmount" type="number" min="0.01" step="0.01" placeholder="उदा. 500" required>
-          <label>व्यवहाराचे कारण</label>
-          <textarea id="adminDescription" placeholder="उदा. Wallet Recharge" required></textarea>
-          <button class="admin-action" id="adminSubmitButton" type="submit">व्यवहार पूर्ण करा</button>
-          <div id="adminWalletMessage" class="admin-message"></div>
-        </form>
+      <div class="cards">
+        <div class="stat"><small>Total Retailers</small><h2 id="adminTotalRetailers">0</h2></div>
       </div>
 
-      <h2 class="section-title">Service Price Management</h2>
-      <div class="white-box admin-form">
-        <h3>सेवेचे दर कमी / जास्त करा</h3>
-        <p>येथे बदललेला दर सर्व Retailers च्या Dashboard वर दिसेल.</p>
-        <form id="adminPriceForm">
-          <label>Service निवडा</label>
-          <select id="adminServiceSelect" required>
-            <option value="">Service निवडा</option>
-            <option value="PAN Find">PAN Find</option>
-            <option value="PAN e-PDF Download">PAN e-PDF Download</option>
-            <option value="PAN Reprint">PAN Reprint</option>
-            <option value="PAN Mobile & Email Update">PAN Mobile & Email Update</option>
-            <option value="Driving Licence Print">Driving Licence Print</option>
-            <option value="RC Book Print">RC Book Print</option>
-            <option value="AgriStack Print">AgriStack Print</option>
-          </select>
-          <label>नवीन दर (₹)</label>
-          <input id="adminServicePrice" type="number" min="0" step="0.01" placeholder="नवीन दर टाका" required>
-          <button class="admin-action" id="adminPriceButton" type="submit">दर Update करा</button>
-          <div id="adminPriceMessage" class="admin-message"></div>
-        </form>
+      <div class="admin-top-grid">
+        <!-- LEFT SIDE: RETAILER WALLET ADD / DEDUCT -->
+        <div class="admin-left-column">
+          <div class="white-box admin-form">
+            <h3>Retailer Wallet मध्ये पैसे Add / Deduct</h3>
+            <form id="adminWalletForm">
+              <label>Retailer निवडा</label>
+              <select id="adminRetailerSelect" required><option value="">Retailer निवडा</option></select>
+              <label>व्यवहार प्रकार</label>
+              <select id="adminTransactionType" required>
+                <option value="credit">पैसे Add करा (Credit)</option>
+                <option value="debit">पैसे Deduct करा (Debit)</option>
+              </select>
+              <label>रक्कम (₹)</label>
+              <input id="adminAmount" type="number" min="0.01" step="0.01" placeholder="उदा. 500" required>
+              <label>व्यवहाराचे कारण</label>
+              <textarea id="adminDescription" placeholder="उदा. Wallet Recharge" required></textarea>
+              <button class="admin-action" id="adminSubmitButton" type="submit">व्यवहार पूर्ण करा</button>
+              <div id="adminWalletMessage" class="admin-message"></div>
+            </form>
+          </div>
+        </div>
+
+        <!-- RIGHT SIDE: SERVICE PRICE MANAGEMENT AND RETAILER PROFILE -->
+        <div class="admin-right-column">
+          <div class="white-box admin-form">
+            <h3 class="admin-profile-title">Service Price Management</h3>
+            <p>येथे बदललेला दर सर्व Retailers च्या Dashboard वर दिसेल.</p>
+            <form id="adminPriceForm">
+              <label>Service निवडा</label>
+              <select id="adminServiceSelect" required>
+                <option value="">Service निवडा</option>
+                <option value="PAN Find">PAN Find</option>
+                <option value="PAN e-PDF Download">PAN e-PDF Download</option>
+                <option value="PAN Reprint">PAN Reprint</option>
+                <option value="PAN Mobile & Email Update">PAN Mobile & Email Update</option>
+                <option value="Driving Licence Print">Driving Licence Print</option>
+                <option value="RC Book Print">RC Book Print</option>
+                <option value="AgriStack Print">AgriStack Print</option>
+              </select>
+              <label>नवीन दर (₹)</label>
+              <input id="adminServicePrice" type="number" min="0" step="0.01" placeholder="नवीन दर टाका" required>
+              <button class="admin-action" id="adminPriceButton" type="submit">दर Update करा</button>
+              <div id="adminPriceMessage" class="admin-message"></div>
+            </form>
+          </div>
+
+          <!-- RETAILER PROFILE ON RIGHT SIDE -->
+          <div class="white-box admin-profile-box">
+            <h3 class="admin-profile-title">Retailer Profile</h3>
+            <p><b>Name:</b> <span id="adminProfileName">-</span></p>
+            <p><b>Email:</b> <span id="adminProfileEmail">-</span></p>
+            <p><b>Mobile:</b> <span id="adminProfileMobile">-</span></p>
+          </div>
+        </div>
       </div>
 
       <h2 class="section-title">सध्याचे Service Rates</h2>
@@ -341,6 +391,19 @@ async function openAdminPanel(button) {
   selectMenu(button,"adminSection");
   await loadAdminRetailers();
   await loadAdminServicePrices();
+  loadAdminProfile();
+}
+
+function loadAdminProfile() {
+  if(!currentUser)return;
+
+  const name=currentUser.user_metadata?.full_name||"Retailer";
+  const email=currentUser.email||"";
+  const mobile=document.getElementById("profileMobile").textContent||"माहिती उपलब्ध नाही";
+
+  document.getElementById("adminProfileName").textContent=name;
+  document.getElementById("adminProfileEmail").textContent=email;
+  document.getElementById("adminProfileMobile").textContent=mobile;
 }
 
 function serviceMessage(service) {
@@ -443,7 +506,6 @@ async function loadAdminServicePrices() {
     </table>`;
 }
 
-/* दुरुस्त केलेला Admin Service Price Update कोड */
 document.getElementById("adminPriceForm").addEventListener("submit",async function(e) {
   e.preventDefault();
 
@@ -502,7 +564,7 @@ document.getElementById("adminPriceForm").addEventListener("submit",async functi
     button.disabled=false;
     button.textContent="दर Update करा";
   }
-}); /* ही बंद होणारी ओळ आधी राहिली होती. आता दुरुस्त केली आहे. */
+});
 
 function renderTransactions(transactions) {
   if(!transactions||!transactions.length) {
@@ -643,6 +705,7 @@ async function loadDashboard(user) {
   await loadWallet(user);
   await loadServicePrices();
   await checkAdminAccess();
+  loadAdminProfile();
 
   showDashboardSection("dashboardHome");
 
