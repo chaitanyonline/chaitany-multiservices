@@ -1,6 +1,4 @@
-from pathlib import Path
-
-html = r'''<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="mr">
 <head>
 <meta charset="UTF-8">
@@ -84,6 +82,7 @@ td,th{padding:11px;border-bottom:1px solid #e5eaf0;text-align:left}
 </style>
 </head>
 <body>
+
 <header class="topbar" id="publicHeader">
   <div class="brand">CHAITANY MULTISERVICES<small>RETAILER SERVICE PORTAL</small></div>
   <nav class="toplinks">
@@ -102,6 +101,7 @@ td,th{padding:11px;border-bottom:1px solid #e5eaf0;text-align:left}
       <button class="btn" onclick="showPage('register')">New Registration</button>
     </div>
   </section>
+
   <section id="loginPage" class="panel hidden">
     <h2>Retailer Login</h2>
     <form id="loginForm">
@@ -112,6 +112,7 @@ td,th{padding:11px;border-bottom:1px solid #e5eaf0;text-align:left}
     </form>
     <p style="text-align:center;font-size:13px">नवीन Retailer आहात? <a onclick="showPage('register')" style="color:#145da0;cursor:pointer">Registration करा</a></p>
   </section>
+
   <section id="registerPage" class="panel hidden">
     <h2>Retailer Registration</h2>
     <form id="registerForm">
@@ -139,7 +140,6 @@ td,th{padding:11px;border-bottom:1px solid #e5eaf0;text-align:left}
 <div id="dashboard" class="layout hidden">
   <aside class="sidebar">
     <h3>RETAILER MENU</h3>
-    <!-- Admin menu सर्वात वर; सामान्य Retailer ला hidden राहील -->
     <button class="menu hidden" id="adminMenuButton" onclick="openAdminPanel(this)">▣ Admin Dashboard</button>
     <button class="menu active" id="retailerDashboardMenu" onclick="selectMenu(this,'dashboardHome')">▣ Retailer Dashboard</button>
     <button class="menu" onclick="selectMenu(this,'serviceSection')">▣ Apply Service</button>
@@ -156,12 +156,14 @@ td,th{padding:11px;border-bottom:1px solid #e5eaf0;text-align:left}
         <h2>Welcome, <span id="welcomeName">Retailer</span>!</h2>
         <p>CHAITANY MULTISERVICES Retailer Portal मध्ये आपले स्वागत आहे.</p>
       </div>
+
       <div class="cards">
         <div class="stat"><small>Wallet Balance</small><h2 id="walletBalance">₹ 0.00</h2></div>
         <div class="stat"><small>Total Applications</small><h2 id="totalApplications">0</h2></div>
         <div class="stat"><small>Pending Applications</small><h2 id="pendingApplications">0</h2></div>
         <div class="stat"><small>Completed Applications</small><h2 id="completedApplications">0</h2></div>
       </div>
+
       <h2 class="section-title">Quick Services</h2>
       <div class="services">
         <div class="service"><div class="symbol">🪪</div><h3>PAN Find</h3><p>PAN Number Search Service</p><div class="service-price" data-service-price="PAN Find">दर लोड होत आहे...</div><button onclick="serviceMessage('PAN Find')">Apply Now</button></div>
@@ -172,6 +174,7 @@ td,th{padding:11px;border-bottom:1px solid #e5eaf0;text-align:left}
         <div class="service"><div class="symbol">🚗</div><h3>RC Book Print</h3><p>RC Book Print Service</p><div class="service-price" data-service-price="RC Book Print">दर लोड होत आहे...</div><button onclick="serviceMessage('RC Book Print')">Apply Now</button></div>
         <div class="service"><div class="symbol">🌾</div><h3>AgriStack Print</h3><p>AgriStack Print Service</p><div class="service-price" data-service-price="AgriStack Print">दर लोड होत आहे...</div><button onclick="serviceMessage('AgriStack Print')">Apply Now</button></div>
       </div>
+
       <div class="bottom-grid">
         <div class="white-box"><h3>Recent Applications</h3><p>आपले अर्ज येथे दिसतील.</p><div id="recentApplications">अद्याप कोणतेही अर्ज नाहीत.</div></div>
         <div class="white-box"><h3>Wallet Activity</h3><p>Wallet व्यवहारांची माहिती येथे दिसेल.</p><div id="walletActivity">व्यवहार लोड होत आहेत...</div></div>
@@ -198,6 +201,7 @@ td,th{padding:11px;border-bottom:1px solid #e5eaf0;text-align:left}
     </section>
 
     <section id="transactionsSection" class="hidden"><h2 class="section-title">Transactions</h2><div class="white-box" id="transactionsList">व्यवहार लोड होत आहेत...</div></section>
+
     <section id="profileSection" class="hidden">
       <h2 class="section-title">Retailer Profile</h2>
       <div class="white-box">
@@ -210,14 +214,21 @@ td,th{padding:11px;border-bottom:1px solid #e5eaf0;text-align:left}
     <section id="adminSection" class="hidden">
       <h2 class="section-title">Admin Dashboard</h2>
       <div class="cards"><div class="stat"><small>Total Retailers</small><h2 id="adminTotalRetailers">0</h2></div></div>
+
       <div class="white-box admin-form">
         <h3>Retailer Wallet मध्ये पैसे Add / Deduct</h3>
         <form id="adminWalletForm">
-          <label>Retailer निवडा</label><select id="adminRetailerSelect" required><option value="">Retailer निवडा</option></select>
+          <label>Retailer निवडा</label>
+          <select id="adminRetailerSelect" required><option value="">Retailer निवडा</option></select>
           <label>व्यवहार प्रकार</label>
-          <select id="adminTransactionType" required><option value="credit">पैसे Add करा (Credit)</option><option value="debit">पैसे Deduct करा (Debit)</option></select>
-          <label>रक्कम (₹)</label><input id="adminAmount" type="number" min="0.01" step="0.01" placeholder="उदा. 500" required>
-          <label>व्यवहाराचे कारण</label><textarea id="adminDescription" placeholder="उदा. Wallet Recharge" required></textarea>
+          <select id="adminTransactionType" required>
+            <option value="credit">पैसे Add करा (Credit)</option>
+            <option value="debit">पैसे Deduct करा (Debit)</option>
+          </select>
+          <label>रक्कम (₹)</label>
+          <input id="adminAmount" type="number" min="0.01" step="0.01" placeholder="उदा. 500" required>
+          <label>व्यवहाराचे कारण</label>
+          <textarea id="adminDescription" placeholder="उदा. Wallet Recharge" required></textarea>
           <button class="admin-action" id="adminSubmitButton" type="submit">व्यवहार पूर्ण करा</button>
           <div id="adminWalletMessage" class="admin-message"></div>
         </form>
@@ -225,32 +236,47 @@ td,th{padding:11px;border-bottom:1px solid #e5eaf0;text-align:left}
 
       <h2 class="section-title">Service Price Management</h2>
       <div class="white-box admin-form">
-        <h3>सेवेचे दर कमी / जास्त करा</h3><p>येथे बदललेला दर सर्व Retailers च्या Dashboard वर दिसेल.</p>
+        <h3>सेवेचे दर कमी / जास्त करा</h3>
+        <p>येथे बदललेला दर सर्व Retailers च्या Dashboard वर दिसेल.</p>
         <form id="adminPriceForm">
           <label>Service निवडा</label>
           <select id="adminServiceSelect" required>
             <option value="">Service निवडा</option>
-            <option value="PAN Find">PAN Find</option><option value="PAN e-PDF Download">PAN e-PDF Download</option>
-            <option value="PAN Reprint">PAN Reprint</option><option value="PAN Mobile & Email Update">PAN Mobile & Email Update</option>
-            <option value="Driving Licence Print">Driving Licence Print</option><option value="RC Book Print">RC Book Print</option>
+            <option value="PAN Find">PAN Find</option>
+            <option value="PAN e-PDF Download">PAN e-PDF Download</option>
+            <option value="PAN Reprint">PAN Reprint</option>
+            <option value="PAN Mobile & Email Update">PAN Mobile & Email Update</option>
+            <option value="Driving Licence Print">Driving Licence Print</option>
+            <option value="RC Book Print">RC Book Print</option>
             <option value="AgriStack Print">AgriStack Print</option>
           </select>
-          <label>नवीन दर (₹)</label><input id="adminServicePrice" type="number" min="0" step="0.01" placeholder="नवीन दर टाका" required>
+          <label>नवीन दर (₹)</label>
+          <input id="adminServicePrice" type="number" min="0" step="0.01" placeholder="नवीन दर टाका" required>
           <button class="admin-action" id="adminPriceButton" type="submit">दर Update करा</button>
           <div id="adminPriceMessage" class="admin-message"></div>
         </form>
       </div>
+
       <h2 class="section-title">सध्याचे Service Rates</h2>
-      <div class="white-box"><button class="admin-refresh" onclick="loadAdminServicePrices()">↻ Refresh Rates</button><div id="adminPricesList" style="margin-top:15px">दर लोड होत आहेत...</div></div>
+      <div class="white-box">
+        <button class="admin-refresh" onclick="loadAdminServicePrices()">↻ Refresh Rates</button>
+        <div id="adminPricesList" style="margin-top:15px">दर लोड होत आहेत...</div>
+      </div>
+
       <h2 class="section-title">All Retailers</h2>
-      <div class="white-box"><button class="admin-refresh" onclick="loadAdminRetailers()">↻ Refresh Retailers</button><div id="adminRetailersList" style="margin-top:15px">Retailers लोड होत आहेत...</div></div>
+      <div class="white-box">
+        <button class="admin-refresh" onclick="loadAdminRetailers()">↻ Refresh Retailers</button>
+        <div id="adminRetailersList" style="margin-top:15px">Retailers लोड होत आहेत...</div>
+      </div>
     </section>
   </main>
 </div>
 
 <script>
 const SUPABASE_URL = "https://uzlqlyzcweivflauacyz.supabase.co";
+
 const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_U4H72DvhmAG3gZIUbMjmNQ_6t2PCOVR";
+
 const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
 
 let currentUser = null;
@@ -258,247 +284,630 @@ let isAdmin = false;
 let adminRetailers = [];
 let servicePriceMap = {};
 
-const SERVICE_NAMES = ["PAN Find","PAN e-PDF Download","PAN Reprint","PAN Mobile & Email Update","Driving Licence Print","RC Book Print","AgriStack Print"];
+const SERVICE_NAMES = [
+  "PAN Find",
+  "PAN e-PDF Download",
+  "PAN Reprint",
+  "PAN Mobile & Email Update",
+  "Driving Licence Print",
+  "RC Book Print",
+  "AgriStack Print"
+];
 
 function showPage(page) {
-  ["home","login","register"].forEach(name => document.getElementById(name+"Page").classList.toggle("hidden",page!==name));
+  ["home","login","register"].forEach(name => {
+    document.getElementById(name+"Page").classList.toggle("hidden",page!==name);
+  });
+
   const dashboardPage = page==="dashboard";
+
   document.getElementById("publicHeader").classList.toggle("hidden",dashboardPage);
   document.getElementById("publicContainer").classList.toggle("hidden",dashboardPage);
   document.getElementById("dashboardHeader").classList.toggle("hidden",!dashboardPage);
   document.getElementById("dashboard").classList.toggle("hidden",!dashboardPage);
 }
+
 function showDashboardSection(sectionId) {
-  ["dashboardHome","serviceSection","applicationsSection","walletSection","transactionsSection","profileSection","adminSection"].forEach(id => {
+  [
+    "dashboardHome",
+    "serviceSection",
+    "applicationsSection",
+    "walletSection",
+    "transactionsSection",
+    "profileSection",
+    "adminSection"
+  ].forEach(id => {
     document.getElementById(id).classList.toggle("hidden",id!==sectionId);
   });
 }
+
 function selectMenu(button,sectionId) {
-  if(sectionId==="adminSection" && !isAdmin) { alert("Admin Access उपलब्ध नाही."); return; }
+  if(sectionId==="adminSection" && !isAdmin) {
+    alert("Admin Access उपलब्ध नाही.");
+    return;
+  }
+
   document.querySelectorAll(".menu").forEach(m=>m.classList.remove("active"));
   button.classList.add("active");
   showDashboardSection(sectionId);
 }
+
 async function openAdminPanel(button) {
-  if(!isAdmin) { alert("Admin Access उपलब्ध नाही."); return; }
+  if(!isAdmin) {
+    alert("Admin Access उपलब्ध नाही.");
+    return;
+  }
+
   selectMenu(button,"adminSection");
   await loadAdminRetailers();
   await loadAdminServicePrices();
 }
+
 function serviceMessage(service) {
   alert(service + " सेवा जोडण्याचे काम पुढील टप्प्यात करूया. सध्या प्रत्यक्ष अर्ज सबमिट होत नाही.");
 }
+
 function startRecharge() {
   const amount = Number(document.getElementById("rechargeAmount").value);
   const message = document.getElementById("rechargeMessage");
+
   message.style.color = "#c0392b";
+
   if(!Number.isFinite(amount) || amount<1 || amount>50000) {
     message.textContent = "कृपया ₹1 ते ₹50,000 पर्यंत योग्य रक्कम टाका.";
     return;
   }
+
   message.textContent = "UPI Payment Gateway अजून जोडलेले नाही. सध्या पेमेंट करू नका. Gateway जोडल्यानंतर QR Payment सुरू होईल.";
 }
-function formatAmount(amount) { return "₹ " + Number(amount || 0).toFixed(2); }
+
+function formatAmount(amount) {
+  return "₹ " + Number(amount || 0).toFixed(2);
+}
+
 function escapeHTML(value) {
-  return String(value ?? "").replace(/[&<>"']/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]));
+  return String(value ?? "").replace(/[&<>"']/g,ch=>({
+    "&":"&amp;",
+    "<":"&lt;",
+    ">":"&gt;",
+    '"':"&quot;",
+    "'":"&#39;"
+  }[ch]));
 }
 
 async function loadServicePrices() {
   const elements=document.querySelectorAll("[data-service-price]");
+
   elements.forEach(el=>el.textContent="दर लोड होत आहे...");
+
   const {data,error}=await db.from("service_prices").select("service_name,price");
+
   if(error) {
     console.error("Service price load error:",error);
     elements.forEach(el=>el.textContent="दर उपलब्ध नाही");
     return;
   }
+
   servicePriceMap={};
-  (data||[]).forEach(item=>servicePriceMap[item.service_name]=Number(item.price));
+
+  (data||[]).forEach(item=>{
+    servicePriceMap[item.service_name]=Number(item.price);
+  });
+
   elements.forEach(el=>{
     const service=el.dataset.servicePrice;
-    el.textContent=Object.prototype.hasOwnProperty.call(servicePriceMap,service) ? "दर: "+formatAmount(servicePriceMap[service]) : "दर उपलब्ध नाही";
+
+    el.textContent=Object.prototype.hasOwnProperty.call(servicePriceMap,service)
+      ? "दर: "+formatAmount(servicePriceMap[service])
+      : "दर उपलब्ध नाही";
   });
 }
+
 async function loadAdminServicePrices() {
   if(!isAdmin)return;
+
   const list=document.getElementById("adminPricesList");
   list.textContent="दर लोड होत आहेत...";
-  const {data,error}=await db.from("service_prices").select("service_name,price,updated_at").order("service_name");
-  if(error) { console.error("Admin price list error:",error); list.textContent="दर लोड करता आले नाहीत: "+error.message; return; }
-  if(!data||!data.length) { list.textContent="Service Rates उपलब्ध नाहीत."; return; }
+
+  const {data,error}=await db.from("service_prices")
+    .select("service_name,price,updated_at")
+    .order("service_name");
+
+  if(error) {
+    console.error("Admin price list error:",error);
+    list.textContent="दर लोड करता आले नाहीत: "+error.message;
+    return;
+  }
+
+  if(!data||!data.length) {
+    list.textContent="Service Rates उपलब्ध नाहीत.";
+    return;
+  }
+
   const rows=data.map(item=>{
-    const date=item.updated_at?new Date(item.updated_at).toLocaleString("en-IN"):"-";
-    return `<tr><td>${escapeHTML(item.service_name)}</td><td><b>${formatAmount(item.price)}</b></td><td>${escapeHTML(date)}</td></tr>`;
+    const date=item.updated_at
+      ? new Date(item.updated_at).toLocaleString("en-IN")
+      : "-";
+
+    return `<tr>
+      <td>${escapeHTML(item.service_name)}</td>
+      <td><b>${formatAmount(item.price)}</b></td>
+      <td>${escapeHTML(date)}</td>
+    </tr>`;
   }).join("");
-  list.innerHTML=`<table><tr><th>Service Name</th><th>सध्याचा दर</th><th>शेवटचा बदल</th></tr>${rows}</table>`;
+
+  list.innerHTML=`
+    <table>
+      <tr><th>Service Name</th><th>सध्याचा दर</th><th>शेवटचा बदल</th></tr>
+      ${rows}
+    </table>`;
 }
 
-document.getElementById("adminPriceForm").addEventListener("submit",async function(e){
+/* दुरुस्त केलेला Admin Service Price Update कोड */
+document.getElementById("adminPriceForm").addEventListener("submit",async function(e) {
   e.preventDefault();
-  if(!isAdmin){alert("Admin Access उपलब्ध नाही.");return;}
+
+  if(!isAdmin) {
+    alert("Admin Access उपलब्ध नाही.");
+    return;
+  }
+
   const service=document.getElementById("adminServiceSelect").value;
   const price=Number(document.getElementById("adminServicePrice").value);
   const button=document.getElementById("adminPriceButton");
   const message=document.getElementById("adminPriceMessage");
-  message.style.color="#c0392b";message.textContent="";
-  if(!SERVICE_NAMES.includes(service)){message.textContent="कृपया योग्य Service निवडा.";return;}
-  if(!Number.isFinite(price)||price<0){message.textContent="योग्य दर टाका.";return;}
-  if(!confirm(`${service} चा नवीन दर ${formatAmount(price)} करायचा आहे का?`))return;
-  button.disabled=true;button.textContent="Updating...";
+
+  message.style.color="#c0392b";
+  message.textContent="";
+
+  if(!SERVICE_NAMES.includes(service)) {
+    message.textContent="कृपया योग्य Service निवडा.";
+    return;
+  }
+
+  if(!Number.isFinite(price)||price<0) {
+    message.textContent="योग्य दर टाका.";
+    return;
+  }
+
+  if(!confirm(`${service} चा नवीन दर ${formatAmount(price)} करायचा आहे का?`)) {
+    return;
+  }
+
+  button.disabled=true;
+  button.textContent="Updating...";
+
   try {
-    const {data,error}=await db.rpc("admin_update_service_price",{p_service_name:service,p_price:price});
+    const {data,error}=await db.rpc("admin_update_service_price",{
+      p_service_name:service,
+      p_price:price
+    });
+
     if(error)throw error;
-    message.style.color="green";message.textContent=`${service} चा दर यशस्वीपणे ${formatAmount(data)} केला आहे.`;
+
+    message.style.color="green";
+    message.textContent=`${service} चा दर यशस्वीपणे ${formatAmount(data)} केला आहे.`;
+
     document.getElementById("adminServicePrice").value="";
-    await loadServicePrices();await loadAdminServicePrices();
+
+    await loadServicePrices();
+    await loadAdminServicePrices();
+
   } catch(err) {
     console.error("Service price update error:",err);
-    message.style.color="#c0392b";message.textContent="दर Update अयशस्वी: "+(err.message||"पुन्हा प्रयत्न करा.");
-  } finally {button.disabled=false;button.textContent="दर Update करा";}
-}
+    message.style.color="#c0392b";
+    message.textContent="दर Update अयशस्वी: "+(err.message||"पुन्हा प्रयत्न करा.");
+
+  } finally {
+    button.disabled=false;
+    button.textContent="दर Update करा";
+  }
+}); /* ही बंद होणारी ओळ आधी राहिली होती. आता दुरुस्त केली आहे. */
 
 function renderTransactions(transactions) {
-  if(!transactions||!transactions.length)return "<p>अद्याप कोणतेही व्यवहार नाहीत.</p>";
+  if(!transactions||!transactions.length) {
+    return "<p>अद्याप कोणतेही व्यवहार नाहीत.</p>";
+  }
+
   const rows=transactions.map(t=>{
     const credit=t.transaction_type==="credit";
-    const date=t.created_at?new Date(t.created_at).toLocaleString("en-IN"):"-";
-    return `<tr><td>${escapeHTML(t.description||t.transaction_type)}</td><td>${credit?"+":"-"}${formatAmount(t.amount)}</td><td>${escapeHTML(date)}</td></tr>`;
+    const date=t.created_at
+      ? new Date(t.created_at).toLocaleString("en-IN")
+      : "-";
+
+    return `<tr>
+      <td>${escapeHTML(t.description||t.transaction_type)}</td>
+      <td>${credit?"+":"-"}${formatAmount(t.amount)}</td>
+      <td>${escapeHTML(date)}</td>
+    </tr>`;
   }).join("");
-  return `<table><tr><th>तपशील</th><th>रक्कम</th><th>तारीख</th></tr>${rows}</table>`;
+
+  return `<table>
+    <tr><th>तपशील</th><th>रक्कम</th><th>तारीख</th></tr>
+    ${rows}
+  </table>`;
 }
+
 async function loadWallet(user) {
-  const home=document.getElementById("walletBalance"),page=document.getElementById("walletBalancePage");
-  const activity=document.getElementById("walletActivity"),transactionsList=document.getElementById("transactionsList");
-  home.textContent="लोड होत आहे...";page.textContent="लोड होत आहे...";activity.textContent="व्यवहार लोड होत आहेत...";transactionsList.textContent="व्यवहार लोड होत आहेत...";
-  const {data:wallet,error:walletError}=await db.from("wallets").select("balance").eq("customer_id",user.id).maybeSingle();
-  if(walletError){home.textContent="लोड होत नाही";page.textContent="लोड होत नाही";}
-  else {const balance=formatAmount(wallet?.balance??0);home.textContent=balance;page.textContent=balance;}
-  const {data:transactions,error:transactionError}=await db.from("wallet_transactions").select("amount,transaction_type,description,created_at").eq("customer_id",user.id).order("created_at",{ascending:false}).limit(50);
-  if(transactionError){activity.textContent="व्यवहार लोड करता आले नाहीत.";transactionsList.textContent="व्यवहार लोड करता आले नाहीत.";console.error("Wallet transaction error:",transactionError);}
-  else {transactionsList.innerHTML=renderTransactions(transactions);activity.innerHTML=renderTransactions((transactions||[]).slice(0,10));}
+  const home=document.getElementById("walletBalance");
+  const page=document.getElementById("walletBalancePage");
+  const activity=document.getElementById("walletActivity");
+  const transactionsList=document.getElementById("transactionsList");
+
+  home.textContent="लोड होत आहे...";
+  page.textContent="लोड होत आहे...";
+  activity.textContent="व्यवहार लोड होत आहेत...";
+  transactionsList.textContent="व्यवहार लोड होत आहेत...";
+
+  const {data:wallet,error:walletError}=await db.from("wallets")
+    .select("balance")
+    .eq("customer_id",user.id)
+    .maybeSingle();
+
+  if(walletError) {
+    home.textContent="लोड होत नाही";
+    page.textContent="लोड होत नाही";
+  } else {
+    const balance=formatAmount(wallet?.balance??0);
+    home.textContent=balance;
+    page.textContent=balance;
+  }
+
+  const {data:transactions,error:transactionError}=await db.from("wallet_transactions")
+    .select("amount,transaction_type,description,created_at")
+    .eq("customer_id",user.id)
+    .order("created_at",{ascending:false})
+    .limit(50);
+
+  if(transactionError) {
+    activity.textContent="व्यवहार लोड करता आले नाहीत.";
+    transactionsList.textContent="व्यवहार लोड करता आले नाहीत.";
+    console.error("Wallet transaction error:",transactionError);
+  } else {
+    transactionsList.innerHTML=renderTransactions(transactions);
+    activity.innerHTML=renderTransactions((transactions||[]).slice(0,10));
+  }
+
   if(walletError)console.error("Wallet balance error:",walletError);
 }
+
 async function checkAdminAccess() {
   const {data,error}=await db.rpc("admin_is_current_user");
-  if(error){console.error("Admin check error:",error);isAdmin=false;}else{isAdmin=data===true;}
+
+  if(error) {
+    console.error("Admin check error:",error);
+    isAdmin=false;
+  } else {
+    isAdmin=data===true;
+  }
+
   document.getElementById("adminMenuButton").classList.toggle("hidden",!isAdmin);
   return isAdmin;
 }
+
 async function loadDashboard(user) {
   if(!user)return;
-  currentUser=user;showPage("dashboard");
+
+  currentUser=user;
+  showPage("dashboard");
+
   const name=user.user_metadata?.full_name||"Retailer";
+
   document.getElementById("retailerName").textContent=name;
   document.getElementById("welcomeName").textContent=name;
   document.getElementById("retailerEmail").textContent=user.email||"";
   document.getElementById("profileName").textContent=name;
   document.getElementById("profileEmail").textContent=user.email||"";
-  const {data:customer}=await db.from("customers").select("mobile_number").eq("id",user.id).maybeSingle();
-  document.getElementById("profileMobile").textContent=customer?.mobile_number||user.user_metadata?.mobile_number||"माहिती उपलब्ध नाही";
 
-  const {data:apps,error}=await db.from("applications").select("id,service_name,status,created_at").eq("customer_id",user.id).order("created_at",{ascending:false});
-  if(!error&&apps){
+  const {data:customer}=await db.from("customers")
+    .select("mobile_number")
+    .eq("id",user.id)
+    .maybeSingle();
+
+  document.getElementById("profileMobile").textContent=
+    customer?.mobile_number||user.user_metadata?.mobile_number||"माहिती उपलब्ध नाही";
+
+  const {data:apps,error}=await db.from("applications")
+    .select("id,service_name,status,created_at")
+    .eq("customer_id",user.id)
+    .order("created_at",{ascending:false});
+
+  if(!error&&apps) {
     document.getElementById("totalApplications").textContent=apps.length;
-    document.getElementById("pendingApplications").textContent=apps.filter(a=>a.status==="Pending").length;
-    document.getElementById("completedApplications").textContent=apps.filter(a=>a.status==="Completed").length;
-    if(apps.length){
-      const rows=apps.slice(0,5).map(a=>`<tr><td>${escapeHTML(a.service_name)}</td><td>${escapeHTML(a.status)}</td></tr>`).join("");
-      const table=`<table><tr><th>Service</th><th>Status</th></tr>${rows}</table>`;
-      document.getElementById("recentApplications").innerHTML=table;document.getElementById("allApplications").innerHTML=table;
-    }else{document.getElementById("recentApplications").textContent="अद्याप कोणतेही अर्ज नाहीत.";document.getElementById("allApplications").textContent="अद्याप कोणतेही अर्ज नाहीत.";}
+    document.getElementById("pendingApplications").textContent=
+      apps.filter(a=>a.status==="Pending").length;
+    document.getElementById("completedApplications").textContent=
+      apps.filter(a=>a.status==="Completed").length;
+
+    if(apps.length) {
+      const rows=apps.slice(0,5).map(a=>`
+        <tr>
+          <td>${escapeHTML(a.service_name)}</td>
+          <td>${escapeHTML(a.status)}</td>
+        </tr>`).join("");
+
+      const table=`<table>
+        <tr><th>Service</th><th>Status</th></tr>
+        ${rows}
+      </table>`;
+
+      document.getElementById("recentApplications").innerHTML=table;
+      document.getElementById("allApplications").innerHTML=table;
+
+    } else {
+      document.getElementById("recentApplications").textContent="अद्याप कोणतेही अर्ज नाहीत.";
+      document.getElementById("allApplications").textContent="अद्याप कोणतेही अर्ज नाहीत.";
+    }
   }
-  await loadWallet(user);await loadServicePrices();await checkAdminAccess();
+
+  await loadWallet(user);
+  await loadServicePrices();
+  await checkAdminAccess();
+
   showDashboardSection("dashboardHome");
+
   document.querySelectorAll(".menu").forEach(m=>m.classList.remove("active"));
   document.getElementById("retailerDashboardMenu").classList.add("active");
 }
+
 async function loadAdminRetailers() {
   if(!isAdmin)return;
-  const list=document.getElementById("adminRetailersList"),select=document.getElementById("adminRetailerSelect");
+
+  const list=document.getElementById("adminRetailersList");
+  const select=document.getElementById("adminRetailerSelect");
+
   list.textContent="Retailers लोड होत आहेत...";
+
   const {data,error}=await db.rpc("admin_list_retailers");
-  if(error){console.error("Retailer list error:",error);list.textContent="Retailers लोड करता आले नाहीत: "+error.message;return;}
-  adminRetailers=data||[];document.getElementById("adminTotalRetailers").textContent=adminRetailers.length;
-  const previous=select.value;select.innerHTML='<option value="">Retailer निवडा</option>';
-  adminRetailers.forEach(r=>{const option=document.createElement("option");option.value=r.retailer_id;option.textContent=`${r.full_name||"Retailer"} - ${r.mobile_number||r.email||""}`;select.appendChild(option);});
-  if(adminRetailers.some(r=>r.retailer_id===previous))select.value=previous;
-  if(!adminRetailers.length){list.textContent="अद्याप कोणताही Retailer उपलब्ध नाही.";return;}
-  const rows=adminRetailers.map(r=>`<tr><td>${escapeHTML(r.full_name||"-")}</td><td>${escapeHTML(r.mobile_number||"-")}</td><td>${escapeHTML(r.email||"-")}</td><td>${formatAmount(r.balance)}</td></tr>`).join("");
-  list.innerHTML=`<table><tr><th>नाव</th><th>मोबाईल</th><th>Email</th><th>Wallet Balance</th></tr>${rows}</table>`;
+
+  if(error) {
+    console.error("Retailer list error:",error);
+    list.textContent="Retailers लोड करता आले नाहीत: "+error.message;
+    return;
+  }
+
+  adminRetailers=data||[];
+
+  document.getElementById("adminTotalRetailers").textContent=adminRetailers.length;
+
+  const previous=select.value;
+  select.innerHTML='<option value="">Retailer निवडा</option>';
+
+  adminRetailers.forEach(r=>{
+    const option=document.createElement("option");
+    option.value=r.retailer_id;
+    option.textContent=`${r.full_name||"Retailer"} - ${r.mobile_number||r.email||""}`;
+    select.appendChild(option);
+  });
+
+  if(adminRetailers.some(r=>r.retailer_id===previous)) {
+    select.value=previous;
+  }
+
+  if(!adminRetailers.length) {
+    list.textContent="अद्याप कोणताही Retailer उपलब्ध नाही.";
+    return;
+  }
+
+  const rows=adminRetailers.map(r=>`
+    <tr>
+      <td>${escapeHTML(r.full_name||"-")}</td>
+      <td>${escapeHTML(r.mobile_number||"-")}</td>
+      <td>${escapeHTML(r.email||"-")}</td>
+      <td>${formatAmount(r.balance)}</td>
+    </tr>`).join("");
+
+  list.innerHTML=`<table>
+    <tr><th>नाव</th><th>मोबाईल</th><th>Email</th><th>Wallet Balance</th></tr>
+    ${rows}
+  </table>`;
 }
-document.getElementById("adminWalletForm").addEventListener("submit",async function(e){
+
+document.getElementById("adminWalletForm").addEventListener("submit",async function(e) {
   e.preventDefault();
-  if(!isAdmin){alert("Admin Access उपलब्ध नाही.");return;}
+
+  if(!isAdmin) {
+    alert("Admin Access उपलब्ध नाही.");
+    return;
+  }
+
   const customerId=document.getElementById("adminRetailerSelect").value;
   const type=document.getElementById("adminTransactionType").value;
   const amount=Number(document.getElementById("adminAmount").value);
   const description=document.getElementById("adminDescription").value.trim();
-  const button=document.getElementById("adminSubmitButton"),message=document.getElementById("adminWalletMessage");
-  message.style.color="#c0392b";message.textContent="";
-  if(!customerId){message.textContent="कृपया Retailer निवडा.";return;}
-  if(!Number.isFinite(amount)||amount<=0){message.textContent="योग्य रक्कम टाका.";return;}
-  if(!description){message.textContent="व्यवहाराचे कारण लिहा.";return;}
+
+  const button=document.getElementById("adminSubmitButton");
+  const message=document.getElementById("adminWalletMessage");
+
+  message.style.color="#c0392b";
+  message.textContent="";
+
+  if(!customerId) {
+    message.textContent="कृपया Retailer निवडा.";
+    return;
+  }
+
+  if(!Number.isFinite(amount)||amount<=0) {
+    message.textContent="योग्य रक्कम टाका.";
+    return;
+  }
+
+  if(!description) {
+    message.textContent="व्यवहाराचे कारण लिहा.";
+    return;
+  }
+
   const retailer=adminRetailers.find(r=>r.retailer_id===customerId);
   const retailerName=retailer?.full_name||"निवडलेला Retailer";
   const action=type==="credit"?"Add":"Deduct";
-  if(!confirm(`${retailerName} यांच्या Wallet मध्ये ₹${amount.toFixed(2)} ${action} करायचे आहेत का?`))return;
-  button.disabled=true;button.textContent="व्यवहार सुरू आहे...";
-  try{
-    const {data,error}=await db.rpc("admin_adjust_wallet",{p_customer_id:customerId,p_amount:amount,p_type:type,p_description:description});
+
+  if(!confirm(`${retailerName} यांच्या Wallet मध्ये ₹${amount.toFixed(2)} ${action} करायचे आहेत का?`)) {
+    return;
+  }
+
+  button.disabled=true;
+  button.textContent="व्यवहार सुरू आहे...";
+
+  try {
+    const {data,error}=await db.rpc("admin_adjust_wallet",{
+      p_customer_id:customerId,
+      p_amount:amount,
+      p_type:type,
+      p_description:description
+    });
+
     if(error)throw error;
-    message.style.color="green";message.textContent=`व्यवहार यशस्वी! नवीन Wallet Balance: ${formatAmount(data)}`;
-    document.getElementById("adminAmount").value="";document.getElementById("adminDescription").value="";
+
+    message.style.color="green";
+    message.textContent=`व्यवहार यशस्वी! नवीन Wallet Balance: ${formatAmount(data)}`;
+
+    document.getElementById("adminAmount").value="";
+    document.getElementById("adminDescription").value="";
+
     await loadAdminRetailers();
-  }catch(err){console.error("Admin wallet error:",err);message.style.color="#c0392b";message.textContent="व्यवहार अयशस्वी: "+(err.message||"कृपया पुन्हा प्रयत्न करा.");}
-  finally{button.disabled=false;button.textContent="व्यवहार पूर्ण करा";}
+
+  } catch(err) {
+    console.error("Admin wallet error:",err);
+    message.style.color="#c0392b";
+    message.textContent="व्यवहार अयशस्वी: "+(err.message||"कृपया पुन्हा प्रयत्न करा.");
+
+  } finally {
+    button.disabled=false;
+    button.textContent="व्यवहार पूर्ण करा";
+  }
 });
 
-document.getElementById("loginForm").addEventListener("submit",async function(e){
+document.getElementById("loginForm").addEventListener("submit",async function(e) {
   e.preventDefault();
-  const button=document.getElementById("loginButton"),message=document.getElementById("loginMessage");
-  button.disabled=true;button.textContent="Please wait...";message.textContent="";
-  try{
-    const identifier=document.getElementById("loginIdentifier").value.trim(),password=document.getElementById("loginPassword").value;
-    const {data,error}=await db.functions.invoke("clever-service",{body:{identifier,password}});
-    if(error)throw error;if(data?.error)throw new Error(data.error);if(!data?.session)throw new Error("Login session मिळाले नाही.");
-    const {data:sessionData,error:sessionError}=await db.auth.setSession({access_token:data.session.access_token,refresh_token:data.session.refresh_token});
-    if(sessionError)throw sessionError;await loadDashboard(sessionData.user||data.user);
-  }catch(err){message.textContent=err.message||"Login failed. पुन्हा प्रयत्न करा.";}
-  finally{button.disabled=false;button.textContent="Login";}
-});
-document.getElementById("registerForm").addEventListener("submit",async function(e){
-  e.preventDefault();
-  const button=document.getElementById("registerButton"),message=document.getElementById("registerMessage");
-  const name=document.getElementById("regName").value.trim(),mobile=document.getElementById("regMobile").value.trim();
-  const email=document.getElementById("regEmail").value.trim().toLowerCase(),password=document.getElementById("regPassword").value;
-  const confirmPassword=document.getElementById("regConfirm").value;
+
+  const button=document.getElementById("loginButton");
+  const message=document.getElementById("loginMessage");
+
+  button.disabled=true;
+  button.textContent="Please wait...";
   message.textContent="";
-  if(!/^[6-9]\d{9}$/.test(mobile)){message.textContent="योग्य 10 अंकी मोबाईल नंबर टाका.";return;}
-  if(password!==confirmPassword){message.textContent="दोन्ही Password जुळत नाहीत.";return;}
-  button.disabled=true;button.textContent="Registering...";
-  try{
-    const username="retailer_"+crypto.randomUUID().replace(/-/g,"").slice(0,16);
-    const {data,error}=await db.auth.signUp({email,password,options:{emailRedirectTo:"https://chaitanyonline.github.io/chaitany-multiservices/",data:{username,full_name:name,mobile_number:"+91"+mobile}}});
+
+  try {
+    const identifier=document.getElementById("loginIdentifier").value.trim();
+    const password=document.getElementById("loginPassword").value;
+
+    const {data,error}=await db.functions.invoke("clever-service",{
+      body:{identifier,password}
+    });
+
     if(error)throw error;
-    message.style.color="green";message.textContent="Registration यशस्वी! Email वर आलेली confirmation link उघडा. त्यानंतर Login करा.";
-    document.getElementById("registerForm").reset();
-  }catch(err){message.style.color="#c0392b";message.textContent=err.message||"Registration अयशस्वी.";}
-  finally{button.disabled=false;button.textContent="Register Now";}
+    if(data?.error)throw new Error(data.error);
+    if(!data?.session)throw new Error("Login session मिळाले नाही.");
+
+    const {data:sessionData,error:sessionError}=await db.auth.setSession({
+      access_token:data.session.access_token,
+      refresh_token:data.session.refresh_token
+    });
+
+    if(sessionError)throw sessionError;
+
+    await loadDashboard(sessionData.user||data.user);
+
+  } catch(err) {
+    message.textContent=err.message||"Login failed. पुन्हा प्रयत्न करा.";
+
+  } finally {
+    button.disabled=false;
+    button.textContent="Login";
+  }
 });
-async function logout(){
-  await db.auth.signOut();currentUser=null;isAdmin=false;servicePriceMap={};
+
+document.getElementById("registerForm").addEventListener("submit",async function(e) {
+  e.preventDefault();
+
+  const button=document.getElementById("registerButton");
+  const message=document.getElementById("registerMessage");
+
+  const name=document.getElementById("regName").value.trim();
+  const mobile=document.getElementById("regMobile").value.trim();
+  const email=document.getElementById("regEmail").value.trim().toLowerCase();
+  const password=document.getElementById("regPassword").value;
+  const confirmPassword=document.getElementById("regConfirm").value;
+
+  message.textContent="";
+
+  if(!/^[6-9]\d{9}$/.test(mobile)) {
+    message.textContent="योग्य 10 अंकी मोबाईल नंबर टाका.";
+    return;
+  }
+
+  if(password!==confirmPassword) {
+    message.textContent="दोन्ही Password जुळत नाहीत.";
+    return;
+  }
+
+  button.disabled=true;
+  button.textContent="Registering...";
+
+  try {
+    const username="retailer_"+crypto.randomUUID().replace(/-/g,"").slice(0,16);
+
+    const {data,error}=await db.auth.signUp({
+      email,
+      password,
+      options:{
+        emailRedirectTo:"https://chaitanyonline.github.io/chaitany-multiservices/",
+        data:{
+          username,
+          full_name:name,
+          mobile_number:"+91"+mobile
+        }
+      }
+    });
+
+    if(error)throw error;
+
+    message.style.color="green";
+    message.textContent="Registration यशस्वी! Email वर आलेली confirmation link उघडा. त्यानंतर Login करा.";
+
+    document.getElementById("registerForm").reset();
+
+  } catch(err) {
+    message.style.color="#c0392b";
+    message.textContent=err.message||"Registration अयशस्वी.";
+
+  } finally {
+    button.disabled=false;
+    button.textContent="Register Now";
+  }
+});
+
+async function logout() {
+  await db.auth.signOut();
+
+  currentUser=null;
+  isAdmin=false;
+  servicePriceMap={};
+
   document.getElementById("adminMenuButton").classList.add("hidden");
-  showPage("login");document.getElementById("loginForm").reset();
+
+  showPage("login");
+  document.getElementById("loginForm").reset();
 }
-db.auth.getSession().then(({data})=>{if(data.session)loadDashboard(data.session.user);else showPage("home");});
+
+db.auth.getSession().then(({data})=>{
+  if(data.session) {
+    loadDashboard(data.session.user);
+  } else {
+    showPage("home");
+  }
+});
+
 db.auth.onAuthStateChange((event,session)=>{
-  if(event==="SIGNED_OUT"){currentUser=null;isAdmin=false;servicePriceMap={};document.getElementById("adminMenuButton").classList.add("hidden");showPage("login");}
+  if(event==="SIGNED_OUT") {
+    currentUser=null;
+    isAdmin=false;
+    servicePriceMap={};
+
+    document.getElementById("adminMenuButton").classList.add("hidden");
+    showPage("login");
+  }
 });
 </script>
 </body>
 </html>
-'''
-
-path = Path("/mnt/data/index.html")
-path.write_text(html, encoding="utf-8")
-print(f"तयार फाईल: {path.name} | आकार: {path.stat().st_size:,} bytes")
