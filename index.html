@@ -48,6 +48,7 @@ textarea{min-height:75px;resize:vertical}
 .service .symbol{font-size:27px}
 .service h3{font-size:16px;color:#102b55}
 .service p{font-size:12px;color:#65738a}
+.service-price{font-size:15px;font-weight:bold;color:#168044;margin:12px 0}
 .service button{background:#145da0;color:white;padding:9px 14px;border-radius:5px}
 .bottom-grid{display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-top:22px}
 .white-box{background:white;padding:20px;border-radius:10px;box-shadow:0 2px 9px #0001;overflow:auto}
@@ -174,13 +175,19 @@ td,th{padding:11px;border-bottom:1px solid #e5eaf0;text-align:left}
 
       <h2 class="section-title">Quick Services</h2>
       <div class="services">
-        <div class="service"><div class="symbol">🪪</div><h3>PAN Find</h3><p>PAN Number Search Service</p><button onclick="serviceMessage('PAN Find')">Apply Now</button></div>
-        <div class="service"><div class="symbol">📄</div><h3>PAN e-PDF</h3><p>PAN PDF Download Service</p><button onclick="serviceMessage('PAN e-PDF Download')">Apply Now</button></div>
-        <div class="service"><div class="symbol">💳</div><h3>PAN Reprint</h3><p>PAN Card Reprint Service</p><button onclick="serviceMessage('PAN Reprint')">Apply Now</button></div>
-        <div class="service"><div class="symbol">📱</div><h3>PAN Mobile & Email Update</h3><p>Mobile Number आणि Email Update</p><button onclick="serviceMessage('PAN Mobile & Email Update')">Apply Now</button></div>
-        <div class="service"><div class="symbol">🚘</div><h3>Driving Licence Print</h3><p>DL Print Service</p><button onclick="serviceMessage('Driving Licence Print')">Apply Now</button></div>
-        <div class="service"><div class="symbol">🚗</div><h3>RC Book Print</h3><p>RC Book Print Service</p><button onclick="serviceMessage('RC Book Print')">Apply Now</button></div>
-        <div class="service"><div class="symbol">🌾</div><h3>AgriStack Print</h3><p>AgriStack Print Service</p><button onclick="serviceMessage('AgriStack Print')">Apply Now</button></div>
+        <div class="service"><div class="symbol">🪪</div><h3>PAN Find</h3><p>PAN Number Search Service</p><div class="service-price" data-service-price="PAN Find">दर लोड होत आहे...</div><button onclick="serviceMessage('PAN Find')">Apply Now</button></div>
+
+        <div class="service"><div class="symbol">📄</div><h3>PAN e-PDF</h3><p>PAN PDF Download Service</p><div class="service-price" data-service-price="PAN e-PDF Download">दर लोड होत आहे...</div><button onclick="serviceMessage('PAN e-PDF Download')">Apply Now</button></div>
+
+        <div class="service"><div class="symbol">💳</div><h3>PAN Reprint</h3><p>PAN Card Reprint Service</p><div class="service-price" data-service-price="PAN Reprint">दर लोड होत आहे...</div><button onclick="serviceMessage('PAN Reprint')">Apply Now</button></div>
+
+        <div class="service"><div class="symbol">📱</div><h3>PAN Mobile & Email Update</h3><p>Mobile Number आणि Email Update</p><div class="service-price" data-service-price="PAN Mobile & Email Update">दर लोड होत आहे...</div><button onclick="serviceMessage('PAN Mobile & Email Update')">Apply Now</button></div>
+
+        <div class="service"><div class="symbol">🚘</div><h3>Driving Licence Print</h3><p>DL Print Service</p><div class="service-price" data-service-price="Driving Licence Print">दर लोड होत आहे...</div><button onclick="serviceMessage('Driving Licence Print')">Apply Now</button></div>
+
+        <div class="service"><div class="symbol">🚗</div><h3>RC Book Print</h3><p>RC Book Print Service</p><div class="service-price" data-service-price="RC Book Print">दर लोड होत आहे...</div><button onclick="serviceMessage('RC Book Print')">Apply Now</button></div>
+
+        <div class="service"><div class="symbol">🌾</div><h3>AgriStack Print</h3><p>AgriStack Print Service</p><div class="service-price" data-service-price="AgriStack Print">दर लोड होत आहे...</div><button onclick="serviceMessage('AgriStack Print')">Apply Now</button></div>
       </div>
 
       <div class="bottom-grid">
@@ -242,7 +249,6 @@ td,th{padding:11px;border-bottom:1px solid #e5eaf0;text-align:left}
 
       <div class="white-box admin-form">
         <h3>Retailer Wallet मध्ये पैसे Add / Deduct</h3>
-
         <form id="adminWalletForm">
           <label>Retailer निवडा</label>
           <select id="adminRetailerSelect" required>
@@ -266,13 +272,45 @@ td,th{padding:11px;border-bottom:1px solid #e5eaf0;text-align:left}
         </form>
       </div>
 
+      <!-- SERVICE PRICE MANAGEMENT -->
+      <h2 class="section-title">Service Price Management</h2>
+      <div class="white-box admin-form">
+        <h3>सेवेचे दर कमी / जास्त करा</h3>
+        <p>येथे बदललेला दर सर्व Retailers च्या Dashboard वर दिसेल.</p>
+
+        <form id="adminPriceForm">
+          <label>Service निवडा</label>
+          <select id="adminServiceSelect" required>
+            <option value="">Service निवडा</option>
+            <option value="PAN Find">PAN Find</option>
+            <option value="PAN e-PDF Download">PAN e-PDF Download</option>
+            <option value="PAN Reprint">PAN Reprint</option>
+            <option value="PAN Mobile & Email Update">PAN Mobile & Email Update</option>
+            <option value="Driving Licence Print">Driving Licence Print</option>
+            <option value="RC Book Print">RC Book Print</option>
+            <option value="AgriStack Print">AgriStack Print</option>
+          </select>
+
+          <label>नवीन दर (₹)</label>
+          <input id="adminServicePrice" type="number" min="0" step="0.01" placeholder="नवीन दर टाका" required>
+
+          <button class="admin-action" id="adminPriceButton" type="submit">दर Update करा</button>
+          <div id="adminPriceMessage" class="admin-message"></div>
+        </form>
+      </div>
+
+      <h2 class="section-title">सध्याचे Service Rates</h2>
+      <div class="white-box">
+        <button class="admin-refresh" onclick="loadAdminServicePrices()">↻ Refresh Rates</button>
+        <div id="adminPricesList" style="margin-top:15px">दर लोड होत आहेत...</div>
+      </div>
+
       <h2 class="section-title">All Retailers</h2>
       <div class="white-box">
         <button class="admin-refresh" onclick="loadAdminRetailers()">↻ Refresh Retailers</button>
         <div id="adminRetailersList" style="margin-top:15px">Retailers लोड होत आहेत...</div>
       </div>
     </section>
-
   </main>
 </div>
 
@@ -289,6 +327,17 @@ const db = window.supabase.createClient(
 let currentUser = null;
 let isAdmin = false;
 let adminRetailers = [];
+let servicePriceMap = {};
+
+const SERVICE_NAMES = [
+  "PAN Find",
+  "PAN e-PDF Download",
+  "PAN Reprint",
+  "PAN Mobile & Email Update",
+  "Driving Licence Print",
+  "RC Book Print",
+  "AgriStack Print"
+];
 
 function showPage(page) {
   document.getElementById("homePage").classList.toggle("hidden",page!=="home");
@@ -332,6 +381,7 @@ async function openAdminPanel(button) {
 
   selectMenu(button,"adminSection");
   await loadAdminRetailers();
+  await loadAdminServicePrices();
 }
 
 function serviceMessage(service) {
@@ -347,6 +397,146 @@ function escapeHTML(value) {
     "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
   })[ch]);
 }
+
+/* सर्व Retailers साठी Service Prices लोड करणे */
+async function loadServicePrices() {
+  const priceElements = document.querySelectorAll("[data-service-price]");
+
+  priceElements.forEach(el => {
+    el.textContent = "दर लोड होत आहे...";
+  });
+
+  const {data,error} = await db
+    .from("service_prices")
+    .select("service_name,price");
+
+  if(error) {
+    console.error("Service price load error:",error);
+    priceElements.forEach(el => {
+      el.textContent = "दर उपलब्ध नाही";
+    });
+    return;
+  }
+
+  servicePriceMap = {};
+
+  (data || []).forEach(item => {
+    servicePriceMap[item.service_name] = Number(item.price);
+  });
+
+  priceElements.forEach(el => {
+    const service = el.dataset.servicePrice;
+
+    if(Object.prototype.hasOwnProperty.call(servicePriceMap,service)) {
+      el.textContent = "दर: " + formatAmount(servicePriceMap[service]);
+    } else {
+      el.textContent = "दर उपलब्ध नाही";
+    }
+  });
+}
+
+/* Admin साठी सर्व Service Rates दाखवणे */
+async function loadAdminServicePrices() {
+  if(!isAdmin) return;
+
+  const list = document.getElementById("adminPricesList");
+  list.textContent = "दर लोड होत आहेत...";
+
+  const {data,error} = await db
+    .from("service_prices")
+    .select("service_name,price,updated_at")
+    .order("service_name");
+
+  if(error) {
+    console.error("Admin price list error:",error);
+    list.textContent = "दर लोड करता आले नाहीत: " + error.message;
+    return;
+  }
+
+  if(!data || data.length===0) {
+    list.textContent = "Service Rates उपलब्ध नाहीत.";
+    return;
+  }
+
+  const rows = data.map(item => {
+    const date = item.updated_at
+      ? new Date(item.updated_at).toLocaleString("en-IN")
+      : "-";
+
+    return `<tr>
+      <td>${escapeHTML(item.service_name)}</td>
+      <td><b>${formatAmount(item.price)}</b></td>
+      <td>${escapeHTML(date)}</td>
+    </tr>`;
+  }).join("");
+
+  list.innerHTML = `
+    <table>
+      <tr><th>Service Name</th><th>सध्याचा दर</th><th>शेवटचा बदल</th></tr>
+      ${rows}
+    </table>
+  `;
+}
+
+/* Admin कडून Service Price Update */
+document.getElementById("adminPriceForm").addEventListener("submit",async function(e) {
+  e.preventDefault();
+
+  if(!isAdmin) {
+    alert("Admin Access उपलब्ध नाही.");
+    return;
+  }
+
+  const service = document.getElementById("adminServiceSelect").value;
+  const price = Number(document.getElementById("adminServicePrice").value);
+  const button = document.getElementById("adminPriceButton");
+  const message = document.getElementById("adminPriceMessage");
+
+  message.style.color = "#c0392b";
+  message.textContent = "";
+
+  if(!SERVICE_NAMES.includes(service)) {
+    message.textContent = "कृपया योग्य Service निवडा.";
+    return;
+  }
+
+  if(!Number.isFinite(price) || price < 0) {
+    message.textContent = "योग्य दर टाका.";
+    return;
+  }
+
+  if(!confirm(`${service} चा नवीन दर ${formatAmount(price)} करायचा आहे का?`)) {
+    return;
+  }
+
+  button.disabled = true;
+  button.textContent = "Updating...";
+
+  try {
+    const {data,error} = await db.rpc("admin_update_service_price",{
+      p_service_name: service,
+      p_price: price
+    });
+
+    if(error) throw error;
+
+    message.style.color = "green";
+    message.textContent = `${service} चा दर यशस्वीपणे ${formatAmount(data)} केला आहे.`;
+
+    document.getElementById("adminServicePrice").value = "";
+
+    await loadServicePrices();
+    await loadAdminServicePrices();
+
+  } catch(err) {
+    console.error("Service price update error:",err);
+    message.style.color = "#c0392b";
+    message.textContent = "दर Update अयशस्वी: " + (err.message || "पुन्हा प्रयत्न करा.");
+  } finally {
+    button.disabled = false;
+    button.textContent = "दर Update करा";
+  }
+});
 
 function renderTransactions(transactions) {
   if (!transactions || transactions.length === 0) {
@@ -483,7 +673,9 @@ async function loadDashboard(user) {
   }
 
   await loadWallet(user);
+  await loadServicePrices();
   await checkAdminAccess();
+
   showDashboardSection("dashboardHome");
 
   document.querySelectorAll(".menu").forEach(m=>m.classList.remove("active"));
@@ -719,6 +911,7 @@ async function logout() {
   await db.auth.signOut();
   currentUser = null;
   isAdmin = false;
+  servicePriceMap = {};
   document.getElementById("adminMenuButton").classList.add("hidden");
   showPage("login");
   document.getElementById("loginForm").reset();
@@ -733,6 +926,7 @@ db.auth.onAuthStateChange((event,session)=>{
   if(event==="SIGNED_OUT") {
     currentUser = null;
     isAdmin = false;
+    servicePriceMap = {};
     document.getElementById("adminMenuButton").classList.add("hidden");
     showPage("login");
   }
