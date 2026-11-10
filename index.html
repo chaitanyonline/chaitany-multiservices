@@ -764,7 +764,9 @@ async function renderTransactions(){
     activity.innerHTML = data.slice(0,5).map(item=>`
       <p>${escapeHTML(item.description||item.remark||"Wallet Transaction")} – <b>${formatAmount(item.amount)}</b></p>
     `).join("");
-
+    }
+}
+</script>
   
 <script>
 /* LOGIN */
