@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="mr">
 <head>
@@ -6,6 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CHAITANY MULTISERVICES - Retailer Portal</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
 <style>
 *{box-sizing:border-box}
 body{margin:0;font-family:Arial,sans-serif;background:#f1f4f9;color:#17233b}
@@ -60,48 +63,38 @@ td,th{padding:11px;border-bottom:1px solid #e5eaf0;text-align:left}
 .admin-refresh{background:#f4c542;color:#102b55;padding:9px 14px;border-radius:5px;font-weight:bold}
 .admin-message{font-size:14px;margin-top:12px;white-space:pre-wrap}
 .recharge-note{background:#fff8df;border-left:4px solid #f4c542;padding:12px;border-radius:6px;color:#6c5717;font-size:13px;line-height:1.5}
+.admin-top-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:20px;align-items:start}
+.admin-left-column,.admin-right-column{min-width:0}
+.admin-right-column .white-box{margin-bottom:18px}
+.admin-profile-title{font-size:19px;color:#102b55;margin:0 0 15px}
 
-/* ADMIN DASHBOARD TWO-COLUMN DESIGN */
-.admin-top-grid{
-  display:grid;
-  grid-template-columns:minmax(0,1fr) minmax(0,1fr);
-  gap:20px;
-  align-items:start;
-}
-.admin-left-column,.admin-right-column{
-  min-width:0;
-}
-.admin-right-column .white-box{
-  margin-bottom:18px;
-}
-.admin-profile-title{
-  font-size:19px;
-  color:#102b55;
-  margin:0 0 15px;
-}
-@media(max-width:1000px){
- .cards{grid-template-columns:repeat(2,1fr)}
- .admin-top-grid{grid-template-columns:1fr}
-}
-@media(max-width:850px){
- .layout{display:block}
- .sidebar{width:100%;display:flex;overflow-x:auto;padding:8px}
- .sidebar h3{display:none}
- .menu{white-space:nowrap;width:auto;margin:2px}
- .services{grid-template-columns:repeat(2,1fr)}
-}
-@media(max-width:520px){
- .topbar{padding:14px;flex-wrap:wrap}
- .toplinks a{margin-left:8px}
- .brand{font-size:17px}
- .main{padding:13px}
- .services{grid-template-columns:1fr}
- .bottom-grid{grid-template-columns:1fr}
- .dashboard-header{padding:12px}
- .profile{font-size:11px}
- .welcome h2{font-size:19px}
- .cards{grid-template-columns:repeat(2,1fr)}
-}
+/* AGRISTACK */
+.agri-tabs{display:flex;gap:10px;flex-wrap:wrap;margin:15px 0}
+.agri-tab{background:#e5edf7;color:#102b55;padding:12px 18px;border-radius:7px;font-weight:bold}
+.agri-tab.active{background:#145da0;color:white}
+.agri-card{background:white;border-radius:12px;padding:20px;margin:15px 0;box-shadow:0 2px 10px #0001}
+.agri-card h3{color:#102b55;margin-top:0}
+.agri-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.agri-action{background:#145da0;color:white;padding:11px 16px;border-radius:6px;font-weight:bold;margin:5px 4px 5px 0}
+.agri-yellow{background:#f4c542;color:#102b55}
+.agri-muted{font-size:13px;color:#65738a;line-height:1.6}
+.agri-notice{background:#fff8df;border-left:4px solid #f4c542;padding:12px;border-radius:6px;font-size:13px;line-height:1.6;margin:12px 0}
+#pdfCanvas{max-width:100%;height:auto;border:1px solid #ccd4e0;display:block;margin:12px auto;touch-action:none;cursor:crosshair}
+#cropCanvas{max-width:100%;height:auto;border:1px solid #ccd4e0}
+.pdf-workspace{background:#f7f9fc;padding:12px;border-radius:8px;overflow:auto}
+.farmer-card-preview{width:430px;max-width:100%;min-height:270px;margin:15px auto;background:linear-gradient(135deg,#fff,#eef5e8);border:2px solid #28743d;border-radius:12px;padding:14px;color:#183b24;position:relative;overflow:hidden}
+.farmer-card-preview:before{content:"";position:absolute;inset:6px;border:1px solid #9ab99f;border-radius:8px;pointer-events:none}
+.farmer-card-head{text-align:center;border-bottom:2px solid #28743d;padding-bottom:8px;margin-bottom:10px;position:relative}
+.farmer-card-head strong{display:block;font-size:17px;color:#14532d}
+.farmer-card-head small{font-size:10px}
+.farmer-card-body{display:flex;gap:12px;position:relative}
+.farmer-card-photo{width:90px;height:110px;object-fit:cover;border:1px solid #888;background:#eee}
+.farmer-card-info{font-size:12px;line-height:1.8;flex:1;overflow-wrap:anywhere}
+.farmer-card-info b{color:#14532d}
+.farmer-card-footer{font-size:10px;text-align:center;border-top:1px solid #9ab99f;margin-top:10px;padding-top:6px;position:relative}
+@media(max-width:1000px){.cards{grid-template-columns:repeat(2,1fr)}.admin-top-grid{grid-template-columns:1fr}}
+@media(max-width:850px){.layout{display:block}.sidebar{width:100%;display:flex;overflow-x:auto;padding:8px}.sidebar h3{display:none}.menu{white-space:nowrap;width:auto;margin:2px}.services{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:520px){.topbar{padding:14px;flex-wrap:wrap}.toplinks a{margin-left:8px}.brand{font-size:17px}.main{padding:13px}.services{grid-template-columns:1fr}.bottom-grid{grid-template-columns:1fr}.dashboard-header{padding:12px}.profile{font-size:11px}.welcome h2{font-size:19px}.cards{grid-template-columns:repeat(2,1fr)}.agri-grid{grid-template-columns:1fr}.farmer-card-preview{width:100%}}
 </style>
 </head>
 <body>
@@ -179,14 +172,12 @@ td,th{padding:11px;border-bottom:1px solid #e5eaf0;text-align:left}
         <h2>Welcome, <span id="welcomeName">Retailer</span>!</h2>
         <p>CHAITANY MULTISERVICES Retailer Portal मध्ये आपले स्वागत आहे.</p>
       </div>
-
       <div class="cards">
         <div class="stat"><small>Wallet Balance</small><h2 id="walletBalance">₹ 0.00</h2></div>
         <div class="stat"><small>Total Applications</small><h2 id="totalApplications">0</h2></div>
         <div class="stat"><small>Pending Applications</small><h2 id="pendingApplications">0</h2></div>
         <div class="stat"><small>Completed Applications</small><h2 id="completedApplications">0</h2></div>
       </div>
-
       <h2 class="section-title">Quick Services</h2>
       <div class="services">
         <div class="service"><div class="symbol">🪪</div><h3>PAN Find</h3><p>PAN Number Search Service</p><div class="service-price" data-service-price="PAN Find">दर लोड होत आहे...</div><button onclick="serviceMessage('PAN Find')">Apply Now</button></div>
@@ -195,9 +186,8 @@ td,th{padding:11px;border-bottom:1px solid #e5eaf0;text-align:left}
         <div class="service"><div class="symbol">📱</div><h3>PAN Mobile & Email Update</h3><p>Mobile Number आणि Email Update</p><div class="service-price" data-service-price="PAN Mobile & Email Update">दर लोड होत आहे...</div><button onclick="serviceMessage('PAN Mobile & Email Update')">Apply Now</button></div>
         <div class="service"><div class="symbol">🚘</div><h3>Driving Licence Print</h3><p>DL Print Service</p><div class="service-price" data-service-price="Driving Licence Print">दर लोड होत आहे...</div><button onclick="serviceMessage('Driving Licence Print')">Apply Now</button></div>
         <div class="service"><div class="symbol">🚗</div><h3>RC Book Print</h3><p>RC Book Print Service</p><div class="service-price" data-service-price="RC Book Print">दर लोड होत आहे...</div><button onclick="serviceMessage('RC Book Print')">Apply Now</button></div>
-        <div class="service"><div class="symbol">🌾</div><h3>AgriStack Print</h3><p>AgriStack Print Service</p><div class="service-price" data-service-price="AgriStack Print">दर लोड होत आहे...</div><button onclick="serviceMessage('AgriStack Print')">Apply Now</button></div>
+        <div class="service"><div class="symbol">🌾</div><h3>AgriStack Print</h3><p>Manual Farmer Card आणि PDF Crop</p><div class="service-price" data-service-price="AgriStack Print">दर लोड होत आहे...</div><button onclick="openAgriStack()">Open AgriStack</button></div>
       </div>
-
       <div class="bottom-grid">
         <div class="white-box"><h3>Recent Applications</h3><p>आपले अर्ज येथे दिसतील.</p><div id="recentApplications">अद्याप कोणतेही अर्ज नाहीत.</div></div>
         <div class="white-box"><h3>Wallet Activity</h3><p>Wallet व्यवहारांची माहिती येथे दिसेल.</p><div id="walletActivity">व्यवहार लोड होत आहेत...</div></div>
@@ -224,7 +214,6 @@ td,th{padding:11px;border-bottom:1px solid #e5eaf0;text-align:left}
     </section>
 
     <section id="transactionsSection" class="hidden"><h2 class="section-title">Transactions</h2><div class="white-box" id="transactionsList">व्यवहार लोड होत आहेत...</div></section>
-
     <section id="profileSection" class="hidden">
       <h2 class="section-title">Retailer Profile</h2>
       <div class="white-box">
@@ -234,49 +223,106 @@ td,th{padding:11px;border-bottom:1px solid #e5eaf0;text-align:left}
       </div>
     </section>
 
+    <!-- AGRISTACK SECTION -->
+    <section id="agristackSection" class="hidden">
+      <h2 class="section-title">🌾 AgriStack Farmer Card Maker</h2>
+      <div class="agri-notice">
+        येथे तयार होणारे कार्ड हे तुम्ही भरलेल्या माहितीवर किंवा PDF मधून Crop केलेल्या फोटोवर आधारित प्रिंट स्वरूप आहे. हे सरकारी पोर्टलवरील अधिकृत पडताळणी किंवा सरकारी कार्ड डाउनलोड नाही.
+      </div>
+
+      <div class="agri-tabs">
+        <button class="agri-tab active" id="manualTab" onclick="showAgriTab('manual')">Manual Farmer Card</button>
+        <button class="agri-tab" id="pdfTab" onclick="showAgriTab('pdf')">PDF Upload & Crop</button>
+      </div>
+
+      <div id="manualAgriPanel" class="agri-card">
+        <h3>शेतकऱ्याची माहिती भरा</h3>
+        <div class="agri-grid">
+          <div><label>शेतकऱ्याचे पूर्ण नाव</label><input id="farmerName" placeholder="पूर्ण नाव"></div>
+          <div><label>वडील / पतीचे नाव</label><input id="farmerRelation" placeholder="वडील / पतीचे नाव"></div>
+          <div><label>Farmer ID</label><input id="farmerId" placeholder="Farmer ID"></div>
+          <div><label>मोबाईल नंबर</label><input id="farmerMobile" maxlength="10" placeholder="मोबाईल नंबर"></div>
+          <div><label>गाव</label><input id="farmerVillage" placeholder="गावाचे नाव"></div>
+          <div><label>तालुका</label><input id="farmerTaluka" placeholder="तालुका"></div>
+          <div><label>जिल्हा</label><input id="farmerDistrict" placeholder="जिल्हा"></div>
+          <div><label>राज्य</label><input id="farmerState" value="महाराष्ट्र"></div>
+          <div><label>जमीन / क्षेत्र (ऐच्छिक)</label><input id="farmerLand" placeholder="उदा. 1.5 हेक्टर"></div>
+          <div><label>जन्मतारीख (ऐच्छिक)</label><input id="farmerDob" type="date"></div>
+        </div>
+        <label>शेतकऱ्याचा फोटो निवडा</label>
+        <input id="farmerPhoto" type="file" accept="image/*">
+        <button class="agri-action" onclick="updateFarmerCard()">कार्ड तयार करा / Preview Update</button>
+      </div>
+
+      <div id="pdfAgriPanel" class="agri-card hidden">
+        <h3>PDF Upload आणि Photo Crop</h3>
+        <p class="agri-muted">PDF मधील पहिल्या पानाचे Preview दिसेल. माऊस किंवा टचने फोटोचा भाग निवडा आणि Crop करा.</p>
+        <input id="farmerPdfFile" type="file" accept="application/pdf">
+        <div class="pdf-workspace">
+          <div id="pdfStatus" class="agri-muted">अद्याप PDF निवडलेली नाही.</div>
+          <canvas id="pdfCanvas" class="hidden"></canvas>
+          <div>
+            <button class="agri-action" id="cropPdfButton" onclick="cropPdfSelection()" disabled>निवडलेला फोटो Crop करा</button>
+            <button class="agri-action agri-yellow" onclick="clearPdfSelection()">Selection काढा</button>
+          </div>
+          <p class="agri-muted">Crop केलेला फोटो खाली Preview मध्ये दिसेल. तो कार्डमध्ये वापरण्यासाठी Manual Farmer Card मध्येही माहिती भरू शकता.</p>
+          <canvas id="cropCanvas" class="hidden"></canvas>
+          <button class="agri-action" onclick="useCroppedPhoto()" id="useCropButton" disabled>हा Crop केलेला फोटो कार्डमध्ये वापरा</button>
+        </div>
+      </div>
+
+      <div class="agri-card">
+        <h3>Farmer Card Preview</h3>
+        <div id="farmerCardPreview" class="farmer-card-preview">
+          <div class="farmer-card-head">
+            <strong>FARMER CARD</strong>
+            <small>AGRICULTURE INFORMATION CARD</small>
+          </div>
+          <div class="farmer-card-body">
+            <img id="cardPhotoPreview" class="farmer-card-photo" alt="Farmer Photo">
+            <div class="farmer-card-info">
+              <div><b>नाव:</b> <span id="cardName">-</span></div>
+              <div><b>वडील / पती:</b> <span id="cardRelation">-</span></div>
+              <div><b>Farmer ID:</b> <span id="cardFarmerId">-</span></div>
+              <div><b>गाव:</b> <span id="cardVillage">-</span></div>
+              <div><b>तालुका:</b> <span id="cardTaluka">-</span></div>
+              <div><b>जिल्हा:</b> <span id="cardDistrict">-</span></div>
+            </div>
+          </div>
+          <div class="farmer-card-footer">CHAITANY MULTISERVICES | प्रिंटसाठी तयार केलेले कार्ड</div>
+        </div>
+        <button class="agri-action" onclick="downloadFarmerPDF('a4')">A4 Size Download</button>
+        <button class="agri-action agri-yellow" onclick="downloadFarmerPDF('pvc')">PVC Card Size Download</button>
+        <div id="agriDownloadStatus" class="agri-muted" aria-live="polite"></div>
+      </div>
+    </section>
+
     <!-- ADMIN DASHBOARD -->
     <section id="adminSection" class="hidden">
       <h2 class="section-title">Admin Dashboard</h2>
-
-      <div class="cards">
-        <div class="stat"><small>Total Retailers</small><h2 id="adminTotalRetailers">0</h2></div>
-      </div>
-
+      <div class="cards"><div class="stat"><small>Total Retailers</small><h2 id="adminTotalRetailers">0</h2></div></div>
       <div class="admin-top-grid">
-
-        <!-- LEFT SIDE: RETAILER WALLET ADD / DEDUCT -->
         <div class="admin-left-column">
           <div class="white-box admin-form">
             <h3>Retailer Wallet मध्ये पैसे Add / Deduct</h3>
             <form id="adminWalletForm">
               <label>Retailer निवडा</label>
               <select id="adminRetailerSelect" required><option value="">Retailer निवडा</option></select>
-
               <label>व्यवहार प्रकार</label>
-              <select id="adminTransactionType" required>
-                <option value="credit">पैसे Add करा (Credit)</option>
-                <option value="debit">पैसे Deduct करा (Debit)</option>
-              </select>
-
+              <select id="adminTransactionType" required><option value="credit">पैसे Add करा (Credit)</option><option value="debit">पैसे Deduct करा (Debit)</option></select>
               <label>रक्कम (₹)</label>
               <input id="adminAmount" type="number" min="0.01" step="0.01" placeholder="उदा. 500" required>
-
               <label>व्यवहाराचे कारण</label>
               <textarea id="adminDescription" placeholder="उदा. Wallet Recharge" required></textarea>
-
               <button class="admin-action" id="adminSubmitButton" type="submit">व्यवहार पूर्ण करा</button>
               <div id="adminWalletMessage" class="admin-message"></div>
             </form>
           </div>
         </div>
-
-        <!-- RIGHT SIDE: SERVICE PRICE MANAGEMENT + CURRENT SERVICE RATES -->
         <div class="admin-right-column">
-
           <div class="white-box admin-form">
             <h3>Service Price Management</h3>
             <p>येथे बदललेला दर सर्व Retailers च्या Dashboard वर दिसेल.</p>
-
             <form id="adminPriceForm">
               <label>Service निवडा</label>
               <select id="adminServiceSelect" required>
@@ -289,25 +335,19 @@ td,th{padding:11px;border-bottom:1px solid #e5eaf0;text-align:left}
                 <option value="RC Book Print">RC Book Print</option>
                 <option value="AgriStack Print">AgriStack Print</option>
               </select>
-
               <label>नवीन दर (₹)</label>
               <input id="adminServicePrice" type="number" min="0" step="0.01" placeholder="नवीन दर टाका" required>
-
               <button class="admin-action" id="adminPriceButton" type="submit">दर Update करा</button>
               <div id="adminPriceMessage" class="admin-message"></div>
             </form>
           </div>
-
-          <!-- CURRENT SERVICE RATES ON LEFT SIDE -->
           <div class="white-box">
             <h3 class="admin-profile-title">सध्याचे Service Rates</h3>
             <button class="admin-refresh" onclick="loadAdminServicePrices()">↻ Refresh Rates</button>
             <div id="adminPricesList" style="margin-top:15px">दर लोड होत आहेत...</div>
           </div>
-
         </div>
       </div>
-
       <h2 class="section-title">All Retailers</h2>
       <div class="white-box">
         <button class="admin-refresh" onclick="loadAdminRetailers()">↻ Refresh Retailers</button>
@@ -317,637 +357,562 @@ td,th{padding:11px;border-bottom:1px solid #e5eaf0;text-align:left}
   </main>
 </div>
 
-<script>
+  <script>
 const SUPABASE_URL = "https://uzlqlyzcweivflauacyz.supabase.co";
 
 const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_U4H72DvhmAG3gZIUbMjmNQ_6t2PCOVR";
 
 const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
 
-let currentUser = null;
-let isAdmin = false;
-let adminRetailers = [];
-let servicePriceMap = {};
+let currentUser=null;
+let isAdmin=false;
+let adminRetailers=[];
+let servicePriceMap={};
+let farmerPhotoData="";
+let pdfDocument=null;
+let pdfPageCanvas=null;
+let cropStart=null;
+let cropEnd=null;
+let cropImageData="";
 
-const SERVICE_NAMES = [
-  "PAN Find",
-  "PAN e-PDF Download",
-  "PAN Reprint",
-  "PAN Mobile & Email Update",
-  "Driving Licence Print",
-  "RC Book Print",
-  "AgriStack Print"
+if(window.pdfjsLib){
+  pdfjsLib.GlobalWorkerOptions.workerSrc=
+    "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+}
+
+const SERVICE_NAMES=[
+  "PAN Find","PAN e-PDF Download","PAN Reprint",
+  "PAN Mobile & Email Update","Driving Licence Print",
+  "RC Book Print","AgriStack Print"
 ];
 
-function showPage(page) {
-  ["home","login","register"].forEach(name => {
+function showPage(page){
+  ["home","login","register"].forEach(name=>{
     document.getElementById(name+"Page").classList.toggle("hidden",page!==name);
   });
-
-  const dashboardPage = page==="dashboard";
-
+  const dashboardPage=page==="dashboard";
   document.getElementById("publicHeader").classList.toggle("hidden",dashboardPage);
   document.getElementById("publicContainer").classList.toggle("hidden",dashboardPage);
   document.getElementById("dashboardHeader").classList.toggle("hidden",!dashboardPage);
   document.getElementById("dashboard").classList.toggle("hidden",!dashboardPage);
 }
 
-function showDashboardSection(sectionId) {
+function showDashboardSection(sectionId){
   [
-    "dashboardHome",
-    "serviceSection",
-    "applicationsSection",
-    "walletSection",
-    "transactionsSection",
-    "profileSection",
-    "adminSection"
-  ].forEach(id => {
+    "dashboardHome","serviceSection","applicationsSection","walletSection",
+    "transactionsSection","profileSection","adminSection","agristackSection"
+  ].forEach(id=>{
     document.getElementById(id).classList.toggle("hidden",id!==sectionId);
   });
 }
 
-function selectMenu(button,sectionId) {
-  if(sectionId==="adminSection" && !isAdmin) {
+function selectMenu(button,sectionId){
+  if(sectionId==="adminSection"&&!isAdmin){
     alert("Admin Access उपलब्ध नाही.");
     return;
   }
-
   document.querySelectorAll(".menu").forEach(m=>m.classList.remove("active"));
   button.classList.add("active");
   showDashboardSection(sectionId);
 }
 
-async function openAdminPanel(button) {
-  if(!isAdmin) {
-    alert("Admin Access उपलब्ध नाही.");
-    return;
-  }
-
+async function openAdminPanel(button){
+  if(!isAdmin){alert("Admin Access उपलब्ध नाही.");return;}
   selectMenu(button,"adminSection");
   await loadAdminRetailers();
   await loadAdminServicePrices();
 }
 
-function serviceMessage(service) {
-  alert(service + " सेवा जोडण्याचे काम पुढील टप्प्यात करूया. सध्या प्रत्यक्ष अर्ज सबमिट होत नाही.");
+function serviceMessage(service){
+  alert(service+" सेवा जोडण्याचे काम पुढील टप्प्यात करूया. सध्या प्रत्यक्ष अर्ज सबमिट होत नाही.");
 }
 
-function startRecharge() {
-  const amount = Number(document.getElementById("rechargeAmount").value);
-  const message = document.getElementById("rechargeMessage");
+function openAgriStack(){
+  document.querySelectorAll(".menu").forEach(m=>m.classList.remove("active"));
+  showDashboardSection("agristackSection");
+  showAgriTab("manual");
+  updateFarmerCard();
+}
 
-  message.style.color = "#c0392b";
-
-  if(!Number.isFinite(amount) || amount<1 || amount>50000) {
-    message.textContent = "कृपया ₹1 ते ₹50,000 पर्यंत योग्य रक्कम टाका.";
+function startRecharge(){
+  const amount=Number(document.getElementById("rechargeAmount").value);
+  const message=document.getElementById("rechargeMessage");
+  message.style.color="#c0392b";
+  if(!Number.isFinite(amount)||amount<1||amount>50000){
+    message.textContent="कृपया ₹1 ते ₹50,000 पर्यंत योग्य रक्कम टाका.";
     return;
   }
-
-  message.textContent = "UPI Payment Gateway अजून जोडलेले नाही. सध्या पेमेंट करू नका. Gateway जोडल्यानंतर QR Payment सुरू होईल.";
+  message.textContent="UPI Payment Gateway अजून जोडलेले नाही. सध्या पेमेंट करू नका.";
 }
 
-function formatAmount(amount) {
-  return "₹ " + Number(amount || 0).toFixed(2);
+function formatAmount(amount){
+  return "₹ "+Number(amount||0).toFixed(2);
 }
 
-function escapeHTML(value) {
-  return String(value ?? "").replace(/[&<>"']/g,ch=>({
-    "&":"&amp;",
-    "<":"&lt;",
-    ">":"&gt;",
-    '"':"&quot;",
-    "'":"&#39;"
+function escapeHTML(value){
+  return String(value??"").replace(/[&<>"']/g,ch=>({
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
   }[ch]));
 }
 
-async function loadServicePrices() {
+async function loadServicePrices(){
   const elements=document.querySelectorAll("[data-service-price]");
-
   elements.forEach(el=>el.textContent="दर लोड होत आहे...");
-
   const {data,error}=await db.from("service_prices").select("service_name,price");
-
-  if(error) {
+  if(error){
     console.error("Service price load error:",error);
     elements.forEach(el=>el.textContent="दर उपलब्ध नाही");
     return;
   }
-
   servicePriceMap={};
-
-  (data||[]).forEach(item=>{
-    servicePriceMap[item.service_name]=Number(item.price);
-  });
-
+  (data||[]).forEach(item=>servicePriceMap[item.service_name]=Number(item.price));
   elements.forEach(el=>{
     const service=el.dataset.servicePrice;
-
     el.textContent=Object.prototype.hasOwnProperty.call(servicePriceMap,service)
-      ? "दर: "+formatAmount(servicePriceMap[service])
-      : "दर उपलब्ध नाही";
+      ?"दर: "+formatAmount(servicePriceMap[service])
+      :"दर उपलब्ध नाही";
   });
 }
 
-async function loadAdminServicePrices() {
+async function loadAdminServicePrices(){
   if(!isAdmin)return;
-
   const list=document.getElementById("adminPricesList");
   list.textContent="दर लोड होत आहेत...";
-
   const {data,error}=await db.from("service_prices")
-    .select("service_name,price,updated_at")
-    .order("service_name");
-
-  if(error) {
+    .select("service_name,price,updated_at").order("service_name");
+  if(error){
     console.error("Admin price list error:",error);
     list.textContent="दर लोड करता आले नाहीत: "+error.message;
     return;
   }
-
-  if(!data||!data.length) {
+  if(!data||!data.length){
     list.textContent="Service Rates उपलब्ध नाहीत.";
     return;
   }
-
   const rows=data.map(item=>{
-    const date=item.updated_at
-      ? new Date(item.updated_at).toLocaleString("en-IN")
-      : "-";
-
-    return `<tr>
-      <td>${escapeHTML(item.service_name)}</td>
-      <td><b>${formatAmount(item.price)}</b></td>
-      <td>${escapeHTML(date)}</td>
-    </tr>`;
+    const date=item.updated_at?new Date(item.updated_at).toLocaleString("en-IN"):"-";
+    return `<tr><td>${escapeHTML(item.service_name)}</td><td><b>${formatAmount(item.price)}</b></td><td>${escapeHTML(date)}</td></tr>`;
   }).join("");
-
-  list.innerHTML=`
-    <table>
-      <tr><th>Service Name</th><th>सध्याचा दर</th><th>शेवटचा बदल</th></tr>
-      ${rows}
-    </table>`;
+  list.innerHTML=`<table><tr><th>Service Name</th><th>सध्याचा दर</th><th>शेवटचा बदल</th></tr>${rows}</table>`;
 }
 
-document.getElementById("adminPriceForm").addEventListener("submit",async function(e) {
+document.getElementById("adminPriceForm").addEventListener("submit",async function(e){
   e.preventDefault();
-
-  if(!isAdmin) {
-    alert("Admin Access उपलब्ध नाही.");
-    return;
-  }
-
+  if(!isAdmin){alert("Admin Access उपलब्ध नाही.");return;}
   const service=document.getElementById("adminServiceSelect").value;
   const price=Number(document.getElementById("adminServicePrice").value);
   const button=document.getElementById("adminPriceButton");
   const message=document.getElementById("adminPriceMessage");
-
-  message.style.color="#c0392b";
-  message.textContent="";
-
-  if(!SERVICE_NAMES.includes(service)) {
-    message.textContent="कृपया योग्य Service निवडा.";
-    return;
-  }
-
-  if(!Number.isFinite(price)||price<0) {
-    message.textContent="योग्य दर टाका.";
-    return;
-  }
-
-  if(!confirm(`${service} चा नवीन दर ${formatAmount(price)} करायचा आहे का?`)) {
-    return;
-  }
-
-  button.disabled=true;
-  button.textContent="Updating...";
-
-  try {
-    const {data,error}=await db.rpc("admin_update_service_price",{
-      p_service_name:service,
-      p_price:price
-    });
-
+  message.style.color="#c0392b";message.textContent="";
+  if(!SERVICE_NAMES.includes(service)){message.textContent="कृपया योग्य Service निवडा.";return;}
+  if(!Number.isFinite(price)||price<0){message.textContent="योग्य दर टाका.";return;}
+  if(!confirm(`${service} चा नवीन दर ${formatAmount(price)} करायचा आहे का?`))return;
+  button.disabled=true;button.textContent="Updating...";
+  try{
+    const {data,error}=await db.rpc("admin_update_service_price",{p_service_name:service,p_price:price});
     if(error)throw error;
-
     message.style.color="green";
     message.textContent=`${service} चा दर यशस्वीपणे ${formatAmount(data)} केला आहे.`;
-
     document.getElementById("adminServicePrice").value="";
-
-    await loadServicePrices();
-    await loadAdminServicePrices();
-
-  } catch(err) {
+    await loadServicePrices();await loadAdminServicePrices();
+  }catch(err){
     console.error("Service price update error:",err);
     message.style.color="#c0392b";
     message.textContent="दर Update अयशस्वी: "+(err.message||"पुन्हा प्रयत्न करा.");
-
-  } finally {
-    button.disabled=false;
-    button.textContent="दर Update करा";
-  }
+  }finally{button.disabled=false;button.textContent="दर Update करा";}
 });
 
-function renderTransactions(transactions) {
-  if(!transactions||!transactions.length) {
-    return "<p>अद्याप कोणतेही व्यवहार नाहीत.</p>";
-  }
-
+function renderTransactions(transactions){
+  if(!transactions||!transactions.length)return "<p>अद्याप कोणतेही व्यवहार नाहीत.</p>";
   const rows=transactions.map(t=>{
     const credit=t.transaction_type==="credit";
-    const date=t.created_at
-      ? new Date(t.created_at).toLocaleString("en-IN")
-      : "-";
-
-    return `<tr>
-      <td>${escapeHTML(t.description||t.transaction_type)}</td>
-      <td>${credit?"+":"-"}${formatAmount(t.amount)}</td>
-      <td>${escapeHTML(date)}</td>
-    </tr>`;
+    const date=t.created_at?new Date(t.created_at).toLocaleString("en-IN"):"-";
+    return `<tr><td>${escapeHTML(t.description||t.transaction_type)}</td><td>${credit?"+":"-"}${formatAmount(t.amount)}</td><td>${escapeHTML(date)}</td></tr>`;
   }).join("");
-
-  return `<table>
-    <tr><th>तपशील</th><th>रक्कम</th><th>तारीख</th></tr>
-    ${rows}
-  </table>`;
+  return `<table><tr><th>तपशील</th><th>रक्कम</th><th>तारीख</th></tr>${rows}</table>`;
 }
 
-async function loadWallet(user) {
+async function loadWallet(user){
   const home=document.getElementById("walletBalance");
   const page=document.getElementById("walletBalancePage");
   const activity=document.getElementById("walletActivity");
   const transactionsList=document.getElementById("transactionsList");
-
-  home.textContent="लोड होत आहे...";
-  page.textContent="लोड होत आहे...";
-  activity.textContent="व्यवहार लोड होत आहेत...";
-  transactionsList.textContent="व्यवहार लोड होत आहेत...";
-
+  home.textContent="लोड होत आहे...";page.textContent="लोड होत आहे...";
+  activity.textContent="व्यवहार लोड होत आहेत...";transactionsList.textContent="व्यवहार लोड होत आहेत...";
   const {data:wallet,error:walletError}=await db.from("wallets")
-    .select("balance")
-    .eq("customer_id",user.id)
-    .maybeSingle();
-
-  if(walletError) {
-    home.textContent="लोड होत नाही";
-    page.textContent="लोड होत नाही";
-  } else {
-    const balance=formatAmount(wallet?.balance??0);
-    home.textContent=balance;
-    page.textContent=balance;
-  }
-
+    .select("balance").eq("customer_id",user.id).maybeSingle();
+  if(walletError){home.textContent="लोड होत नाही";page.textContent="लोड होत नाही";}
+  else{const balance=formatAmount(wallet?.balance??0);home.textContent=balance;page.textContent=balance;}
   const {data:transactions,error:transactionError}=await db.from("wallet_transactions")
     .select("amount,transaction_type,description,created_at")
-    .eq("customer_id",user.id)
-    .order("created_at",{ascending:false})
-    .limit(50);
-
-  if(transactionError) {
+    .eq("customer_id",user.id).order("created_at",{ascending:false}).limit(50);
+  if(transactionError){
     activity.textContent="व्यवहार लोड करता आले नाहीत.";
     transactionsList.textContent="व्यवहार लोड करता आले नाहीत.";
     console.error("Wallet transaction error:",transactionError);
-  } else {
+  }else{
     transactionsList.innerHTML=renderTransactions(transactions);
     activity.innerHTML=renderTransactions((transactions||[]).slice(0,10));
   }
-
   if(walletError)console.error("Wallet balance error:",walletError);
 }
 
-async function checkAdminAccess() {
+async function checkAdminAccess(){
   const {data,error}=await db.rpc("admin_is_current_user");
-
-  if(error) {
-    console.error("Admin check error:",error);
-    isAdmin=false;
-  } else {
-    isAdmin=data===true;
-  }
-
+  if(error){console.error("Admin check error:",error);isAdmin=false;}
+  else{isAdmin=data===true;}
   document.getElementById("adminMenuButton").classList.toggle("hidden",!isAdmin);
   return isAdmin;
 }
 
-async function loadDashboard(user) {
+async function loadDashboard(user){
   if(!user)return;
-
-  currentUser=user;
-  showPage("dashboard");
-
+  currentUser=user;showPage("dashboard");
   const name=user.user_metadata?.full_name||"Retailer";
-
   document.getElementById("retailerName").textContent=name;
   document.getElementById("welcomeName").textContent=name;
   document.getElementById("retailerEmail").textContent=user.email||"";
   document.getElementById("profileName").textContent=name;
   document.getElementById("profileEmail").textContent=user.email||"";
-
-  const {data:customer}=await db.from("customers")
-    .select("mobile_number")
-    .eq("id",user.id)
-    .maybeSingle();
-
+  const {data:customer}=await db.from("customers").select("mobile_number").eq("id",user.id).maybeSingle();
   document.getElementById("profileMobile").textContent=
     customer?.mobile_number||user.user_metadata?.mobile_number||"माहिती उपलब्ध नाही";
-
   const {data:apps,error}=await db.from("applications")
-    .select("id,service_name,status,created_at")
-    .eq("customer_id",user.id)
+    .select("id,service_name,status,created_at").eq("customer_id",user.id)
     .order("created_at",{ascending:false});
-
-  if(!error&&apps) {
+  if(!error&&apps){
     document.getElementById("totalApplications").textContent=apps.length;
-    document.getElementById("pendingApplications").textContent=
-      apps.filter(a=>a.status==="Pending").length;
-    document.getElementById("completedApplications").textContent=
-      apps.filter(a=>a.status==="Completed").length;
-
-    if(apps.length) {
-      const rows=apps.slice(0,5).map(a=>`
-        <tr>
-          <td>${escapeHTML(a.service_name)}</td>
-          <td>${escapeHTML(a.status)}</td>
-        </tr>`).join("");
-
-      const table=`<table>
-        <tr><th>Service</th><th>Status</th></tr>
-        ${rows}
-      </table>`;
-
+    document.getElementById("pendingApplications").textContent=apps.filter(a=>a.status==="Pending").length;
+    document.getElementById("completedApplications").textContent=apps.filter(a=>a.status==="Completed").length;
+    if(apps.length){
+      const rows=apps.slice(0,5).map(a=>`<tr><td>${escapeHTML(a.service_name)}</td><td>${escapeHTML(a.status)}</td></tr>`).join("");
+      const table=`<table><tr><th>Service</th><th>Status</th></tr>${rows}</table>`;
       document.getElementById("recentApplications").innerHTML=table;
       document.getElementById("allApplications").innerHTML=table;
-
-    } else {
+    }else{
       document.getElementById("recentApplications").textContent="अद्याप कोणतेही अर्ज नाहीत.";
       document.getElementById("allApplications").textContent="अद्याप कोणतेही अर्ज नाहीत.";
     }
   }
-
-  await loadWallet(user);
-  await loadServicePrices();
-  await checkAdminAccess();
-
+  await loadWallet(user);await loadServicePrices();await checkAdminAccess();
   showDashboardSection("dashboardHome");
-
   document.querySelectorAll(".menu").forEach(m=>m.classList.remove("active"));
   document.getElementById("retailerDashboardMenu").classList.add("active");
 }
 
-async function loadAdminRetailers() {
+async function loadAdminRetailers(){
   if(!isAdmin)return;
-
   const list=document.getElementById("adminRetailersList");
   const select=document.getElementById("adminRetailerSelect");
-
   list.textContent="Retailers लोड होत आहेत...";
-
   const {data,error}=await db.rpc("admin_list_retailers");
-
-  if(error) {
-    console.error("Retailer list error:",error);
-    list.textContent="Retailers लोड करता आले नाहीत: "+error.message;
-    return;
-  }
-
+  if(error){console.error("Retailer list error:",error);list.textContent="Retailers लोड करता आले नाहीत: "+error.message;return;}
   adminRetailers=data||[];
-
   document.getElementById("adminTotalRetailers").textContent=adminRetailers.length;
-
   const previous=select.value;
   select.innerHTML='<option value="">Retailer निवडा</option>';
-
   adminRetailers.forEach(r=>{
     const option=document.createElement("option");
     option.value=r.retailer_id;
     option.textContent=`${r.full_name||"Retailer"} - ${r.mobile_number||r.email||""}`;
     select.appendChild(option);
   });
-
-  if(adminRetailers.some(r=>r.retailer_id===previous)) {
-    select.value=previous;
-  }
-
-  if(!adminRetailers.length) {
-    list.textContent="अद्याप कोणताही Retailer उपलब्ध नाही.";
-    return;
-  }
-
-  const rows=adminRetailers.map(r=>`
-    <tr>
-      <td>${escapeHTML(r.full_name||"-")}</td>
-      <td>${escapeHTML(r.mobile_number||"-")}</td>
-      <td>${escapeHTML(r.email||"-")}</td>
-      <td>${formatAmount(r.balance)}</td>
-    </tr>`).join("");
-
-  list.innerHTML=`<table>
-    <tr><th>नाव</th><th>मोबाईल</th><th>Email</th><th>Wallet Balance</th></tr>
-    ${rows}
-  </table>`;
+  if(adminRetailers.some(r=>r.retailer_id===previous))select.value=previous;
+  if(!adminRetailers.length){list.textContent="अद्याप कोणताही Retailer उपलब्ध नाही.";return;}
+  const rows=adminRetailers.map(r=>`<tr><td>${escapeHTML(r.full_name||"-")}</td><td>${escapeHTML(r.mobile_number||"-")}</td><td>${escapeHTML(r.email||"-")}</td><td>${formatAmount(r.balance)}</td></tr>`).join("");
+  list.innerHTML=`<table><tr><th>नाव</th><th>मोबाईल</th><th>Email</th><th>Wallet Balance</th></tr>${rows}</table>`;
 }
-
-document.getElementById("adminWalletForm").addEventListener("submit",async function(e) {
+    <script>
+/* ADMIN WALLET */
+document.getElementById("adminWalletForm").addEventListener("submit",async function(e){
   e.preventDefault();
-
-  if(!isAdmin) {
-    alert("Admin Access उपलब्ध नाही.");
-    return;
-  }
-
+  if(!isAdmin){alert("Admin Access उपलब्ध नाही.");return;}
   const customerId=document.getElementById("adminRetailerSelect").value;
   const type=document.getElementById("adminTransactionType").value;
   const amount=Number(document.getElementById("adminAmount").value);
   const description=document.getElementById("adminDescription").value.trim();
-
   const button=document.getElementById("adminSubmitButton");
   const message=document.getElementById("adminWalletMessage");
-
-  message.style.color="#c0392b";
-  message.textContent="";
-
-  if(!customerId) {
-    message.textContent="कृपया Retailer निवडा.";
-    return;
-  }
-
-  if(!Number.isFinite(amount)||amount<=0) {
-    message.textContent="योग्य रक्कम टाका.";
-    return;
-  }
-
-  if(!description) {
-    message.textContent="व्यवहाराचे कारण लिहा.";
-    return;
-  }
-
+  message.style.color="#c0392b";message.textContent="";
+  if(!customerId){message.textContent="कृपया Retailer निवडा.";return;}
+  if(!Number.isFinite(amount)||amount<=0){message.textContent="योग्य रक्कम टाका.";return;}
+  if(!description){message.textContent="व्यवहाराचे कारण लिहा.";return;}
   const retailer=adminRetailers.find(r=>r.retailer_id===customerId);
   const retailerName=retailer?.full_name||"निवडलेला Retailer";
   const action=type==="credit"?"Add":"Deduct";
-
-  if(!confirm(`${retailerName} यांच्या Wallet मध्ये ₹${amount.toFixed(2)} ${action} करायचे आहेत का?`)) {
-    return;
-  }
-
-  button.disabled=true;
-  button.textContent="व्यवहार सुरू आहे...";
-
-  try {
+  if(!confirm(`${retailerName} यांच्या Wallet मध्ये ₹${amount.toFixed(2)} ${action} करायचे आहेत का?`))return;
+  button.disabled=true;button.textContent="व्यवहार सुरू आहे...";
+  try{
     const {data,error}=await db.rpc("admin_adjust_wallet",{
-      p_customer_id:customerId,
-      p_amount:amount,
-      p_type:type,
-      p_description:description
+      p_customer_id:customerId,p_amount:amount,p_type:type,p_description:description
     });
-
     if(error)throw error;
-
     message.style.color="green";
     message.textContent=`व्यवहार यशस्वी! नवीन Wallet Balance: ${formatAmount(data)}`;
-
     document.getElementById("adminAmount").value="";
     document.getElementById("adminDescription").value="";
-
     await loadAdminRetailers();
-
-  } catch(err) {
+  }catch(err){
     console.error("Admin wallet error:",err);
     message.style.color="#c0392b";
     message.textContent="व्यवहार अयशस्वी: "+(err.message||"कृपया पुन्हा प्रयत्न करा.");
-
-  } finally {
-    button.disabled=false;
-    button.textContent="व्यवहार पूर्ण करा";
-  }
+  }finally{button.disabled=false;button.textContent="व्यवहार पूर्ण करा";}
 });
 
-document.getElementById("loginForm").addEventListener("submit",async function(e) {
+/* LOGIN */
+document.getElementById("loginForm").addEventListener("submit",async function(e){
   e.preventDefault();
-
   const button=document.getElementById("loginButton");
   const message=document.getElementById("loginMessage");
-
-  button.disabled=true;
-  button.textContent="Please wait...";
-  message.textContent="";
-
-  try {
+  button.disabled=true;button.textContent="Please wait...";message.textContent="";
+  try{
     const identifier=document.getElementById("loginIdentifier").value.trim();
     const password=document.getElementById("loginPassword").value;
-
-    const {data,error}=await db.functions.invoke("clever-service",{
-      body:{identifier,password}
-    });
-
+    const {data,error}=await db.functions.invoke("clever-service",{body:{identifier,password}});
     if(error)throw error;
     if(data?.error)throw new Error(data.error);
     if(!data?.session)throw new Error("Login session मिळाले नाही.");
-
     const {data:sessionData,error:sessionError}=await db.auth.setSession({
-      access_token:data.session.access_token,
-      refresh_token:data.session.refresh_token
+      access_token:data.session.access_token,refresh_token:data.session.refresh_token
     });
-
     if(sessionError)throw sessionError;
-
     await loadDashboard(sessionData.user||data.user);
-
-  } catch(err) {
-    message.textContent=err.message||"Login failed. पुन्हा प्रयत्न करा.";
-
-  } finally {
-    button.disabled=false;
-    button.textContent="Login";
-  }
+  }catch(err){message.textContent=err.message||"Login failed. पुन्हा प्रयत्न करा.";}
+  finally{button.disabled=false;button.textContent="Login";}
 });
 
-document.getElementById("registerForm").addEventListener("submit",async function(e) {
+/* REGISTRATION */
+document.getElementById("registerForm").addEventListener("submit",async function(e){
   e.preventDefault();
-
   const button=document.getElementById("registerButton");
   const message=document.getElementById("registerMessage");
-
   const name=document.getElementById("regName").value.trim();
   const mobile=document.getElementById("regMobile").value.trim();
   const email=document.getElementById("regEmail").value.trim().toLowerCase();
   const password=document.getElementById("regPassword").value;
   const confirmPassword=document.getElementById("regConfirm").value;
-
   message.textContent="";
-
-  if(!/^[6-9]\d{9}$/.test(mobile)) {
-    message.textContent="योग्य 10 अंकी मोबाईल नंबर टाका.";
-    return;
-  }
-
-  if(password!==confirmPassword) {
-    message.textContent="दोन्ही Password जुळत नाहीत.";
-    return;
-  }
-
-  button.disabled=true;
-  button.textContent="Registering...";
-
-  try {
+  if(!/^[6-9]\d{9}$/.test(mobile)){message.textContent="योग्य 10 अंकी मोबाईल नंबर टाका.";return;}
+  if(password!==confirmPassword){message.textContent="दोन्ही Password जुळत नाहीत.";return;}
+  button.disabled=true;button.textContent="Registering...";
+  try{
     const username="retailer_"+crypto.randomUUID().replace(/-/g,"").slice(0,16);
-
     const {data,error}=await db.auth.signUp({
-      email,
-      password,
+      email,password,
       options:{
         emailRedirectTo:"https://chaitanyonline.github.io/chaitany-multiservices/",
-        data:{
-          username,
-          full_name:name,
-          mobile_number:"+91"+mobile
-        }
+        data:{username,full_name:name,mobile_number:"+91"+mobile}
       }
     });
-
     if(error)throw error;
-
     message.style.color="green";
     message.textContent="Registration यशस्वी! Email वर आलेली confirmation link उघडा. त्यानंतर Login करा.";
-
     document.getElementById("registerForm").reset();
+  }catch(err){
+    message.style.color="#c0392b";message.textContent=err.message||"Registration अयशस्वी.";
+  }finally{button.disabled=false;button.textContent="Register Now";}
+});
 
-  } catch(err) {
-    message.style.color="#c0392b";
-    message.textContent=err.message||"Registration अयशस्वी.";
+/* AGRISTACK TAB SWITCH */
+function showAgriTab(tab){
+  const manual=tab==="manual";
+  document.getElementById("manualAgriPanel").classList.toggle("hidden",!manual);
+  document.getElementById("pdfAgriPanel").classList.toggle("hidden",manual);
+  document.getElementById("manualTab").classList.toggle("active",manual);
+  document.getElementById("pdfTab").classList.toggle("active",!manual);
+}
 
-  } finally {
-    button.disabled=false;
-    button.textContent="Register Now";
+/* MANUAL FARMER CARD */
+function updateFarmerCard(){
+  document.getElementById("cardName").textContent=document.getElementById("farmerName").value.trim()||"-";
+  document.getElementById("cardRelation").textContent=document.getElementById("farmerRelation").value.trim()||"-";
+  document.getElementById("cardFarmerId").textContent=document.getElementById("farmerId").value.trim()||"-";
+  document.getElementById("cardVillage").textContent=document.getElementById("farmerVillage").value.trim()||"-";
+  document.getElementById("cardTaluka").textContent=document.getElementById("farmerTaluka").value.trim()||"-";
+  document.getElementById("cardDistrict").textContent=document.getElementById("farmerDistrict").value.trim()||"-";
+}
+
+["farmerName","farmerRelation","farmerId","farmerVillage","farmerTaluka","farmerDistrict"].forEach(id=>{
+  document.getElementById(id).addEventListener("input",updateFarmerCard);
+});
+
+document.getElementById("farmerPhoto").addEventListener("change",function(e){
+  const file=e.target.files[0];
+  if(!file)return;
+  if(!file.type.startsWith("image/")){alert("कृपया फोटो फाइल निवडा.");return;}
+  const reader=new FileReader();
+  reader.onload=()=>{
+    farmerPhotoData=reader.result;
+    document.getElementById("cardPhotoPreview").src=farmerPhotoData;
+  };
+  reader.readAsDataURL(file);
+});
+
+/* PDF LOAD AND RENDER */
+document.getElementById("farmerPdfFile").addEventListener("change",async function(e){
+  const file=e.target.files[0];
+  if(!file)return;
+  const status=document.getElementById("pdfStatus");
+  status.textContent="PDF लोड होत आहे...";
+  try{
+    if(!window.pdfjsLib)throw new Error("PDF Viewer लोड झाले नाही. इंटरनेट तपासा.");
+    const bytes=await file.arrayBuffer();
+    pdfDocument=await pdfjsLib.getDocument({data:bytes}).promise;
+    const page=await pdfDocument.getPage(1);
+    const base=page.getViewport({scale:1});
+    const maxWidth=Math.min(850,window.innerWidth-80);
+    const scale=Math.min(1.5,maxWidth/base.width);
+    const viewport=page.getViewport({scale});
+    const canvas=document.getElementById("pdfCanvas");
+    const context=canvas.getContext("2d");
+    canvas.width=viewport.width;canvas.height=viewport.height;
+    canvas.classList.remove("hidden");
+    await page.render({canvasContext:context,viewport}).promise;
+    pdfPageCanvas=canvas;
+    status.textContent="PDF तयार आहे. फोटोचा भाग माऊसने किंवा टचने निवडा.";
+    document.getElementById("cropPdfButton").disabled=false;
+    clearPdfSelection();
+  }catch(err){
+    console.error(err);status.textContent="PDF उघडता आला नाही: "+err.message;
   }
 });
 
-async function logout() {
+/* PDF PAGE PHOTO SELECTION */
+const pdfCanvasElement=document.getElementById("pdfCanvas");
+function getCanvasPoint(e){
+  const rect=pdfCanvasElement.getBoundingClientRect();
+  const scaleX=pdfCanvasElement.width/rect.width;
+  const scaleY=pdfCanvasElement.height/rect.height;
+  return {
+    x:Math.max(0,Math.min(pdfCanvasElement.width,(e.clientX-rect.left)*scaleX)),
+    y:Math.max(0,Math.min(pdfCanvasElement.height,(e.clientY-rect.top)*scaleY))
+  };
+}
+pdfCanvasElement.addEventListener("pointerdown",function(e){
+  if(pdfCanvasElement.classList.contains("hidden"))return;
+  pdfCanvasElement.setPointerCapture(e.pointerId);
+  cropStart=getCanvasPoint(e);cropEnd=cropStart;
+  drawPdfSelection();
+});
+pdfCanvasElement.addEventListener("pointermove",function(e){
+  if(!cropStart)return;
+  cropEnd=getCanvasPoint(e);drawPdfSelection();
+});
+pdfCanvasElement.addEventListener("pointerup",function(e){
+  if(!cropStart)return;
+  cropEnd=getCanvasPoint(e);drawPdfSelection();
+});
+
+function drawPdfSelection(){
+  if(!pdfPageCanvas)return;
+  const canvas=document.getElementById("pdfCanvas");
+  const ctx=canvas.getContext("2d");
+  if(!cropStart||!cropEnd)return;
+  const x=Math.min(cropStart.x,cropEnd.x);
+  const y=Math.min(cropStart.y,cropEnd.y);
+  const w=Math.abs(cropEnd.x-cropStart.x);
+  const h=Math.abs(cropEnd.y-cropStart.y);
+  const image=ctx.getImageData(0,0,canvas.width,canvas.height);
+  ctx.putImageData(image,0,0);
+  ctx.strokeStyle="#ff0000";ctx.lineWidth=Math.max(2,canvas.width/400);
+  ctx.setLineDash([8,5]);ctx.strokeRect(x,y,w,h);ctx.setLineDash([]);
+}
+
+function clearPdfSelection(){
+  cropStart=null;cropEnd=null;
+  if(pdfPageCanvas){
+    const ctx=pdfPageCanvas.getContext("2d");
+    ctx.clearRect(0,0,pdfPageCanvas.width,pdfPageCanvas.height);
+    /* PDF पान पुन्हा Render करा */
+    if(pdfDocument){
+      pdfDocument.getPage(1).then(page=>{
+        const viewport=page.getViewport({scale:pdfPageCanvas.width/page.getViewport({scale:1}).width});
+        page.render({canvasContext:ctx,viewport});
+      });
+    }
+  }
+}
+
+function cropPdfSelection(){
+  if(!pdfPageCanvas||!cropStart||!cropEnd){alert("PDF मधील फोटोचा भाग आधी निवडा.");return;}
+  const x=Math.round(Math.min(cropStart.x,cropEnd.x));
+  const y=Math.round(Math.min(cropStart.y,cropEnd.y));
+  const w=Math.round(Math.abs(cropEnd.x-cropStart.x));
+  const h=Math.round(Math.abs(cropEnd.y-cropStart.y));
+  if(w<15||h<15){alert("कृपया मोठा फोटो भाग निवडा.");return;}
+  const output=document.createElement("canvas");
+  output.width=w;output.height=h;
+  output.getContext("2d").drawImage(pdfPageCanvas,x,y,w,h,0,0,w,h);
+  cropImageData=output.toDataURL("image/png");
+  const preview=document.getElementById("cropCanvas");
+  preview.width=w;preview.height=h;
+  preview.getContext("2d").drawImage(output,0,0);
+  preview.classList.remove("hidden");
+  document.getElementById("useCropButton").disabled=false;
+  document.getElementById("pdfStatus").textContent="फोटो Crop झाला. आता तो कार्डमध्ये वापरू शकता.";
+}
+
+function useCroppedPhoto(){
+  if(!cropImageData){alert("आधी फोटो Crop करा.");return;}
+  farmerPhotoData=cropImageData;
+  document.getElementById("cardPhotoPreview").src=cropImageData;
+  showAgriTab("manual");
+  updateFarmerCard();
+  document.getElementById("agriDownloadStatus").textContent="Crop केलेला फोटो कार्डमध्ये जोडला आहे.";
+}
+
+/* DOWNLOAD CARD AS PDF */
+async function downloadFarmerPDF(size){
+  const status=document.getElementById("agriDownloadStatus");
+  const name=document.getElementById("farmerName").value.trim();
+  const farmerId=document.getElementById("farmerId").value.trim();
+  if(!name&&!farmerId){
+    alert("कृपया शेतकऱ्याचे नाव किंवा Farmer ID भरा.");
+    showAgriTab("manual");return;
+  }
+  updateFarmerCard();
+  status.textContent="PDF तयार होत आहे...";
+  try{
+    const card=document.getElementById("farmerCardPreview");
+    const canvas=await html2canvas(card,{scale:3,backgroundColor:"#ffffff",useCORS:true});
+    const image=canvas.toDataURL("image/png");
+    const {jsPDF}=window.jspdf;
+    let pdf;
+    if(size==="a4"){
+      pdf=new jsPDF({orientation:"portrait",unit:"mm",format:"a4"});
+      const pageW=210,pageH=297;
+      const cardW=85.6,cardH=54;
+      pdf.addImage(image,"PNG",(pageW-cardW)/2,(pageH-cardH)/2,cardW,cardH);
+    }else{
+      pdf=new jsPDF({orientation:"landscape",unit:"mm",format:[85.6,54]});
+      pdf.addImage(image,"PNG",0,0,85.6,54);
+    }
+    const safeName=(name||"Farmer").replace(/[^\w\u0900-\u097F-]/g,"_");
+    pdf.save(`Farmer_Card_${safeName}_${size.toUpperCase()}.pdf`);
+    status.textContent="PDF Download सुरू झाले.";
+  }catch(err){
+    console.error(err);
+    status.textContent="PDF तयार करताना अडचण: "+err.message;
+    alert("PDF तयार झाले नाही. इंटरनेट तपासा आणि पुन्हा प्रयत्न करा.");
+  }
+}
+
+/* LOGOUT AND SESSION */
+async function logout(){
   await db.auth.signOut();
-
-  currentUser=null;
-  isAdmin=false;
-  servicePriceMap={};
-
+  currentUser=null;isAdmin=false;servicePriceMap={};
   document.getElementById("adminMenuButton").classList.add("hidden");
-
-  showPage("login");
-  document.getElementById("loginForm").reset();
+  showPage("login");document.getElementById("loginForm").reset();
 }
 
 db.auth.getSession().then(({data})=>{
-  if(data.session) {
-    loadDashboard(data.session.user);
-  } else {
-    showPage("home");
-  }
+  if(data.session)loadDashboard(data.session.user);
+  else showPage("home");
 });
 
 db.auth.onAuthStateChange((event,session)=>{
-  if(event==="SIGNED_OUT") {
-    currentUser=null;
-    isAdmin=false;
-    servicePriceMap={};
-
+  if(event==="SIGNED_OUT"){
+    currentUser=null;isAdmin=false;servicePriceMap={};
     document.getElementById("adminMenuButton").classList.add("hidden");
     showPage("login");
   }
