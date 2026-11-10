@@ -764,8 +764,9 @@ async function renderTransactions(){
     activity.innerHTML = data.slice(0,5).map(item=>`
       <p>${escapeHTML(item.description||item.remark||"Wallet Transaction")} – <b>${formatAmount(item.amount)}</b></p>
     `).join("");
-    
- <script>
+
+  
+<script>
 /* LOGIN */
 document.getElementById("loginForm").addEventListener("submit",async function(e){
   e.preventDefault();
@@ -786,8 +787,8 @@ document.getElementById("loginForm").addEventListener("submit",async function(e)
     });
 
     if(error) throw error;
-
     if(data?.error) throw new Error(data.error);
+
     if(!data?.access_token || !data?.refresh_token){
       throw new Error("Login session मिळाली नाही.");
     }
@@ -888,9 +889,7 @@ db.auth.getSession().then(async({data,error})=>{
   }
 });
 
-/* ================================
-   AGRISTACK CARD DESIGN FUNCTIONS
-================================ */
+/* AGRISTACK CARD DESIGN FUNCTIONS */
 
 function selectCardDesign(design){
   currentCardDesign = design;
@@ -916,7 +915,6 @@ function showCardSide(side){
   document.getElementById("backSideTab").classList.toggle("active",side==="back");
 }
 
-/* APPLY SELECTED DESIGN */
 function applyCardDesign(){
   ["farmerFrontCard","farmerBackCard"].forEach(id=>{
     const card = document.getElementById(id);
@@ -925,7 +923,6 @@ function applyCardDesign(){
   });
 }
 
-/* SAFE IMAGE READER */
 function readImageFile(file){
   return new Promise((resolve,reject)=>{
     if(!file){
@@ -939,10 +936,8 @@ function readImageFile(file){
     }
 
     const reader = new FileReader();
-
     reader.onload = ()=>resolve(reader.result);
     reader.onerror = ()=>reject(new Error("Image वाचता आली नाही."));
-
     reader.readAsDataURL(file);
   });
 }
@@ -1120,10 +1115,7 @@ function generateAgriQR(){
   agriQrReady = true;
 }
 
-/* ================================
-   INDEXEDDB SAVE / LOAD
-================================ */
-
+/* INDEXEDDB SAVE / LOAD */
 function openFarmerDatabase(){
   return new Promise((resolve,reject)=>{
     if(!window.indexedDB){
@@ -1241,8 +1233,7 @@ async function clearFarmerForm(){
   if(!confirm("सर्व माहिती Clear करायची आहे का?")) return;
 
   document.querySelectorAll("#agristackSection input").forEach(input=>{
-    if(input.type!=="file") input.value = "";
-    else input.value = "";
+    input.value = "";
   });
 
   document.getElementById("farmerGender").value = "";
@@ -1261,10 +1252,7 @@ async function clearFarmerForm(){
   showCardSide("front");
 }
 
-/* ================================
-   PDF UPLOAD AND PHOTO CROP
-================================ */
-
+/* PDF UPLOAD AND PHOTO CROP */
 if(window.pdfjsLib){
   pdfjsLib.GlobalWorkerOptions.workerSrc =
     "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
@@ -1435,26 +1423,13 @@ function useCroppedPhoto(){
   alert("Crop केलेला फोटो कार्डमध्ये जोडला.");
 }
 
-/* ================================
-   PDF CARD DOWNLOAD
-================================ */
-
+/* PDF CARD DOWNLOAD */
 async function createCardImage(element){
-  const previousSide = currentCardSide;
-
-  element.classList.remove("card-hidden");
-
   const canvas = await html2canvas(element,{
     scale:3,
     backgroundColor:"#ffffff",
     useCORS:true
   });
-
-  if(previousSide==="front"){
-    document.getElementById("farmerBackCard").classList.add("card-hidden");
-  }else{
-    document.getElementById("farmerFrontCard").classList.add("card-hidden");
-  }
 
   return canvas.toDataURL("image/png");
 }
@@ -1476,13 +1451,13 @@ async function downloadFarmerPDF(type){
 
   status.textContent = "PDF तयार होत आहे... कृपया थांबा.";
 
+  const previousSide = currentCardSide;
+
   try{
     refreshFarmerCard();
 
     const front = document.getElementById("farmerFrontCard");
     const back = document.getElementById("farmerBackCard");
-
-    const previousSide = currentCardSide;
 
     front.classList.remove("card-hidden");
     back.classList.remove("card-hidden");
@@ -1503,7 +1478,6 @@ async function downloadFarmerPDF(type){
     const backImage = backCanvas.toDataURL("image/png");
 
     const {jsPDF} = window.jspdf;
-
     let pdf;
 
     if(type==="pvc"){
@@ -1544,14 +1518,13 @@ async function downloadFarmerPDF(type){
       : "Farmer_Card_A4_Front_Back.pdf";
 
     pdf.save(fileName);
-
     status.textContent = "PDF तयार झाली. Download तपासा.";
-
-    showCardSide(previousSide);
 
   }catch(error){
     console.error("PDF error:",error);
     status.textContent = "PDF तयार करता आली नाही: "+error.message;
+  }finally{
+    showCardSide(previousSide);
   }
 }
 
@@ -1563,176 +1536,3 @@ document.addEventListener("DOMContentLoaded",()=>{
 </script>
 </body>
 </html>
-
-  }
-}
-
-async function loadWallet(){
-  if(!currentUser) return;
-
-  const {data,error} = await db
-    .from("profiles")
-    .select("wallet_balance")
-    .eq("id",currentUser.id)
-    .maybeSingle();
-
-  if(error){
-    console.error("Wallet load error:",error);
-    return;
-  }
-
-  const balance = Number(data?.wallet_balance||0);
-
-  document.getElementById("walletBalance").textContent = formatAmount(balance);
-  document.getElementById("walletBalancePage").textContent = formatAmount(balance);
-}
-
-/* ADMIN CHECK */
-async function checkAdminAccess(){
-  if(!currentUser) return false;
-
-  const {data,error} = await db.rpc("admin_is_current_user");
-
-  if(error){
-    console.error("Admin check:",error);
-    isAdmin = false;
-  }else{
-    isAdmin = data===true;
-  }
-
-  document.getElementById("adminMenuButton").classList.toggle("hidden",!isAdmin);
-  return isAdmin;
-}
-
-async function loadDashboard(){
-  if(!currentUser) return;
-
-  const {data:profile,error} = await db
-    .from("profiles")
-    .select("*")
-    .eq("id",currentUser.id)
-    .maybeSingle();
-
-  if(error) console.error("Profile load:",error);
-
-  const name = profile?.full_name || currentUser.user_metadata?.full_name || "Retailer";
-  const mobile = profile?.mobile || currentUser.user_metadata?.mobile || "";
-
-  document.getElementById("retailerName").textContent = name;
-  document.getElementById("welcomeName").textContent = name;
-  document.getElementById("retailerEmail").textContent = currentUser.email||"";
-  document.getElementById("profileName").textContent = name;
-  document.getElementById("profileEmail").textContent = currentUser.email||"";
-  document.getElementById("profileMobile").textContent = mobile;
-
-  await checkAdminAccess();
-  await loadWallet();
-  await loadServicePrices();
-  await renderTransactions();
-
-  document.getElementById("publicContainer").classList.add("hidden");
-  document.getElementById("publicHeader").classList.add("hidden");
-  document.getElementById("dashboardHeader").classList.remove("hidden");
-  document.getElementById("dashboard").classList.remove("hidden");
-
-  showDashboardSection("dashboardHome");
-}
-
-async function loadAdminRetailers(){
-  if(!isAdmin) return;
-
-  const list = document.getElementById("adminRetailerList");
-  const select = document.getElementById("adminRetailerSelect");
-
-  list.textContent = "Loading...";
-  select.innerHTML = '<option value="">Retailer निवडा</option>';
-
-  const {data,error} = await db.rpc("admin_list_retailers");
-
-  if(error){
-    list.textContent = "Retailers लोड झाले नाहीत: "+error.message;
-    console.error(error);
-    return;
-  }
-
-  adminRetailers = data||[];
-
-  if(!adminRetailers.length){
-    list.textContent = "Retailers उपलब्ध नाहीत.";
-    return;
-  }
-
-  adminRetailers.forEach(retailer=>{
-    const option = document.createElement("option");
-    option.value = retailer.id;
-    option.textContent = retailer.full_name||retailer.email||retailer.id;
-    select.appendChild(option);
-  });
-
-  list.innerHTML = `
-    <table>
-      <thead><tr><th>नाव</th><th>Email</th><th>Wallet</th></tr></thead>
-      <tbody>
-      ${adminRetailers.map(retailer=>`
-        <tr>
-          <td>${escapeHTML(retailer.full_name||"-")}</td>
-          <td>${escapeHTML(retailer.email||"-")}</td>
-          <td>${formatAmount(retailer.wallet_balance)}</td>
-        </tr>
-      `).join("")}
-      </tbody>
-    </table>`;
-}
-
-/* ADMIN WALLET */
-document.getElementById("adminWalletForm").addEventListener("submit",async function(e){
-  e.preventDefault();
-
-  if(!isAdmin){
-    alert("Admin access नाही.");
-    return;
-  }
-
-  const retailerId = document.getElementById("adminRetailerSelect").value;
-  const action = document.getElementById("adminWalletAction").value;
-  const amount = Number(document.getElementById("adminWalletAmount").value);
-  const remark = document.getElementById("adminWalletRemark").value.trim();
-  const button = document.getElementById("adminWalletButton");
-  const message = document.getElementById("adminWalletMessage");
-
-  if(!retailerId||!amount||amount<=0||!remark){
-    message.textContent = "सर्व माहिती योग्य भरा.";
-    return;
-  }
-
-  button.disabled = true;
-  button.textContent = "Processing...";
-  message.textContent = "";
-
-  try{
-    const {data,error} = await db.rpc("admin_adjust_wallet",{
-      p_user_id:retailerId,
-      p_amount:amount,
-      p_action:action,
-      p_remark:remark
-    });
-
-    if(error) throw error;
-
-    message.style.color = "green";
-    message.textContent = "Wallet व्यवहार यशस्वी झाला.";
-    document.getElementById("adminWalletAmount").value = "";
-    document.getElementById("adminWalletRemark").value = "";
-
-    await loadAdminRetailers();
-    await loadWallet();
-  }catch(error){
-    console.error(error);
-    message.style.color = "red";
-    message.textContent = "Wallet Error: "+error.message;
-  }finally{
-    button.disabled = false;
-    button.textContent = "Submit";
-  }
-});
-</script>
