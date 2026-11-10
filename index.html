@@ -733,8 +733,15 @@ async function loadDashboard(){
     if(publicHeader) publicHeader.style.display = "none";
     if(publicContainer) publicContainer.style.display = "none";
     if(dashboardHeader) dashboardHeader.style.display = "flex";
-    if(dashboard) dashboard.style.display = "block";
+    if(dashboard){
+  dashboard.classList.remove("hidden");
+  dashboard.style.display = "block";
+}
 
+if(dashboardHeader){
+  dashboardHeader.classList.remove("hidden");
+  dashboardHeader.style.display = "flex";
+}
     // Retailer माहिती
     const {data:customer,error:customerError} = await db
       .from("customers")
