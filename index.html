@@ -356,8 +356,8 @@ td,th{padding:11px;border-bottom:1px solid #e5eaf0;text-align:left}
     </section>
   </main>
 </div>
-
-  <script>
+  
+<script>
 const SUPABASE_URL = "https://uzlqlyzcweivflauacyz.supabase.co";
 
 const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_U4H72DvhmAG3gZIUbMjmNQ_6t2PCOVR";
@@ -632,7 +632,7 @@ async function loadAdminRetailers(){
   const rows=adminRetailers.map(r=>`<tr><td>${escapeHTML(r.full_name||"-")}</td><td>${escapeHTML(r.mobile_number||"-")}</td><td>${escapeHTML(r.email||"-")}</td><td>${formatAmount(r.balance)}</td></tr>`).join("");
   list.innerHTML=`<table><tr><th>नाव</th><th>मोबाईल</th><th>Email</th><th>Wallet Balance</th></tr>${rows}</table>`;
 }
-    <script>
+
 /* ADMIN WALLET */
 document.getElementById("adminWalletForm").addEventListener("submit",async function(e){
   e.preventDefault();
