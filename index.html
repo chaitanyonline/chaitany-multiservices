@@ -487,7 +487,7 @@ td,th{padding:11px;border-bottom:1px solid #e5eaf0;text-align:left}
 /* SUPABASE CONFIGURATION */
 const SUPABASE_URL = "https://uzlqlyzcweivflauacyz.supabase.co";
 
-const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_U4H72DvhmAG3gZIUbMjmNQ_6t2PCOVR";
+const SUPABASE_PUBLISHABLE_KEY = "my_key";
 
 const db = window.supabase.createClient(
   SUPABASE_URL,
@@ -717,6 +717,139 @@ document.getElementById("adminPriceForm").addEventListener("submit",async functi
   }
 });
 
+  /* LOAD DASHBOARD */
+async function loadDashboard(){
+
+  if(!currentUser) return;
+
+  try{
+
+    // Public pages लपवा आणि Dashboard दाखवा
+    const publicHeader = document.getElementById("publicHeader");
+    const publicContainer = document.getElementById("publicContainer");
+    const dashboardHeader = document.getElementById("dashboardHeader");
+    const dashboard = document.getElementById("dashboard");
+
+    if(publicHeader) publicHeader.style.display = "none";
+    if(publicContainer) publicContainer.style.display = "none";
+    if(dashboardHeader) dashboardHeader.style.display = "flex";
+    if(dashboard) dashboard.style.display = "block";
+
+    // Retailer माहिती
+    const {data:customer,error:customerError} = await db
+      .from("customers")
+      .select("*")
+      .eq("id",currentUser.id)
+      .maybeSingle();
+
+    if(customerError) throw customerError;
+
+    const name = customer?.full_name ||
+      currentUser.user_metadata?.full_name || "Retailer";
+
+    const email = customer?.email || currentUser.email || "";
+    const mobile = customer?.mobile_number || "";
+
+    document.getElementById("retailerName").textContent = name;
+    document.getElementById("retailerEmail").textContent = email;
+    document.getElementById("welcomeName").textContent = name;
+
+    document.getElementById("profileName").textContent = name;
+    document.getElementById("profileEmail").textContent = email;
+    document.getElementById("profileMobile").textContent = mobile;
+
+    // Wallet Balance
+    const {data:wallet,error:walletError} = await db
+      .from("wallets")
+      .select("balance")
+      .eq("customer_id",currentUser.id)
+      .maybeSingle();
+
+    if(walletError) throw walletError;
+
+    const balance = Number(wallet?.balance || 0);
+
+    document.getElementById("walletBalance").textContent =
+      formatAmount(balance);
+
+    document.getElementById("walletBalancePage").textContent =
+      formatAmount(balance);
+
+    // Applications
+    const {data:applications,error:appError} = await db
+      .from("applications")
+      .select("*")
+      .eq("customer_id",currentUser.id)
+      .order("created_at",{ascending:false});
+
+    if(appError) throw appError;
+
+    const apps = applications || [];
+
+    document.getElementById("totalApplications").textContent = apps.length;
+
+    document.getElementById("pendingApplications").textContent =
+      apps.filter(a=>a.status==="Pending").length;
+
+    document.getElementById("completedApplications").textContent =
+      apps.filter(a=>a.status==="Completed").length;
+
+    // Recent Applications
+    const recent = document.getElementById("recentApplications");
+
+    if(recent){
+      recent.innerHTML = apps.length
+        ? apps.slice(0,5).map(a=>`
+            <p>
+              <b>${escapeHTML(a.service_name || "-")}</b>
+              - ${escapeHTML(a.status || "Pending")}
+            </p>
+          `).join("")
+        : "अद्याप कोणतेही अर्ज नाहीत.";
+    }
+
+    // All Applications
+    const all = document.getElementById("allApplications");
+
+    if(all){
+      all.innerHTML = apps.length
+        ? apps.map(a=>`
+            <p>
+              <b>${escapeHTML(a.service_name || "-")}</b>
+              - ${escapeHTML(a.status || "Pending")}
+            </p>
+          `).join("")
+        : "अद्याप कोणतेही अर्ज नाहीत.";
+    }
+
+    // Service Prices
+    await loadServicePrices();
+
+    // Transactions
+    await renderTransactions();
+
+    // Admin Check
+    const {data:admin,error:adminError} = await db
+      .from("admin_users")
+      .select("user_id")
+      .eq("user_id",currentUser.id)
+      .maybeSingle();
+
+    if(adminError) console.error("Admin check:",adminError);
+
+    isAdmin = !!admin;
+
+    const adminButton = document.getElementById("adminMenuButton");
+    if(adminButton){
+      adminButton.style.display = isAdmin ? "block" : "none";
+    }
+
+  }catch(error){
+    console.error("Dashboard Error:",error);
+    alert("Dashboard लोड करताना अडचण आली: "+error.message);
+  }
+}
+  
 /* TRANSACTIONS */
 async function renderTransactions(){
   const list = document.getElementById("transactionsList");
@@ -727,7 +860,7 @@ async function renderTransactions(){
   const {data,error} = await db
     .from("wallet_transactions")
     .select("*")
-    .eq("user_id",currentUser.id)
+    .eq("customer_id",currentUser.id)
     .order("created_at",{ascending:false})
     .limit(50);
 
