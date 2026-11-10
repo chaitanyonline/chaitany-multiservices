@@ -388,13 +388,23 @@ const SERVICE_NAMES=[
 
 function showPage(page){
   ["home","login","register"].forEach(name=>{
-    document.getElementById(name+"Page").classList.toggle("hidden",page!==name);
+    const el = document.getElementById(name+"Page");
+    if(el){
+      el.classList.toggle("hidden",page!==name);
+    }
   });
-  const dashboardPage=page==="dashboard";
-  document.getElementById("publicHeader").classList.toggle("hidden",dashboardPage);
-  document.getElementById("publicContainer").classList.toggle("hidden",dashboardPage);
-  document.getElementById("dashboardHeader").classList.toggle("hidden",!dashboardPage);
-  document.getElementById("dashboard").classList.toggle("hidden",!dashboardPage);
+
+  const dashboardPage = page==="dashboard";
+
+  const publicHeader = document.getElementById("publicHeader");
+  const publicContainer = document.getElementById("publicContainer");
+  const dashboardHeader = document.getElementById("dashboardHeader");
+  const dashboard = document.getElementById("dashboard");
+
+  if(publicHeader) publicHeader.classList.toggle("hidden",dashboardPage);
+  if(publicContainer) publicContainer.classList.toggle("hidden",dashboardPage);
+  if(dashboardHeader) dashboardHeader.classList.toggle("hidden",!dashboardPage);
+  if(dashboard) dashboard.classList.toggle("hidden",!dashboardPage);
 }
 
 function showDashboardSection(sectionId){
