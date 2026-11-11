@@ -640,94 +640,32 @@ function serviceMessage(service){
 
   if(service.toLowerCase().includes("reprint")){
 
-    const oldPopup = document.getElementById("panReprintPopup");
-    if(oldPopup) oldPopup.remove();
-
     const popup = document.createElement("div");
+
     popup.id = "panReprintPopup";
 
     popup.innerHTML = `
-      <div style="
-        position:fixed;
-        inset:0;
-        background:rgba(0,0,0,0.65);
-        display:flex;
-        align-items:center;
-        justify-content:center;
-        z-index:99999;
-        padding:15px;
-      ">
-        <div style="
-          background:white;
-          width:100%;
-          max-width:380px;
-          padding:25px;
-          border-radius:15px;
-          text-align:center;
-          box-shadow:0 5px 25px rgba(0,0,0,0.3);
-        ">
-          <h2 style="color:#12345a;margin-top:0;">
-            PAN REPRINT
-          </h2>
+      <div style="position:fixed;inset:0;background:#0009;display:flex;align-items:center;justify-content:center;z-index:999999;padding:15px;">
+        <div style="background:white;padding:25px;border-radius:15px;width:100%;max-width:380px;text-align:center;">
 
-          <p style="color:#555;">
-            कृपया PAN Reprint साठी पोर्टल निवडा.
-          </p>
+          <h2>PAN REPRINT</h2>
+          <p>अधिकृत पोर्टल निवडा</p>
 
-          <a href="https://onlineservices.proteantech.in/paam/ReprintEPan.html"
-             target="_blank"
-             rel="noopener noreferrer"
-             style="
-               display:block;
-               background:#123b70;
-               color:white;
-               padding:14px;
-               margin:12px 0;
-               border-radius:8px;
-               text-decoration:none;
-               font-weight:bold;
-             ">
-             NSDL / PROTEAN
+          <a href="https://onlineservices.proteantech.in/paam/ReprintEPan.html" target="_blank" rel="noopener noreferrer" style="display:block;background:#123b70;color:white;padding:15px;margin:12px 0;border-radius:8px;text-decoration:none;">
+            NSDL / PROTEAN
           </a>
 
-          <a href="https://www.pan.utiitsl.com/PAN_ONLINE/reprintHome"
-             target="_blank"
-             rel="noopener noreferrer"
-             style="
-               display:block;
-               background:#087b68;
-               color:white;
-               padding:14px;
-               margin:12px 0;
-               border-radius:8px;
-               text-decoration:none;
-               font-weight:bold;
-             ">
-             UTIITSL
+          <a href="https://www.pan.utiitsl.com/PAN_ONLINE/reprintHome" target="_blank" rel="noopener noreferrer" style="display:block;background:#087b68;color:white;padding:15px;margin:12px 0;border-radius:8px;text-decoration:none;">
+            UTIITSL
           </a>
 
-          <button id="closePanReprint"
-            style="
-              background:#eeeeee;
-              color:#333;
-              border:none;
-              padding:11px 25px;
-              border-radius:8px;
-              margin-top:10px;
-              cursor:pointer;
-            ">
-            बंद करा
-          </button>
+          <button onclick="document.getElementById('panReprintPopup').remove()">बंद करा</button>
+
         </div>
       </div>
     `;
 
     document.body.appendChild(popup);
-
-    document.getElementById("closePanReprint").onclick = ()=>{
-      popup.remove();
-    };
-
     return;
   }
 
