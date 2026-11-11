@@ -11,61 +11,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
-  .pan-reprint-overlay{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.65);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  z-index:99999;
-  padding:15px;
-}
-
-.pan-reprint-box{
-  background:white;
-  padding:25px;
-  border-radius:15px;
-  width:100%;
-  max-width:650px;
-  text-align:center;
-}
-
-.pan-reprint-options{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:15px;
-  margin:25px 0;
-}
-
-.pan-option{
-  border:2px solid #dce5f1;
-  border-radius:12px;
-  padding:22px 10px;
-  text-decoration:none;
-  color:#123b70;
-  background:#f5f8fc;
-}
-
-.pan-option:hover{
-  border-color:#123b70;
-  background:#eaf2ff;
-}
-
-.pan-option span{
-  display:block;
-  background:#123b70;
-  color:white;
-  padding:10px;
-  border-radius:7px;
-  margin-top:15px;
-}
-
-@media(max-width:480px){
-  .pan-reprint-options{
-    grid-template-columns:1fr;
-  }
-}
 <style>
 *{box-sizing:border-box}
 body{margin:0;font-family:Arial,sans-serif;background:#f1f4f9;color:#17233b}
