@@ -514,10 +514,20 @@ let agriQrReady = false;
 
 /* COMMON PAGE FUNCTIONS */
 function showPage(page){
-  document.getElementById("publicContainer").classList.remove("hidden");
-  document.getElementById("publicHeader").classList.remove("hidden");
-  document.getElementById("dashboard").classList.add("hidden");
-  document.getElementById("dashboardHeader").classList.add("hidden");
+  const publicHeader = document.getElementById("publicHeader");
+  const publicContainer = document.getElementById("publicContainer");
+  const dashboard = document.getElementById("dashboard");
+  const dashboardHeader = document.getElementById("dashboardHeader");
+
+  publicHeader.style.display = "";
+  publicContainer.style.display = "";
+  dashboard.style.display = "";
+  dashboardHeader.style.display = "";
+
+  publicHeader.classList.remove("hidden");
+  publicContainer.classList.remove("hidden");
+  dashboard.classList.add("hidden");
+  dashboardHeader.classList.add("hidden");
 
   ["homePage","loginPage","registerPage"].forEach(id=>{
     document.getElementById(id).classList.add("hidden");
@@ -724,24 +734,29 @@ async function loadDashboard(){
 
   try{
 
-    // Public pages लपवा आणि Dashboard दाखवा
-    const publicHeader = document.getElementById("publicHeader");
-    const publicContainer = document.getElementById("publicContainer");
-    const dashboardHeader = document.getElementById("dashboardHeader");
-    const dashboard = document.getElementById("dashboard");
+  // Public pages लपवा आणि Dashboard दाखवा
+const publicHeader = document.getElementById("publicHeader");
+const publicContainer = document.getElementById("publicContainer");
+const dashboardHeader = document.getElementById("dashboardHeader");
+const dashboard = document.getElementById("dashboard");
 
-    if(publicHeader) publicHeader.style.display = "none";
-    if(publicContainer) publicContainer.style.display = "none";
-    if(dashboardHeader) dashboardHeader.style.display = "flex";
-    if(dashboard){
-  dashboard.classList.remove("hidden");
-  dashboard.style.display = "block";
-}
+if(publicHeader) publicHeader.style.display = "none";
+if(publicContainer) publicContainer.style.display = "none";
 
 if(dashboardHeader){
   dashboardHeader.classList.remove("hidden");
   dashboardHeader.style.display = "flex";
 }
+
+if(dashboard){
+  dashboard.classList.remove("hidden");
+  dashboard.style.display = "";
+}
+
+["homePage","loginPage","registerPage"].forEach(id=>{
+  const page = document.getElementById(id);
+  if(page) page.classList.add("hidden");
+});
     // Retailer माहिती
     const {data:customer,error:customerError} = await db
       .from("customers")
@@ -757,13 +772,19 @@ if(dashboardHeader){
     const email = customer?.email || currentUser.email || "";
     const mobile = customer?.mobile_number || "";
 
-    document.getElementById("retailerName").textContent = name;
-    document.getElementById("retailerEmail").textContent = email;
-    document.getElementById("welcomeName").textContent = name;
+    const profileFields = {
+  retailerName: name,
+  retailerEmail: email,
+  welcomeName: name,
+  profileName: name,
+  profileEmail: email,
+  profileMobile: mobile
+};
 
-    document.getElementById("profileName").textContent = name;
-    document.getElementById("profileEmail").textContent = email;
-    document.getElementById("profileMobile").textContent = mobile;
+Object.entries(profileFields).forEach(([id,value])=>{
+  const element = document.getElementById(id);
+  if(element) element.textContent = value;
+});
 
     // Wallet Balance
     const {data:wallet,error:walletError} = await db
@@ -846,10 +867,12 @@ if(dashboardHeader){
 
     isAdmin = !!admin;
 
-    const adminButton = document.getElementById("adminMenuButton");
-    if(adminButton){
-      adminButton.style.display = isAdmin ? "block" : "none";
-    }
+   const adminButton = document.getElementById("adminMenuButton");
+
+if(adminButton){
+  adminButton.style.display = "";
+  adminButton.classList.toggle("hidden", !isAdmin);
+}
 
   }catch(error){
     console.error("Dashboard Error:",error);
@@ -895,9 +918,6 @@ async function renderTransactions(){
       `).join("")}
       </tbody>
     </table>`;
-
-  const recent = document.getElementById("recentApplications");
-  if(recent) recent.textContent = "अद्याप कोणतेही अर्ज नाहीत.";
 
   const activity = document.getElementById("walletActivity");
   if(activity){
@@ -1193,7 +1213,7 @@ function refreshFarmerCard(){
 
   const aadhaar = data.aadhaar;
   document.getElementById("cardAadhaar").textContent =
-    aadhaar.length===12 ? "XXXX XXXX "+aadhaar.slice(-4) : "XXXX XXXX XXXX";
+    aadhaar.length===12 ? " "+aadhaar.slice(-4) : "XXXX XXXX XXXX";
 
   document.getElementById("cardFarmerId").textContent = data.farmerId||"-";
   document.getElementById("cardEnrollment").textContent = data.enrollment||"-";
