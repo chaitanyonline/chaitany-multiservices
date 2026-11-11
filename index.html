@@ -139,6 +139,61 @@ td,th{padding:11px;border-bottom:1px solid #e5eaf0;text-align:left}
 @media(max-width:850px){.layout{display:block}.sidebar{width:100%;display:flex;overflow-x:auto;padding:8px}.sidebar h3{display:none}.menu{white-space:nowrap;width:auto;margin:2px}.services{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:600px){.design-options{grid-template-columns:1fr}.farmer-print-card{width:540px;max-width:none;transform-origin:top left}.card-preview-area{overflow-x:auto}.agri-grid{grid-template-columns:1fr}}
 @media(max-width:520px){.topbar{padding:14px;flex-wrap:wrap}.toplinks a{margin-left:8px}.brand{font-size:17px}.main{padding:13px}.services{grid-template-columns:1fr}.bottom-grid{grid-template-columns:1fr}.dashboard-header{padding:12px}.profile{font-size:11px}.welcome h2{font-size:19px}.cards{grid-template-columns:repeat(2,1fr)}}
+.pan-reprint-overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.65);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:99999;
+  padding:15px;
+}
+
+.pan-reprint-box{
+  background:white;
+  padding:25px;
+  border-radius:15px;
+  width:100%;
+  max-width:650px;
+  text-align:center;
+}
+
+.pan-reprint-options{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:15px;
+  margin:25px 0;
+}
+
+.pan-option{
+  border:2px solid #dce5f1;
+  border-radius:12px;
+  padding:22px 10px;
+  text-decoration:none;
+  color:#123b70;
+  background:#f5f8fc;
+}
+
+.pan-option:hover{
+  border-color:#123b70;
+  background:#eaf2ff;
+}
+
+.pan-option span{
+  display:block;
+  background:#123b70;
+  color:white;
+  padding:10px;
+  border-radius:7px;
+  margin-top:15px;
+}
+
+@media(max-width:480px){
+  .pan-reprint-options{
+    grid-template-columns:1fr;
+  }
+}
 </style>
 </head>
 <body>
