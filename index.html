@@ -194,6 +194,81 @@ td,th{padding:11px;border-bottom:1px solid #e5eaf0;text-align:left}
     grid-template-columns:1fr;
   }
 }
+
+  
+/* AGRISTACK GRAPHIC DESIGN */
+.agri-new-front,
+.agri-new-back{
+  background:linear-gradient(135deg,#fffef4,#f1f8df)!important;
+  border:3px solid #b8b8b8!important;
+  border-radius:10px;
+  color:#102b19!important;
+}
+.agri-new-front .card-head,
+.agri-new-back .card-head{
+  height:76px;
+  background:linear-gradient(90deg,#08783a,#159c4d)!important;
+  color:white!important;
+  border-bottom:6px solid #e8b91e;
+}
+.agri-new-front .card-head strong,
+.agri-new-back .card-head strong{
+  font-size:23px;
+}
+.agri-new-front .card-head small,
+.agri-new-back .card-head small{
+  font-size:14px;
+}
+.agri-new-front .card-content{
+  background:
+    linear-gradient(90deg,rgba(255,255,255,.94),rgba(255,255,255,.65)),
+    linear-gradient(135deg,#d9efc9,#fff9df);
+  min-height:190px;
+}
+.agri-new-front .card-photo{
+  border:3px solid #1685e9;
+  border-radius:12px;
+}
+.agri-new-front .card-id{
+  color:#8d1515;
+  font-size:17px;
+}
+.agri-new-front .card-footer,
+.agri-new-back .card-back-footer{
+  background:#fff4c5!important;
+  border-top:5px solid #168342!important;
+  color:#111;
+  font-weight:bold;
+}
+.agri-new-back .card-back-title{
+  color:#08783a;
+  font-size:18px;
+}
+.agri-new-back .card-land-table th{
+  background:#168342!important;
+  color:white!important;
+  font-size:12px;
+}
+.agri-new-back .card-land-table td{
+  background:#fffef5;
+}
+.agri-new-back .card-back-summary{
+  border:2px solid #111;
+  border-radius:10px;
+  padding:10px;
+  background:#fff;
+}
+.agri-new-front:after,
+.agri-new-back:after{
+  content:"🌾  🌿  🚜";
+  position:absolute;
+  right:12px;
+  bottom:34px;
+  font-size:27px;
+  opacity:.45;
+  pointer-events:none;
+}
+
 </style>
 </head>
 <body>
@@ -416,47 +491,62 @@ td,th{padding:11px;border-bottom:1px solid #e5eaf0;text-align:left}
           <button type="button" class="side-tab" id="backSideTab" onclick="showCardSide('back')">Back Side</button>
         </div>
         <div class="card-preview-area">
-          <div id="farmerFrontCard" class="farmer-print-card original">
-            <div class="card-head">
-              <div><strong>शेतकरी नोंदणी कार्ड</strong><small>महाराष्ट्र - कृषी विभाग</small></div>
-            </div>
-            <div class="card-content">
-              <img id="cardPhotoPreview" class="card-photo" alt="Farmer Photo">
-              <div class="card-details">
-                <div class="card-name" id="cardNameMarathi">शेतकऱ्याचे नाव</div>
-                <div><b>Name:</b> <span id="cardNameEnglish">-</span></div>
-                <div><b>वडील / पती:</b> <span id="cardRelation">-</span></div>
-                <div><b>लिंग:</b> <span id="cardGender">-</span></div>
-                <div><b>मोबाईल:</b> <span id="cardMobile">-</span></div>
-                <div><b>आधार:</b> <span id="cardAadhaar">XXXX XXXX XXXX</span></div>
-                <div class="card-id">Farmer ID: <span id="cardFarmerId">-</span></div>
-                <div><b>Enrollment:</b> <span id="cardEnrollment">-</span></div>
-              </div>
-              <div id="cardQr" class="card-qr"></div>
-            </div>
-            <div style="padding:0 15px;font-size:10px"><b>पत्ता:</b> <span id="cardAddress">-</span></div>
-            <div class="card-footer">Maharashtra Farmer Registry</div>
-          </div>
+         
+<div id="farmerFrontCard" class="farmer-print-card original agri-new-front">
+  <div class="agri-front-header">
+    <div class="agri-logo">Agri<span>Stack</span></div>
+    <div class="agri-heading">
+      <strong>शेतकरी नोंदणी कार्ड</strong>
+      <small>महाराष्ट्र शासन — कृषी विभाग</small>
+    </div>
+    <div class="agri-emblem">महाराष्ट्र</div>
+  </div>
 
-          <div id="farmerBackCard" class="farmer-print-card original card-hidden">
-            <div class="card-head">
-              <div><strong>LAND INFORMATION</strong><small>जमीन धारणा माहिती</small></div>
-            </div>
-            <div class="card-back-content">
-              <div class="card-back-title">शेतजमिनीचा तपशील</div>
-              <table class="card-land-table">
-                <thead><tr><th>अ.क्र.</th><th>जिल्हा</th><th>तालुका</th><th>गाव</th><th>गट / खसरा</th><th>क्षेत्र (हे.)</th></tr></thead>
-                <tbody id="cardLandRows"><tr><td colspan="6">जमिनीची माहिती उपलब्ध नाही</td></tr></tbody>
-              </table>
-              <div class="card-back-summary">
-                <span>एकूण गट: <b id="cardTotalGroups">0</b></span>
-                <span>एकूण क्षेत्र: <b id="cardTotalArea">0.000 हे.</b></span>
-              </div>
-              <div class="card-disclaimer">ही माहिती वापरकर्त्याने भरलेली आहे; शासकीय पडताळणी नाही.</div>
-            </div>
-            <div class="card-back-footer">हे माहिती साठवण्यासाठी तयार केलेले कार्ड आहे | अधिकृत सरकारी ओळखपत्र नाही</div>
-          </div>
-        </div>
+  <div class="agri-front-body">
+    <div class="agri-photo-box">
+      <img id="cardPhotoPreview" class="card-photo" alt="Farmer Photo">
+    </div>
+    <div class="agri-front-details">
+      <div class="agri-enrollment">Enrollment No.: <span id="cardEnrollment">—</span></div>
+      <div class="agri-detail">नाव: <span id="cardNameMarathi">—</span></div>
+      <div class="agri-detail">वडील/पती: <span id="cardRelation">—</span></div>
+      <div class="agri-detail">लिंग: <span id="cardGender">—</span></div>
+      <div class="agri-detail">मोबाईल: <span id="cardMobile">—</span></div>
+      <div class="agri-detail">आधार नंबर: <span id="cardAadhaar">XXXX XXXX XXXX</span></div>
+      <div class="agri-farmer-id">FARMER ID: <span id="cardFarmerId">—</span></div>
+    </div>
+    <div id="cardQr" class="card-qr"></div>
+    <div class="agri-address">Address: <span id="cardAddress">—</span></div>
+  </div>
+  <div class="agri-front-footer">Maharashtra Farmer Registry</div>
+  <div class="agri-personal-note">वैयक्तिक वापरासाठी नमुना कार्ड — अधिकृत सरकारी ओळखपत्र नाही.</div>
+</div>
+
+<div id="farmerBackCard" class="farmer-print-card original card-hidden agri-new-back">
+  <div class="agri-back-top"></div>
+  <div class="agri-back-title">
+    🌾 जमिनीचा तपशील — Land Records
+    <span>FARMER ID — <b id="cardBackFarmerId">—</b></span>
+  </div>
+  <table class="card-land-table agri-land-table">
+    <thead>
+      <tr>
+        <th>अ.क्र.</th><th>जिल्हा</th><th>तहसील</th>
+        <th>गाव</th><th>खसरा</th><th>क्षेत्र (हे.)</th>
+      </tr>
+    </thead>
+    <tbody id="cardLandRows">
+      <tr><td colspan="6">जमिनीची माहिती उपलब्ध नाही</td></tr>
+    </tbody>
+  </table>
+  <div class="agri-total-box">
+    <div>एकूण क्षेत्र (हेक्टर)<b id="cardTotalArea">0.000 हे.</b></div>
+    <div>एकूण खसरा<b id="cardTotalGroups">0</b></div>
+  </div>
+  <div class="agri-back-watermark">शेतकरी आणि शेती</div>
+  <div class="agri-back-footer">This card is for personal use only, not a Government-issued card.</div>
+</div>
+
         <div id="qrSource"></div>
         <p class="agri-muted">QR कोड AgriStack च्या अधिकृत वेबसाइटची लिंक उघडेल. तो Farmer ID ची पडताळणी करत नाही.</p>
         <button type="button" class="agri-action" onclick="refreshFarmerCard()">Preview Update</button>
