@@ -636,30 +636,112 @@ function openAdminPanel(button){
 
 
   /* PAN REPRINT POPUP */
+
 function serviceMessage(service){
 
   if(service.toLowerCase().includes("reprint")){
 
-    const popup = document.createElement("div");
+    const oldPopup = document.getElementById("panReprintPopup");
+    if(oldPopup) oldPopup.remove();
 
+    const popup = document.createElement("div");
     popup.id = "panReprintPopup";
 
     popup.innerHTML = `
-      <div style="position:fixed;inset:0;background:#0009;display:flex;align-items:center;justify-content:center;z-index:999999;padding:15px;">
-        <div style="background:white;padding:25px;border-radius:15px;width:100%;max-width:380px;text-align:center;">
+      <style>
+        .pr-overlay{
+          position:fixed;
+          inset:0;
+          background:rgba(0,0,0,0.7);
+          display:flex;
+          align-items:center;
+          justify-content:center;
+          z-index:999999;
+          padding:15px;
+        }
+        .pr-box{
+          background:white;
+          width:100%;
+          max-width:650px;
+          padding:25px;
+          border-radius:18px;
+          text-align:center;
+          box-shadow:0 10px 35px #0004;
+        }
+        .pr-options{
+          display:grid;
+          grid-template-columns:1fr 1fr;
+          gap:18px;
+          margin:25px 0;
+        }
+        .pr-card{
+          padding:25px 15px;
+          border:2px solid #dce5f1;
+          border-radius:14px;
+          background:#f5f8fc;
+          color:#123b70;
+        }
+        .pr-card h3{margin:5px 0 12px;}
+        .pr-card p{color:#555;}
+        .pr-link{
+          display:block;
+          padding:12px;
+          background:#123b70;
+          color:white;
+          border-radius:8px;
+          text-decoration:none;
+          font-weight:bold;
+          margin-top:18px;
+        }
+        .pr-card:nth-child(2) .pr-link{
+          background:#087b68;
+        }
+        .pr-close{
+          padding:11px 30px;
+          border:0;
+          border-radius:8px;
+          background:#eeeeee;
+          cursor:pointer;
+        }
+        @media(max-width:480px){
+          .pr-options{grid-template-columns:1fr;}
+        }
+      </style>
 
-          <h2>PAN REPRINT</h2>
-          <p>अधिकृत पोर्टल निवडा</p>
+      <div class="pr-overlay">
+        <div class="pr-box">
 
-          <a href="https://onlineservices.proteantech.in/paam/ReprintEPan.html" target="_blank" rel="noopener noreferrer" style="display:block;background:#123b70;color:white;padding:15px;margin:12px 0;border-radius:8px;text-decoration:none;">
-            NSDL / PROTEAN
-          </a>
+          <h2 style="color:#123b70;">PAN REPRINT</h2>
+          <p>कृपया अधिकृत पोर्टल निवडा</p>
 
-          <a href="https://www.pan.utiitsl.com/PAN_ONLINE/reprintHome" target="_blank" rel="noopener noreferrer" style="display:block;background:#087b68;color:white;padding:15px;margin:12px 0;border-radius:8px;text-decoration:none;">
-            UTIITSL
-          </a>
+          <div class="pr-options">
 
-          <button onclick="document.getElementById('panReprintPopup').remove()">बंद करा</button>
+            <div class="pr-card">
+              <h3>NSDL / PROTEAN</h3>
+              <p>PAN Card Reprint Service</p>
+              <a class="pr-link"
+                 href="https://onlineservices.proteantech.in/paam/ReprintEPan.html"
+                 target="_blank" rel="noopener noreferrer">
+                OPEN PORTAL →
+              </a>
+            </div>
+
+            <div class="pr-card">
+              <h3>UTIITSL</h3>
+              <p>PAN Card Reprint Service</p>
+              <a class="pr-link"
+                 href="https://www.pan.utiitsl.com/PAN_ONLINE/reprintHome"
+                 target="_blank" rel="noopener noreferrer">
+                OPEN PORTAL →
+              </a>
+            </div>
+
+          </div>
+
+          <button class="pr-close"
+            onclick="document.getElementById('panReprintPopup').remove()">
+            बंद करा
+          </button>
 
         </div>
       </div>
