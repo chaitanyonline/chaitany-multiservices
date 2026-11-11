@@ -639,6 +639,120 @@ function openAdminPanel(button){
 
 function serviceMessage(service){
 
+  if(service.toLowerCase().includes("e-pdf")){
+
+    const oldPopup = document.getElementById("panEpdfPopup");
+    if(oldPopup) oldPopup.remove();
+
+    const popup = document.createElement("div");
+    popup.id = "panEpdfPopup";
+
+    popup.innerHTML = `
+      <style>
+        .ep-overlay{
+          position:fixed;
+          inset:0;
+          background:rgba(0,0,0,.7);
+          display:flex;
+          align-items:center;
+          justify-content:center;
+          z-index:999999;
+          padding:15px;
+        }
+        .ep-box{
+          background:white;
+          width:100%;
+          max-width:650px;
+          padding:25px;
+          border-radius:18px;
+          text-align:center;
+        }
+        .ep-options{
+          display:grid;
+          grid-template-columns:1fr 1fr;
+          gap:18px;
+          margin:25px 0;
+        }
+        .ep-card{
+          padding:22px 15px;
+          border:2px solid #dce5f1;
+          border-radius:14px;
+          background:#f5f8fc;
+          color:#123b70;
+        }
+        .ep-link{
+          display:block;
+          padding:12px;
+          background:#123b70;
+          color:white;
+          border-radius:8px;
+          text-decoration:none;
+          font-weight:bold;
+          margin-top:18px;
+        }
+        .ep-card:nth-child(2) .ep-link{
+          background:#087b68;
+        }
+        .ep-close{
+          padding:11px 30px;
+          border:0;
+          border-radius:8px;
+          cursor:pointer;
+        }
+        @media(max-width:480px){
+          .ep-options{grid-template-columns:1fr;}
+        }
+      </style>
+
+      <div class="ep-overlay">
+        <div class="ep-box">
+
+          <h2 style="color:#123b70;">PAN e-PDF DOWNLOAD</h2>
+          <p>कृपया अधिकृत पोर्टल निवडा</p>
+
+          <div class="ep-options">
+
+            <div class="ep-card">
+              <img src="https://mma.prnewswire.com/media/3003846/Protean_NEW_Logo.jpg"
+                alt="Protean Logo"
+                style="width:170px;height:75px;object-fit:contain;">
+              <h3>NSDL / PROTEAN</h3>
+              <p>PAN e-PAN PDF Download</p>
+              <a class="ep-link"
+                href="https://onlineservices.proteantech.in/paam/requestAndDownloadEPAN.html"
+                target="_blank" rel="noopener noreferrer">
+                OPEN PORTAL →
+              </a>
+            </div>
+
+            <div class="ep-card">
+              <img src="https://images.seeklogo.com/logo-png/40/1/utiitsl-logo-png_seeklogo-406776.png"
+                alt="UTIITSL Logo"
+                style="width:170px;height:75px;object-fit:contain;">
+              <h3>UTIITSL</h3>
+              <p>PAN e-PAN PDF Download</p>
+              <a class="ep-link"
+                href="https://www.pan.utiitsl.com/PAN_ONLINE/ePANCardHome"
+                target="_blank" rel="noopener noreferrer">
+                OPEN PORTAL →
+              </a>
+            </div>
+
+          </div>
+
+          <button class="ep-close"
+            onclick="document.getElementById('panEpdfPopup').remove()">
+            बंद करा
+          </button>
+
+        </div>
+      </div>
+    `;
+
+    document.body.appendChild(popup);
+    return;
+  }
+  
   if(service.toLowerCase().includes("reprint")){
 
     const oldPopup = document.getElementById("panReprintPopup");
