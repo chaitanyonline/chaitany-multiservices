@@ -1712,6 +1712,8 @@ function refreshFarmerCard(){
     aadhaar.length===12 ? " "+aadhaar.slice(-4) : "XXXX XXXX XXXX";
 
   document.getElementById("cardFarmerId").textContent = data.farmerId||"-";
+  document.getElementById("cardBackFarmerId").textContent =
+  data.farmerId || "—";
   document.getElementById("cardEnrollment").textContent = data.enrollment||"-";
   document.getElementById("cardAddress").textContent = data.address||"-";
 
