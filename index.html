@@ -579,8 +579,38 @@ function openAdminPanel(button){
   loadAdminServicePrices();
 }
 
+/* PAN REPRINT REDIRECT */
 function serviceMessage(service){
-  alert(service+" सेवा जोडण्याचे काम पुढील टप्प्यात करूया. सध्या प्रत्यक्ष अर्ज सबमिट होत नाही.");
+
+  if(service.toLowerCase().includes("reprint")){
+
+    const choice = prompt(
+      "PAN REPRINT साठी वेबसाइट निवडा:\n\n"+
+      "1 - NSDL / PROTEAN\n"+
+      "2 - UTIITSL\n\n"+
+      "1 किंवा 2 टाका."
+    );
+
+    if(choice === "1"){
+      window.open(
+        "https://onlineservices.proteantech.in/paam/ReprintEPan.html",
+        "_blank"
+      );
+    }
+    else if(choice === "2"){
+      window.open(
+        "https://www.pan.utiitsl.com/PAN_ONLINE/reprintHome",
+        "_blank"
+      );
+    }
+    else if(choice !== null){
+      alert("कृपया 1 किंवा 2 निवडा.");
+    }
+
+    return;
+  }
+
+  alert(service+" सेवा पुढील टप्प्यात सुरू करूया.");
 }
 
 function openAgriStack(){
