@@ -397,164 +397,171 @@ td,th{padding:11px;border-bottom:1px solid #e5eaf0;text-align:left}
       </div>
     </section>
 
-    <!-- NEW AGRISTACK CARD MAKER -->
-    <section id="agristackSection" class="hidden">
-      <h2 class="section-title">🌾 AgriStack Farmer Card Maker</h2>
-      <div class="agri-notice">
-        हे CHAITANY MULTISERVICES द्वारे तयार केलेले माहिती-आधारित प्रिंट कार्ड आहे. हे शासनाचे अधिकृत ओळखपत्र किंवा अधिकृत पडताळणी नाही. माहितीची अचूकता Retailer ने तपासावी.
+   
+<!-- NEW AGRISTACK CARD MAKER -->
+<section id="agristackSection" class="hidden">
+  <h2 class="section-title">🌾 AgriStack Farmer Card Maker</h2>
+
+  <div class="agri-notice">
+    हे CHAITANY MULTISERVICES द्वारे तयार केलेले माहिती-आधारित नमुना कार्ड आहे. हे शासनाचे अधिकृत ओळखपत्र किंवा अधिकृत पडताळणी नाही.
+  </div>
+
+  <div class="agri-card">
+    <h3>1. शेतकऱ्याची माहिती भरा</h3>
+
+    <div class="agri-form-section">
+      <h4>ओळख व वैयक्तिक माहिती</h4>
+      <div class="agri-grid">
+        <div class="agri-field"><label>Farmer ID</label><input id="farmerId" placeholder="Farmer ID"></div>
+        <div class="agri-field"><label>Enrollment Number</label><input id="farmerEnrollment" placeholder="Enrollment Number"></div>
+        <div class="agri-field"><label>आधार क्रमांक</label><input id="farmerAadhaar" maxlength="12" inputmode="numeric" placeholder="12 अंकी आधार क्रमांक"></div>
+        <div class="agri-field"><label>मोबाईल नंबर</label><input id="farmerMobile" maxlength="10" inputmode="numeric" placeholder="10 अंकी मोबाईल नंबर"></div>
+        <div class="agri-field"><label>Farmer Name (English)</label><input id="farmerNameEnglish" placeholder="Farmer Name in English"></div>
+        <div class="agri-field"><label>शेतकऱ्याचे नाव (मराठी) *</label><input id="farmerNameMarathi" placeholder="शेतकऱ्याचे पूर्ण नाव"></div>
+        <div class="agri-field"><label>वडील / पतीचे नाव *</label><input id="farmerRelation" placeholder="वडील / पतीचे नाव"></div>
+        <div class="agri-field"><label>लिंग</label><select id="farmerGender"><option value="">निवडा</option><option>पुरुष</option><option>स्त्री</option><option>इतर</option></select></div>
+        <div class="agri-field"><label>पत्ता</label><textarea id="farmerAddress" placeholder="संपूर्ण पत्ता"></textarea></div>
+        <div class="agri-field"><label>राज्य</label><input id="farmerState" value="महाराष्ट्र"></div>
       </div>
 
-      <div class="agri-card">
-        <h3>1. कार्डचे डिझाइन निवडा</h3>
-        <div class="design-options">
-          <button type="button" class="design-option selected" id="designOriginal" onclick="selectCardDesign('original')">
-            <div class="design-swatch original"></div>
-            <h4>डिझाइन 1 – Original Style</h4>
-            <div class="agri-muted">हिरवा हेडर, फोटो, वैयक्तिक माहिती आणि जमीन नोंदींचा साधा लेआउट.</div>
-          </button>
-          <button type="button" class="design-option" id="designProfessional" onclick="selectCardDesign('professional')">
-            <div class="design-swatch professional"></div>
-            <h4>डिझाइन 2 – Professional</h4>
-            <div class="agri-muted">निळा-पांढरा आधुनिक लेआउट, स्पष्ट माहिती आणि आकर्षक कार्ड.</div>
-          </button>
-        </div>
-        <p id="selectedDesignText" class="agri-muted">निवडलेले डिझाइन: Original Style</p>
+      <div class="agri-grid">
+        <div class="agri-field"><label>शेतकऱ्याचा फोटो</label><input id="farmerPhoto" type="file" accept="image/*"></div>
+        <div class="agri-field"><label>पीक / Crop फोटो (ऐच्छिक)</label><input id="farmerCropPhoto" type="file" accept="image/*"></div>
       </div>
-
-      <div class="agri-card">
-        <h3>2. शेतकऱ्याची माहिती भरा</h3>
-        <div class="agri-form-section">
-          <h4>ओळख व वैयक्तिक माहिती</h4>
-          <div class="agri-grid">
-            <div class="agri-field"><label>Farmer ID</label><input id="farmerId" placeholder="Farmer ID"></div>
-            <div class="agri-field"><label>Enrollment Number</label><input id="farmerEnrollment" placeholder="Enrollment Number"></div>
-            <div class="agri-field"><label>आधार क्रमांक</label><input id="farmerAadhaar" maxlength="12" inputmode="numeric" placeholder="12 अंकी आधार क्रमांक"></div>
-            <div class="agri-field"><label>मोबाईल नंबर</label><input id="farmerMobile" maxlength="10" inputmode="numeric" placeholder="10 अंकी मोबाईल नंबर"></div>
-            <div class="agri-field"><label>Farmer Name (English)</label><input id="farmerNameEnglish" placeholder="Farmer Name in English"></div>
-            <div class="agri-field"><label>शेतकऱ्याचे नाव (मराठी) *</label><input id="farmerNameMarathi" placeholder="शेतकऱ्याचे पूर्ण नाव"></div>
-            <div class="agri-field"><label>वडील / पतीचे नाव *</label><input id="farmerRelation" placeholder="वडील / पतीचे नाव"></div>
-            <div class="agri-field"><label>लिंग</label><select id="farmerGender"><option value="">निवडा</option><option>पुरुष</option><option>स्त्री</option><option>इतर</option></select></div>
-            <div class="agri-field"><label>पत्ता</label><textarea id="farmerAddress" placeholder="संपूर्ण पत्ता"></textarea></div>
-            <div class="agri-field"><label>राज्य</label><input id="farmerState" value="महाराष्ट्र"></div>
-          </div>
-          <div class="agri-grid">
-            <div class="agri-field"><label>शेतकऱ्याचा फोटो</label><input id="farmerPhoto" type="file" accept="image/*"></div>
-            <div class="agri-field"><label>पीक / Crop फोटो (ऐच्छिक)</label><input id="farmerCropPhoto" type="file" accept="image/*"></div>
-          </div>
-        </div>
-
-        <div class="agri-form-section">
-          <h4>जमिनीची माहिती</h4>
-          <p class="agri-muted">एका शेतकऱ्याच्या अनेक जमीन नोंदी जोडता येतील.</p>
-          <div class="land-table-wrap">
-            <table class="land-table">
-              <thead><tr><th>अ.क्र.</th><th>जिल्हा</th><th>तालुका</th><th>गाव</th><th>गट / खसरा नंबर</th><th>क्षेत्र (हे.)</th><th>काढा</th></tr></thead>
-              <tbody id="landRows">
-                <tr>
-                  <td>1</td>
-                  <td><input class="land-district" placeholder="जिल्हा"></td>
-                  <td><input class="land-taluka" placeholder="तालुका"></td>
-                  <td><input class="land-village" placeholder="गाव"></td>
-                  <td><input class="land-survey" placeholder="गट नंबर"></td>
-                  <td><input class="land-area" type="number" min="0" step="0.001" placeholder="0.00"></td>
-                  <td><button type="button" class="land-remove" onclick="removeLandRow(this)">X</button></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <button type="button" class="agri-action" onclick="addLandRow()">+ जमीन नोंद जोडा</button>
-        </div>
-
-        <button type="button" class="agri-action agri-green" onclick="saveFarmerData()">माहिती सेव्ह करा</button>
-        <button type="button" class="agri-action agri-yellow" onclick="loadFarmerData()">सेव्ह केलेली माहिती उघडा</button>
-        <button type="button" class="agri-action" onclick="clearFarmerForm()">फॉर्म Clear करा</button>
-      </div>
-
-      <div class="agri-card">
-        <h3>3. PDF मधून माहितीचा फोटो Crop करा (ऐच्छिक)</h3>
-        <p class="agri-muted">AgriStack PDF मधील पहिल्या पानाचे Preview दिसेल. फोटोचा भाग निवडून Crop करा.</p>
-        <input id="farmerPdfFile" type="file" accept="application/pdf">
-        <div class="pdf-workspace">
-          <div id="pdfStatus" class="agri-muted">अद्याप PDF निवडलेली नाही.</div>
-          <canvas id="pdfCanvas" class="hidden"></canvas>
-          <button class="agri-action" id="cropPdfButton" onclick="cropPdfSelection()" disabled>निवडलेला फोटो Crop करा</button>
-          <button class="agri-action agri-yellow" onclick="clearPdfSelection()">Selection काढा</button>
-          <canvas id="cropCanvas" class="hidden"></canvas>
-          <button class="agri-action" onclick="useCroppedPhoto()" id="useCropButton" disabled>Crop फोटो कार्डमध्ये वापरा</button>
-        </div>
-      </div>
-
-      <div class="agri-card">
-        <h3>4. कार्ड Preview</h3>
-        <div class="side-tabs">
-          <button type="button" class="side-tab active" id="frontSideTab" onclick="showCardSide('front')">Front Side</button>
-          <button type="button" class="side-tab" id="backSideTab" onclick="showCardSide('back')">Back Side</button>
-        </div>
-        <div class="card-preview-area">
-         
-<div id="farmerFrontCard" class="farmer-print-card original agri-new-front">
-  <div class="agri-front-header">
-    <div class="agri-logo">Agri<span>Stack</span></div>
-    <div class="agri-heading">
-      <strong>शेतकरी नोंदणी कार्ड</strong>
-      <small>महाराष्ट्र शासन — कृषी विभाग</small>
     </div>
-    <div class="agri-emblem">महाराष्ट्र</div>
-  </div>
 
-  <div class="agri-front-body">
-    <div class="agri-photo-box">
-      <img id="cardPhotoPreview" class="card-photo" alt="Farmer Photo">
-    </div>
-    <div class="agri-front-details">
-      <div class="agri-enrollment">Enrollment No.: <span id="cardEnrollment">—</span></div>
-      <div class="agri-detail">नाव: <span id="cardNameMarathi">—</span></div>
-      <div class="agri-detail">वडील/पती: <span id="cardRelation">—</span></div>
-      <div class="agri-detail">लिंग: <span id="cardGender">—</span></div>
-      <div class="agri-detail">मोबाईल: <span id="cardMobile">—</span></div>
-      <div class="agri-detail">आधार नंबर: <span id="cardAadhaar">XXXX XXXX XXXX</span></div>
-      <div class="agri-farmer-id">FARMER ID: <span id="cardFarmerId">—</span></div>
-    </div>
-    <div id="cardQr" class="card-qr"></div>
-    <div class="agri-address">Address: <span id="cardAddress">—</span></div>
-  </div>
-  <div class="agri-front-footer">Maharashtra Farmer Registry</div>
-  <div class="agri-personal-note">वैयक्तिक वापरासाठी नमुना कार्ड — अधिकृत सरकारी ओळखपत्र नाही.</div>
-</div>
-
-<div id="farmerBackCard" class="farmer-print-card original card-hidden agri-new-back">
-  <div class="agri-back-top"></div>
-  <div class="agri-back-title">
-    🌾 जमिनीचा तपशील — Land Records
-    <span>FARMER ID — <b id="cardBackFarmerId">—</b></span>
-  </div>
-  <table class="card-land-table agri-land-table">
-    <thead>
-      <tr>
-        <th>अ.क्र.</th><th>जिल्हा</th><th>तहसील</th>
-        <th>गाव</th><th>खसरा</th><th>क्षेत्र (हे.)</th>
-      </tr>
-    </thead>
-    <tbody id="cardLandRows">
-      <tr><td colspan="6">जमिनीची माहिती उपलब्ध नाही</td></tr>
-    </tbody>
-  </table>
-  <div class="agri-total-box">
-    <div>एकूण क्षेत्र (हेक्टर)<b id="cardTotalArea">0.000 हे.</b></div>
-    <div>एकूण खसरा<b id="cardTotalGroups">0</b></div>
-  </div>
-  <div class="agri-back-watermark">शेतकरी आणि शेती</div>
-  <div class="agri-back-footer">This card is for personal use only, not a Government-issued card.</div>
-</div>
-
-        <div id="qrSource"></div>
-        <p class="agri-muted">QR कोड AgriStack च्या अधिकृत वेबसाइटची लिंक उघडेल. तो Farmer ID ची पडताळणी करत नाही.</p>
-        <button type="button" class="agri-action" onclick="refreshFarmerCard()">Preview Update</button>
-        <button type="button" class="agri-action agri-green" onclick="downloadFarmerPDF('a4')">A4 PDF Download (दोन्ही बाजू)</button>
-        <button type="button" class="agri-action agri-yellow" onclick="downloadFarmerPDF('pvc')">PVC PDF Download (Front/Back)</button>
-        <div id="agriDownloadStatus" class="agri-muted" aria-live="polite"></div>
+    <div class="agri-form-section">
+      <h4>जमिनीची माहिती</h4>
+      <p class="agri-muted">एका शेतकऱ्याच्या अनेक जमीन नोंदी जोडता येतील.</p>
+      <div class="land-table-wrap">
+        <table class="land-table">
+          <thead><tr><th>अ.क्र.</th><th>जिल्हा</th><th>तालुका</th><th>गाव</th><th>गट / खसरा नंबर</th><th>क्षेत्र (हे.)</th><th>काढा</th></tr></thead>
+          <tbody id="landRows">
+            <tr>
+              <td>1</td>
+              <td><input class="land-district" placeholder="जिल्हा"></td>
+              <td><input class="land-taluka" placeholder="तालुका"></td>
+              <td><input class="land-village" placeholder="गाव"></td>
+              <td><input class="land-survey" placeholder="गट नंबर"></td>
+              <td><input class="land-area" type="number" min="0" step="0.001" placeholder="0.00"></td>
+              <td><button type="button" class="land-remove" onclick="removeLandRow(this)">X</button></td>
+            </tr>
+          </tbody>
+        </table>
       </div>
-    </section>
+      <button type="button" class="agri-action" onclick="addLandRow()">+ जमीन नोंद जोडा</button>
+    </div>
+
+    <button type="button" class="agri-action agri-green" onclick="saveFarmerData()">माहिती सेव्ह करा</button>
+    <button type="button" class="agri-action agri-yellow" onclick="loadFarmerData()">सेव्ह केलेली माहिती उघडा</button>
+    <button type="button" class="agri-action" onclick="clearFarmerForm()">फॉर्म Clear करा</button>
+  </div>
+
+  <div class="agri-card">
+    <h3>2. PDF मधून फोटो Crop करा (ऐच्छिक)</h3>
+    <p class="agri-muted">AgriStack PDF मधील पहिल्या पानाचे Preview दिसेल. फोटोचा भाग निवडून Crop करा.</p>
+    <input id="farmerPdfFile" type="file" accept="application/pdf">
+    <div class="pdf-workspace">
+      <div id="pdfStatus" class="agri-muted">अद्याप PDF निवडलेली नाही.</div>
+      <canvas id="pdfCanvas" class="hidden"></canvas>
+      <button class="agri-action" id="cropPdfButton" onclick="cropPdfSelection()" disabled>निवडलेला फोटो Crop करा</button>
+      <button class="agri-action agri-yellow" onclick="clearPdfSelection()">Selection काढा</button>
+      <canvas id="cropCanvas" class="hidden"></canvas>
+      <button class="agri-action" onclick="useCroppedPhoto()" id="useCropButton" disabled>Crop फोटो कार्डमध्ये वापरा</button>
+    </div>
+  </div>
+
+  <div class="agri-card">
+    <h3>3. नवीन कार्ड Preview</h3>
+
+    <div class="side-tabs">
+      <button type="button" class="side-tab active" id="frontSideTab" onclick="showCardSide('front')">FRONT SIDE</button>
+      <button type="button" class="side-tab" id="backSideTab" onclick="showCardSide('back')">BACK SIDE</button>
+    </div>
+
+    <div class="card-preview-area">
+
+      <!-- FRONT CARD -->
+      <div id="farmerFrontCard" class="farmer-print-card original agri-new-front">
+        <div class="agri-front-header">
+          <div class="agri-logo">Agri<span>Stack</span></div>
+          <div class="agri-heading">
+            <strong>शेतकरी नोंदणी कार्ड</strong>
+            <small>महाराष्ट्र शासन — कृषी विभाग</small>
+          </div>
+          <div class="agri-emblem">महाराष्ट्र</div>
+        </div>
+
+        <div class="agri-front-body">
+          <div class="agri-photo-box">
+            <img id="cardPhotoPreview" class="card-photo" alt="Farmer Photo">
+          </div>
+
+          <div class="agri-front-details">
+            <div class="agri-enrollment">Enrollment No.: <span id="cardEnrollment">—</span></div>
+            <div class="agri-detail">नाव: <span id="cardNameMarathi">—</span></div>
+            <div class="agri-detail">Name: <span id="cardNameEnglish">—</span></div>
+            <div class="agri-detail">वडील/पती: <span id="cardRelation">—</span></div>
+            <div class="agri-detail">लिंग: <span id="cardGender">—</span></div>
+            <div class="agri-detail">मोबाईल: <span id="cardMobile">—</span></div>
+            <div class="agri-detail">आधार: <span id="cardAadhaar">XXXX XXXX XXXX</span></div>
+            <div class="agri-farmer-id">FARMER ID: <span id="cardFarmerId">—</span></div>
+          </div>
+
+          <div id="cardQr" class="card-qr"></div>
+          <div class="agri-address">पत्ता: <span id="cardAddress">—</span></div>
+        </div>
+
+        <div class="agri-front-footer">Maharashtra Farmer Registry</div>
+        <div class="agri-personal-note">वैयक्तिक वापरासाठी नमुना कार्ड — अधिकृत सरकारी ओळखपत्र नाही.</div>
+      </div>
+
+      <!-- BACK CARD -->
+      <div id="farmerBackCard" class="farmer-print-card original card-hidden agri-new-back">
+        <div class="agri-back-top"></div>
+
+        <div class="agri-back-title">
+          🌾 जमिनीचा तपशील — LAND INFORMATION
+          <span>FARMER ID: <b id="cardBackFarmerId">—</b></span>
+        </div>
+
+        <table class="card-land-table agri-land-table">
+          <thead>
+            <tr>
+              <th>अ.क्र.</th>
+              <th>जिल्हा</th>
+              <th>तालुका</th>
+              <th>गाव</th>
+              <th>गट / खसरा</th>
+              <th>क्षेत्र (हे.)</th>
+            </tr>
+          </thead>
+          <tbody id="cardLandRows">
+            <tr><td colspan="6">जमिनीची माहिती उपलब्ध नाही</td></tr>
+          </tbody>
+        </table>
+
+        <div class="agri-total-box">
+          <div>एकूण क्षेत्र (हेक्टर)<b id="cardTotalArea">0.000 हे.</b></div>
+          <div>एकूण गट<b id="cardTotalGroups">0</b></div>
+        </div>
+
+        <div class="agri-back-watermark">शेतकरी आणि शेती 🌾</div>
+        <div class="agri-back-footer">वैयक्तिक वापरासाठी नमुना कार्ड — अधिकृत सरकारी ओळखपत्र नाही.</div>
+      </div>
+
+    </div>
+
+    <div id="qrSource"></div>
+    <p class="agri-muted">QR कोड AgriStack च्या अधिकृत वेबसाइटची लिंक उघडेल. तो Farmer ID ची पडताळणी करत नाही.</p>
+
+    <button type="button" class="agri-action" onclick="refreshFarmerCard()">Preview Update</button>
+    <button type="button" class="agri-action agri-green" onclick="downloadFarmerPDF('a4')">A4 PDF Download (दोन्ही बाजू)</button>
+    <button type="button" class="agri-action agri-yellow" onclick="downloadFarmerPDF('pvc')">PVC PDF Download (Front/Back)</button>
+
+    <div id="agriDownloadStatus" class="agri-muted" aria-live="polite"></div>
+  </div>
+</section>
 
     <!-- ADMIN SECTION -->
     <section id="adminSection" class="hidden">
