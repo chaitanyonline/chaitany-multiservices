@@ -1762,21 +1762,54 @@ function refreshFarmerCard(){
   generateAgriQR();
 }
 
-/* QR: OFFICIAL WEBSITE LINK ONLY */
+
+/* QR CODE - FARMER INFORMATION */
 function generateAgriQR(){
+
   const target = document.getElementById("cardQr");
   target.innerHTML = "";
 
-  if(typeof QRCode==="undefined"){
-    target.textContent = "AgriStack";
+  if(typeof QRCode === "undefined"){
+    target.textContent = "QR Code उपलब्ध नाही";
     return;
   }
 
-  new QRCode(target,{
-    text:"https://mhfr.agristack.gov.in/",
-    width:66,
-    height:66,
-    correctLevel:QRCode.CorrectLevel.M
+  const data = getFarmerFormData();
+
+  const aadhaarLast4 = (data.aadhaar || "")
+    .replace(/\D/g, "")
+    .slice(-4);
+
+  const landInfo = (data.lands || [])
+    .filter(land => land.district || land.taluka || land.village || land.survey || land.area)
+    .map((land, index) =>
+      `${index + 1}. जिल्हा: ${land.district || "-"}, तालुका: ${land.taluka || "-"}, गाव: ${land.village || "-"}, गट/सर्व्हे: ${land.survey || "-"}, क्षेत्र: ${land.area || "-"} हे.`
+    );
+
+  const farmerInfo = [
+    "CHAITANY MULTISERVICES - Farmer Information",
+    "ही वापरकर्त्याने भरलेली माहिती आहे. शासकीय पडताळणी नाही.",
+    "",
+    "शेतकऱ्याचे नाव: " + (data.nameMarathi || "-"),
+    "English Name: " + (data.nameEnglish || "-"),
+    "वडील/पती: " + (data.relation || "-"),
+    "लिंग: " + (data.gender || "-"),
+    "Farmer ID: " + (data.farmerId || "-"),
+    "Enrollment No: " + (data.enrollment || "-"),
+    "मोबाईल: " + (data.mobile || "-"),
+    "आधार: XXXX XXXX " + (aadhaarLast4 || "XXXX"),
+    "पत्ता: " + (data.address || "-"),
+    "राज्य: " + (data.state || "-"),
+    "",
+    "जमिनीची माहिती:",
+    ...(landInfo.length ? landInfo : ["जमिनीची माहिती उपलब्ध नाही"])
+  ].join("\n");
+
+  new QRCode(target, {
+    text: farmerInfo,
+    width: 180,
+    height: 180,
+    correctLevel: QRCode.CorrectLevel.M
   });
 
   agriQrReady = true;
