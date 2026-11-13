@@ -677,7 +677,8 @@ td,th{padding:11px;border-bottom:1px solid #e5eaf0;text-align:left}
       </div>
     </section>
  
-<!-- NEW AGRISTACK CARD MAKER -->
+
+<!-- CHAITANY AGRISTACK SAMPLE CARD MAKER -->
 
 <section id="agristackSection" class="hidden">
   <div class="new-agri-maker">
@@ -688,41 +689,35 @@ td,th{padding:11px;border-bottom:1px solid #e5eaf0;text-align:left}
       वैयक्तिक वापरासाठी नमुना कार्ड — अधिकृत सरकारी ओळखपत्र नाही.
     </div>
 
-    <h3>👨‍🌾 शेतकरी माहिती भरा</h3>
+    <h3>👨‍🌾 शेतकरी माहिती</h3>
 
     <div class="new-agri-form-grid">
       <div>
         <label>शेतकऱ्याचे पूर्ण नाव</label>
         <input id="newAgriNameInput" type="text" placeholder="पूर्ण नाव">
       </div>
-
       <div>
         <label>Farmer ID</label>
         <input id="newAgriIdInput" type="text" placeholder="Farmer ID">
       </div>
-
       <div>
         <label>गाव</label>
-        <input id="newAgriVillageInput" type="text" placeholder="गावाचे नाव">
+        <input id="newAgriVillageInput" type="text" placeholder="गाव">
       </div>
-
       <div>
         <label>तालुका</label>
         <input id="newAgriTalukaInput" type="text" placeholder="तालुका">
       </div>
-
       <div>
         <label>जिल्हा</label>
         <input id="newAgriDistrictInput" type="text" placeholder="जिल्हा">
       </div>
-
       <div>
         <label>मोबाईल नंबर</label>
         <input id="newAgriMobileInput" type="tel" maxlength="10" placeholder="मोबाईल नंबर">
       </div>
-
       <div class="new-agri-photo-field">
-        <label>शेतकऱ्याचा फोटो निवडा</label>
+        <label>शेतकऱ्याचा फोटो</label>
         <input id="newAgriPhotoInput" type="file" accept="image/*">
       </div>
     </div>
@@ -731,7 +726,7 @@ td,th{padding:11px;border-bottom:1px solid #e5eaf0;text-align:left}
 
     <div id="newAgriLandRows">
       <div class="new-agri-land-row">
-        <input type="text" class="new-agri-gat" placeholder="गट नंबर">
+        <input type="text" class="new-agri-gat" placeholder="गट / सर्वे नंबर">
         <input type="text" class="new-agri-area" placeholder="क्षेत्र (हेक्टर)">
       </div>
     </div>
@@ -742,29 +737,24 @@ td,th{padding:11px;border-bottom:1px solid #e5eaf0;text-align:left}
 
     <h3>🪪 कार्ड पूर्वावलोकन</h3>
 
+    <!-- FRONT SIDE -->
+    <h4>कार्डची समोरील बाजू</h4>
+
     <div class="new-agri-card" id="newAgriCard">
 
       <div class="new-agri-card-header">
-        <div class="new-agri-logo">
-          <span>🌾</span>
-        </div>
+        <div class="new-agri-logo">🌾</div>
         <div class="new-agri-heading">
           <strong>FARMER INFORMATION CARD</strong>
           <small>AGRICULTURE • FARMER PROFILE</small>
         </div>
       </div>
 
-      <div class="new-agri-card-art">
-        <span>🌾</span>
-        <span>🚜</span>
-        <span>🌾</span>
-      </div>
-
       <div class="new-agri-card-body">
 
         <div class="new-agri-photo-box">
           <img id="newAgriPhoto" alt="Farmer Photo"
-               src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='140'%3E%3Crect width='100%25' height='100%25' fill='%23dcebd5'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dominant-baseline='middle' font-size='14' fill='%23345b32'%3EPHOTO%3C/text%3E%3C/svg%3E">
+            src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='140'%3E%3Crect width='100%25' height='100%25' fill='%23dcebd5'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dominant-baseline='middle' font-size='14' fill='%23345b32'%3EPHOTO%3C/text%3E%3C/svg%3E">
         </div>
 
         <div class="new-agri-card-details">
@@ -787,7 +777,7 @@ td,th{padding:11px;border-bottom:1px solid #e5eaf0;text-align:left}
 
         <div class="new-agri-qr-box">
           <div id="newAgriQR"></div>
-          <small>SCAN QR</small>
+          <small>QR SAMPLE</small>
         </div>
 
       </div>
@@ -796,16 +786,52 @@ td,th{padding:11px;border-bottom:1px solid #e5eaf0;text-align:left}
         CHAITANY MULTISERVICES • SAMPLE CARD
       </div>
 
+      <div class="new-agri-disclaimer">
+        नमुना कार्ड • अधिकृत सरकारी ओळखपत्र नाही
+      </div>
+
     </div>
 
-    <h3>📋 जमिनीचा तपशील</h3>
+    <!-- BACK SIDE -->
+    <h4>कार्डची मागील बाजू</h4>
 
-    <div class="new-agri-land-preview" id="newAgriLandPreview">
-      जमिनीची माहिती येथे दिसेल.
-    </div>
+    <div class="new-agri-card new-agri-back-card">
 
-    <div class="new-agri-total">
-      एकूण क्षेत्र: <strong id="newAgriTotalArea">0</strong> हेक्टर
+      <div class="new-agri-card-header">
+        <div class="new-agri-logo">🌱</div>
+        <div class="new-agri-heading">
+          <strong>LAND INFORMATION</strong>
+          <small>FARMER LAND DETAILS • SAMPLE</small>
+        </div>
+      </div>
+
+      <div class="new-agri-back-farmer">
+        <strong id="newAgriBackName">शेतकऱ्याचे नाव</strong>
+        <span>Farmer ID: <b id="newAgriBackId">-</b></span>
+        <span>गाव: <b id="newAgriBackVillage">-</b></span>
+      </div>
+
+      <div class="new-agri-land-preview" id="newAgriLandPreview">
+        जमिनीची माहिती येथे दिसेल.
+      </div>
+
+      <div class="new-agri-total">
+        एकूण क्षेत्र:
+        <strong id="newAgriTotalArea">0</strong> हेक्टर
+      </div>
+
+      <div class="new-agri-back-art">
+        🌾 शेत • शेती • शेतकरी 🌾
+      </div>
+
+      <div class="new-agri-card-footer">
+        CHAITANY MULTISERVICES • SAMPLE CARD
+      </div>
+
+      <div class="new-agri-disclaimer">
+        नमुना कार्ड • अधिकृत सरकारी ओळखपत्र नाही
+      </div>
+
     </div>
 
     <div class="new-agri-actions">
@@ -817,6 +843,7 @@ td,th{padding:11px;border-bottom:1px solid #e5eaf0;text-align:left}
 
   </div>
 </section>
+
 
     <!-- ADMIN SECTION -->
     <section id="adminSection" class="hidden">
