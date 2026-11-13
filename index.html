@@ -1687,8 +1687,9 @@ async function renderTransactions(){
 </script>
   
 <script>
-/* LOGIN */
-document.getElementById("loginForm").addEventListener("submit",async function(e){
+
+/* LOGIN - DIAGNOSTIC */
+document.getElementById("loginForm").addEventListener("submit", async function(e) {
   e.preventDefault();
 
   const button = document.getElementById("loginButton");
@@ -1696,41 +1697,55 @@ document.getElementById("loginForm").addEventListener("submit",async function(e)
 
   button.disabled = true;
   button.textContent = "Please wait...";
-  message.textContent = "";
+  message.textContent = "Supabase शी संपर्क सुरू आहे...";
 
-  try{
+  try {
     const identifier = document.getElementById("loginIdentifier").value.trim();
     const password = document.getElementById("loginPassword").value;
 
-    const {data,error} = await db.functions.invoke("clever-service",{
-      body:{identifier,password}
+    console.log("LOGIN STEP 1: Starting");
+
+    const { data, error } = await db.functions.invoke("clever-service", {
+      body: { identifier, password }
     });
 
-    if(error) throw error;
-    if(data?.error) throw new Error(data.error);
+    console.log("LOGIN STEP 2: Function response", data, error);
 
-    if(!data?.access_token || !data?.refresh_token){
+    if (error) throw error;
+    if (data?.error) throw new Error(data.error);
+
+    if (!data?.access_token || !data?.refresh_token) {
       throw new Error("Login session मिळाली नाही.");
     }
 
-    const {data:sessionData,error:sessionError} = await db.auth.setSession({
-      access_token:data.access_token,
-      refresh_token:data.refresh_token
+    message.textContent = "Session तयार होत आहे...";
+
+    const { data: sessionData, error: sessionError } = await db.auth.setSession({
+      access_token: data.access_token,
+      refresh_token: data.refresh_token
     });
 
-    if(sessionError) throw sessionError;
+    console.log("LOGIN STEP 3: Session response", sessionData, sessionError);
+
+    if (sessionError) throw sessionError;
 
     currentUser = sessionData.user;
+
+    message.textContent = "Dashboard उघडत आहे...";
+
     await loadDashboard();
 
-  }catch(error){
-    console.error("Login error:",error);
-    message.textContent = error.message||"Login Failed";
-  }finally{
+    console.log("LOGIN STEP 4: Dashboard loaded");
+
+  } catch (error) {
+    console.error("Login error:", error);
+    message.textContent = error.message || "Login Failed";
+  } finally {
     button.disabled = false;
     button.textContent = "Login";
   }
 });
+
 
 /* REGISTRATION */
 document.getElementById("registerForm").addEventListener("submit",async function(e){
