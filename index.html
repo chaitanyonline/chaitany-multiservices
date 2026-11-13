@@ -1687,7 +1687,6 @@ async function renderTransactions(){
 </script>
   
 <script>
-
 /* LOGIN - DIAGNOSTIC */
 document.getElementById("loginForm").addEventListener("submit", async function(e) {
   e.preventDefault();
@@ -1745,7 +1744,6 @@ document.getElementById("loginForm").addEventListener("submit", async function(e
     button.textContent = "Login";
   }
 });
-  
 
 /* REGISTRATION */
 document.getElementById("registerForm").addEventListener("submit",async function(e){
@@ -1823,6 +1821,7 @@ db.auth.getSession().then(async({data,error})=>{
     await loadDashboard();
   }
 });
+</script>
 
 <script>
 /* NEW CHAITANY AGRISTACK MAKER */
