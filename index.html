@@ -195,397 +195,302 @@ td,th{padding:11px;border-bottom:1px solid #e5eaf0;text-align:left}
   }
 }
  
-/* ===== CHAITANY AGRISTACK CARD DESIGN ===== */
 
-.new-agri-maker {
-  width: 100%;
-  padding: 18px;
-  box-sizing: border-box;
-}
+/* CHAITANY AGRISTACK - NEW GREEN YELLOW PVC DESIGN */
 
-.new-agri-notice {
-  background: #fff4d6;
-  color: #795400;
-  border: 1px solid #e8c66b;
-  padding: 12px;
-  border-radius: 8px;
-  margin: 12px 0 20px;
-  font-weight: 600;
-}
-
-.new-agri-maker h3 {
-  margin: 22px 0 12px;
-  color: #185b32;
-}
-
-.new-agri-maker h4 {
-  margin: 14px 0 10px;
-  color: #246b3a;
-}
-
-.new-agri-form-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 13px;
-}
-
-.new-agri-form-grid label {
-  display: block;
-  font-weight: 600;
-  margin-bottom: 6px;
-}
-
-.new-agri-form-grid input,
-.new-agri-land-row input {
-  width: 100%;
-  min-width: 0;
-  box-sizing: border-box;
-  padding: 11px;
-  border: 1px solid #cbd9c9;
-  border-radius: 7px;
-  background: #fff;
-}
-
-.new-agri-photo-field {
-  grid-column: 1 / -1;
-}
-
-.new-agri-land-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-  margin-bottom: 10px;
-}
-
-.new-agri-btn,
-.new-agri-actions button {
-  border: 0;
-  padding: 11px 16px;
-  border-radius: 7px;
-  background: #18713a;
-  color: white;
-  font-weight: 700;
-  cursor: pointer;
-}
-
-.new-agri-btn {
-  margin-top: 8px;
-}
-
-/* CARD FRONT AND BACK */
-
-.new-agri-card {
+.new-agri-maker .new-agri-card {
   position: relative;
-  width: 100%;
-  max-width: 680px;
-  aspect-ratio: 1.586 / 1;
-  margin: 12px auto 24px;
-  padding: 14px;
-  box-sizing: border-box;
+  width: 540px;
+  max-width: 100%;
+  min-height: 340px;
+  margin: 18px auto 28px;
+  padding: 0;
   overflow: hidden;
-  border: 3px solid #d6b83e;
   border-radius: 17px;
-  background: linear-gradient(135deg, #f8ffe9, #d8efc9 55%, #b8dda9);
-  color: #174a29;
-  box-shadow: 0 5px 16px rgba(0,0,0,.16);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  border: 2px solid #d7c34b;
+  background: linear-gradient(135deg, #fffde8 0%, #f4f8d6 48%, #e1efbd 100%);
+  box-shadow: 0 8px 22px rgba(30, 75, 35, .20);
+  color: #173d25;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
 }
 
-.new-agri-card::before {
-  content: "";
-  position: absolute;
-  width: 190px;
-  height: 190px;
-  right: -55px;
-  bottom: -75px;
-  border: 18px solid rgba(54,130,61,.10);
-  border-radius: 50%;
-  pointer-events: none;
-}
-
-.new-agri-card-header {
+.new-agri-maker .new-agri-card-header {
+  min-height: 66px;
+  padding: 12px 17px;
   display: flex;
   align-items: center;
   gap: 12px;
-  padding-bottom: 9px;
-  border-bottom: 2px solid #d5b536;
-  position: relative;
-  z-index: 1;
+  background: linear-gradient(100deg, #145c32, #328a42);
+  color: white;
+  border-bottom: 4px solid #f1d34e;
+  box-sizing: border-box;
 }
 
-.new-agri-logo {
-  width: 48px;
-  height: 48px;
+.new-agri-maker .new-agri-logo {
+  width: 45px;
+  height: 45px;
   flex-shrink: 0;
+  display: grid;
+  place-items: center;
   border-radius: 50%;
-  background: #176d37;
-  color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 27px;
-  border: 2px solid #e6c64d;
+  background: #f6dc59;
+  color: #15532e;
+  font-size: 25px;
 }
 
-.new-agri-heading {
+.new-agri-maker .new-agri-heading {
   display: flex;
   flex-direction: column;
   gap: 4px;
   min-width: 0;
 }
 
-.new-agri-heading strong {
-  font-size: clamp(12px, 2.5vw, 19px);
+.new-agri-maker .new-agri-heading strong {
+  font-size: 19px;
   letter-spacing: .5px;
-  color: #15542d;
+  line-height: 1.2;
 }
 
-.new-agri-heading small {
-  font-size: clamp(8px, 1.5vw, 11px);
-  color: #52744d;
+.new-agri-maker .new-agri-heading small {
+  font-size: 10px;
+  letter-spacing: 1.4px;
+  color: #fff2a8;
 }
 
-.new-agri-card-body {
+.new-agri-maker .new-agri-card-body {
   display: grid;
-  grid-template-columns: 22% minmax(0, 1fr) 19%;
-  gap: 12px;
+  grid-template-columns: 112px minmax(0, 1fr) 92px;
+  gap: 13px;
   align-items: center;
-  flex: 1;
-  min-height: 0;
-  padding: 10px 0;
-  position: relative;
-  z-index: 1;
+  padding: 20px 16px 14px;
+  box-sizing: border-box;
 }
 
-.new-agri-photo-box {
-  height: 100%;
-  max-height: 135px;
-  min-height: 75px;
-  border: 2px solid #d5b536;
-  border-radius: 8px;
-  background: #eaf4e4;
-  overflow: hidden;
+.new-agri-maker .new-agri-photo-box {
+  width: 108px;
+  height: 132px;
+  padding: 4px;
+  background: white;
+  border: 2px solid #d3b932;
+  border-radius: 9px;
+  box-shadow: 0 3px 8px #244d2822;
+  box-sizing: border-box;
 }
 
-.new-agri-photo-box img {
+.new-agri-maker .new-agri-photo-box img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  border-radius: 5px;
+  display: block;
 }
 
-.new-agri-card-details {
+.new-agri-maker .new-agri-card-details {
+  min-width: 0;
   display: flex;
   flex-direction: column;
-  gap: 3px;
-  min-width: 0;
-  overflow: hidden;
-}
-
-.new-agri-card-details strong {
-  font-size: clamp(11px, 2.1vw, 17px);
+  gap: 4px;
   overflow-wrap: anywhere;
-  color: #174c2a;
 }
 
-.new-agri-card-details small {
-  font-size: clamp(7px, 1.2vw, 9px);
-  color: #54734d;
+.new-agri-maker .new-agri-card-details > strong {
+  color: #15572e;
+  font-size: 18px;
+  line-height: 1.3;
+  margin-bottom: 4px;
+}
+
+.new-agri-maker .new-agri-card-details small {
+  font-size: 9px;
+  font-weight: bold;
+  color: #6c7e42;
+  letter-spacing: .7px;
   margin-top: 3px;
 }
 
-.new-agri-card-details b {
-  color: #a52d20;
-  font-size: clamp(10px, 1.8vw, 14px);
-  overflow-wrap: anywhere;
+.new-agri-maker .new-agri-card-details b {
+  color: #173d25;
+  font-size: 13px;
 }
 
-.new-agri-card-details span {
-  font-size: clamp(9px, 1.5vw, 12px);
-  overflow-wrap: anywhere;
+.new-agri-maker .new-agri-card-details span {
+  font-size: 12px;
+  font-weight: 600;
+  color: #294b2d;
 }
 
-.new-agri-qr-box {
-  text-align: center;
-  min-width: 0;
-}
-
-.new-agri-qr-box #newAgriQR {
-  width: 100%;
-  aspect-ratio: 1;
-  max-width: 105px;
-  margin: auto;
-  padding: 4px;
-  box-sizing: border-box;
-  background: white;
-  border: 1px solid #d5b536;
-  border-radius: 5px;
+.new-agri-maker .new-agri-qr-box {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
+  gap: 5px;
+  padding: 6px;
+  background: white;
+  border: 1px solid #d8c34b;
+  border-radius: 8px;
+  box-sizing: border-box;
+}
+
+.new-agri-maker .new-agri-qr-box #newAgriQR {
+  width: 90px;
+  height: 90px;
+  display: grid;
+  place-items: center;
   overflow: hidden;
 }
 
-.new-agri-qr-box canvas,
-.new-agri-qr-box img {
-  max-width: 100%;
-  max-height: 100%;
+.new-agri-maker .new-agri-qr-box #newAgriQR img,
+.new-agri-maker .new-agri-qr-box #newAgriQR canvas {
+  max-width: 90px;
+  max-height: 90px;
 }
 
-.new-agri-qr-box small {
-  display: block;
-  margin-top: 4px;
+.new-agri-maker .new-agri-qr-box small {
   font-size: 9px;
-  font-weight: 700;
+  font-weight: bold;
+  color: #477039;
 }
 
-.new-agri-card-footer {
-  text-align: center;
-  background: #176d37;
-  color: #fff;
-  padding: 7px 4px;
-  border-radius: 5px;
-  font-size: clamp(8px, 1.4vw, 11px);
-  font-weight: 700;
-  letter-spacing: .4px;
-  position: relative;
-  z-index: 1;
-}
-
-.new-agri-disclaimer {
-  text-align: center;
-  color: #795400;
-  font-size: 9px;
-  font-weight: 700;
+.new-agri-maker .new-agri-card-footer {
   margin-top: 4px;
-  position: relative;
-  z-index: 1;
+  padding: 9px 12px;
+  text-align: center;
+  background: #246c38;
+  color: #fff7c5;
+  font-size: 11px;
+  font-weight: bold;
+  letter-spacing: .7px;
 }
 
-/* BACK SIDE */
-
-.new-agri-back-card {
-  background: linear-gradient(145deg, #f9ffe9, #d9edc9 65%, #c2dfa9);
+.new-agri-maker .new-agri-disclaimer {
+  padding: 6px 10px;
+  text-align: center;
+  background: #f7df70;
+  color: #594800;
+  font-size: 10px;
+  font-weight: bold;
 }
 
-.new-agri-back-farmer {
+.new-agri-maker .new-agri-back-card {
+  background: linear-gradient(140deg, #f8fbdc, #e4efbd);
+}
+
+.new-agri-maker .new-agri-back-farmer {
   display: flex;
   flex-wrap: wrap;
   gap: 8px 18px;
-  padding: 9px;
-  margin: 8px 0;
-  background: rgba(255,255,255,.55);
-  border: 1px solid #c4d9ad;
-  border-radius: 7px;
-  font-size: clamp(9px, 1.5vw, 12px);
+  padding: 13px 17px 7px;
+  font-size: 12px;
+  color: #294b2d;
 }
 
-.new-agri-back-farmer strong {
+.new-agri-maker .new-agri-back-farmer strong {
   width: 100%;
-  font-size: clamp(11px, 2vw, 15px);
+  font-size: 16px;
+  color: #15572e;
 }
 
-.new-agri-land-preview {
-  position: relative;
-  z-index: 1;
-  overflow-x: auto;
-  background: rgba(255,255,255,.75);
-  border: 1px solid #b8d0a9;
-  border-radius: 7px;
+.new-agri-maker .new-agri-land-preview {
+  margin: 8px 14px;
   padding: 8px;
-  font-size: 11px;
+  background: rgba(255,255,255,.8);
+  border: 1px solid #c9d99b;
+  border-radius: 8px;
+  overflow-x: auto;
+  font-size: 10px;
+  color: #243d27;
 }
 
-.new-agri-land-preview table {
+.new-agri-maker .new-agri-preview-table {
   width: 100%;
   border-collapse: collapse;
+  font-size: 10px;
+}
+
+.new-agri-maker .new-agri-preview-table th {
+  background: #327a3e;
+  color: white;
+  padding: 6px 4px;
+}
+
+.new-agri-maker .new-agri-preview-table td {
+  padding: 6px 4px;
+  border-bottom: 1px solid #dce5c5;
   text-align: center;
 }
 
-.new-agri-land-preview th,
-.new-agri-land-preview td {
-  border: 1px solid #b8cda9;
-  padding: 6px;
+.new-agri-maker .new-agri-total {
+  margin: 9px 15px;
+  padding: 9px;
+  background: #f5df72;
+  border-radius: 7px;
+  color: #4a451d;
+  font-size: 13px;
 }
 
-.new-agri-land-preview th {
-  background: #dcebd1;
-}
-
-.new-agri-total {
-  position: relative;
-  z-index: 1;
-  text-align: right;
-  padding: 7px;
-  color: #185b32;
-  font-weight: 700;
-}
-
-.new-agri-back-art {
+.new-agri-maker .new-agri-back-art {
   text-align: center;
-  font-size: clamp(13px, 2vw, 20px);
-  padding: 5px;
-  opacity: .8;
+  padding: 8px;
+  color: #397a3c;
+  font-size: 16px;
+  font-weight: bold;
 }
 
-.new-agri-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 20px;
+.new-agri-maker #newAgriLandRows tr td {
+  padding: 4px;
 }
 
-.new-agri-actions button {
-  flex: 1 1 150px;
+.new-agri-maker #newAgriLandRows input {
+  width: 100%;
+  min-width: 75px;
+  padding: 9px;
+  box-sizing: border-box;
 }
 
-@media (max-width: 520px) {
-  .new-agri-maker {
-    padding: 8px;
+@media (max-width: 600px) {
+  .new-agri-maker .new-agri-card {
+    width: 100%;
+    min-height: 0;
   }
 
-  .new-agri-form-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .new-agri-card {
-    padding: 8px;
-    border-radius: 11px;
-  }
-
-  .new-agri-card-body {
-    gap: 6px;
-    grid-template-columns: 22% minmax(0, 1fr) 19%;
-  }
-
-  .new-agri-photo-box {
-    max-height: 95px;
-  }
-
-  .new-agri-card-header {
+  .new-agri-maker .new-agri-card-body {
+    grid-template-columns: 82px minmax(0, 1fr) 70px;
     gap: 7px;
+    padding: 13px 8px;
   }
 
-  .new-agri-logo {
-    width: 35px;
-    height: 35px;
-    font-size: 20px;
+  .new-agri-maker .new-agri-photo-box {
+    width: 80px;
+    height: 108px;
   }
 
-  .new-agri-back-farmer {
-    gap: 4px 10px;
-    padding: 5px;
+  .new-agri-maker .new-agri-card-details > strong {
+    font-size: 14px;
   }
 
-  .new-agri-land-preview {
-    padding: 4px;
-    font-size: 9px;
+  .new-agri-maker .new-agri-card-details span,
+  .new-agri-maker .new-agri-card-details b {
+    font-size: 10px;
   }
 
-  .new-agri-land-preview th,
-  .new-agri-land-preview td {
-    padding: 4px 2px;
+  .new-agri-maker .new-agri-qr-box {
+    padding: 3px;
+  }
+
+  .new-agri-maker .new-agri-qr-box #newAgriQR,
+  .new-agri-maker .new-agri-qr-box #newAgriQR img,
+  .new-agri-maker .new-agri-qr-box #newAgriQR canvas {
+    width: 64px;
+    height: 64px;
+  }
+
+  .new-agri-maker .new-agri-heading strong {
+    font-size: 15px;
+  }
+
+  .new-agri-maker .new-agri-heading small {
+    font-size: 8px;
   }
 }
 
