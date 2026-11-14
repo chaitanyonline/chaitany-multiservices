@@ -716,7 +716,6 @@ td,th{padding:11px;border-bottom:1px solid #e5eaf0;text-align:left}
         <p><b>Mobile:</b> <span id="profileMobile"></span></p>
       </div>
     </section>
- 
 
 <!-- CHAITANY AGRISTACK SAMPLE CARD MAKER -->
 
@@ -764,12 +763,11 @@ td,th{padding:11px;border-bottom:1px solid #e5eaf0;text-align:left}
 
     <h3>🌱 जमिनीची माहिती</h3>
 
-    <div id="newAgriLandRows">
-      <div class="new-agri-land-row">
-        <input type="text" class="new-agri-gat" placeholder="गट / सर्वे नंबर">
-        <input type="text" class="new-agri-area" placeholder="क्षेत्र (हेक्टर)">
-      </div>
-    </div>
+<div class="new-agri-land-table">
+  <table>
+    <tbody id="newAgriLandRows"></tbody>
+  </table>
+</div>
 
     <button type="button" id="newAgriAddLand" class="new-agri-btn">
       + आणखी जमीन जोडा
@@ -835,7 +833,7 @@ td,th{padding:11px;border-bottom:1px solid #e5eaf0;text-align:left}
     <!-- BACK SIDE -->
     <h4>कार्डची मागील बाजू</h4>
 
-    <div class="new-agri-card new-agri-back-card">
+  <div class="new-agri-card new-agri-back-card" id="newAgriBackCard">
 
       <div class="new-agri-card-header">
         <div class="new-agri-logo">🌱</div>
@@ -883,7 +881,6 @@ td,th{padding:11px;border-bottom:1px solid #e5eaf0;text-align:left}
 
   </div>
 </section>
-
 
     <!-- ADMIN SECTION -->
     <section id="adminSection" class="hidden">
@@ -1890,13 +1887,14 @@ db.auth.getSession().then(async({data,error})=>{
 </script>
 
 <script>
-/* NEW CHAITANY AGRISTACK MAKER */
+
+/* CHAITANY MULTISERVICES - AGRISTACK SAMPLE CARD MAKER */
 (function () {
   "use strict";
 
   const $ = id => document.getElementById(id);
-
   const dbName = "ChaitanyNewAgriDB";
+
   let farmerPhoto = "";
 
   function value(id) {
@@ -1905,37 +1903,58 @@ db.auth.getSession().then(async({data,error})=>{
 
   function safe(text) {
     return String(text || "").replace(/[&<>"']/g, ch => ({
-      "&":"&amp;", "<":"&lt;", ">":"&gt;",
-      '"':"&quot;", "'":"&#39;"
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': "&quot;",
+      "'": "&#39;"
     })[ch]);
   }
 
   function updatePreview() {
+    if (!$("newAgriCard")) return;
+
     $("newAgriName").textContent =
       value("newAgriNameInput") || "शेतकऱ्याचे नाव";
 
     $("newAgriId").textContent =
-      value("newAgriIdInput") || "—";
+      value("newAgriIdInput") || "-";
 
     $("newAgriVillage").textContent =
-      value("newAgriVillageInput") || "—";
+      value("newAgriVillageInput") || "-";
 
     $("newAgriTaluka").textContent =
-      value("newAgriTalukaInput") || "—";
+      value("newAgriTalukaInput") || "-";
 
     $("newAgriDistrict").textContent =
-      value("newAgriDistrictInput") || "—";
+      value("newAgriDistrictInput") || "-";
 
     $("newAgriMobile").textContent =
-      value("newAgriMobileInput") || "—";
+      value("newAgriMobileInput") || "-";
 
-    $("newAgriPhoto").src = farmerPhoto ||
-      "data:image/svg+xml," + encodeURIComponent(
-        '<svg xmlns="http://www.w3.org/2000/svg" width="120" height="140"><rect width="100%" height="100%" fill="#dcebd8"/><circle cx="60" cy="48" r="25" fill="#8eae83"/><path d="M15 140 Q20 85 60 85 Q100 85 105 140" fill="#8eae83"/></svg>'
-      );
+    $("newAgriBackName").textContent =
+      value("newAgriNameInput") || "शेतकऱ्याचे नाव";
+
+    $("newAgriBackId").textContent =
+      value("newAgriIdInput") || "-";
+
+    $("newAgriBackVillage").textContent =
+      value("newAgriVillageInput") || "-";
+
+    $("newAgriPhoto").src = farmerPhoto || defaultPhoto();
 
     updateLandPreview();
     makeQR();
+  }
+
+  function defaultPhoto() {
+    return "data:image/svg+xml," + encodeURIComponent(
+      '<svg xmlns="http://www.w3.org/2000/svg" width="120" height="140">' +
+      '<rect width="100%" height="100%" fill="#dcebd5"/>' +
+      '<circle cx="60" cy="48" r="25" fill="#8eae83"/>' +
+      '<path d="M15 140 Q20 85 60 85 Q100 85 105 140" fill="#8eae83"/>' +
+      '</svg>'
+    );
   }
 
   function updateLandPreview() {
@@ -1944,91 +1963,121 @@ db.auth.getSession().then(async({data,error})=>{
     let total = 0;
 
     rows.forEach((row, index) => {
-      const cells = [...row.querySelectorAll("input")].map(x => x.value.trim());
+      const inputs = [...row.querySelectorAll("input")];
+      const cells = inputs.map(input => input.value.trim());
       const area = Number(cells[4]) || 0;
+
       total += area;
 
-      html += `<tr>
-        <td>${index + 1}</td>
-        <td>${safe(cells[0])}</td>
-        <td>${safe(cells[1])}</td>
-        <td>${safe(cells[2])}</td>
-        <td>${safe(cells[3])}</td>
-        <td>${area || "—"}</td>
-      </tr>`;
+      html += `
+        <tr>
+          <td>${index + 1}</td>
+          <td>${safe(cells[0])}</td>
+          <td>${safe(cells[1])}</td>
+          <td>${safe(cells[2])}</td>
+          <td>${safe(cells[3])}</td>
+          <td>${area ? area.toFixed(3) : "-"}</td>
+        </tr>
+      `;
     });
 
-    $("newAgriLandPreview").innerHTML =
-      html || '<tr><td colspan="6">जमिनीची नोंद उपलब्ध नाही</td></tr>';
+    $("newAgriLandPreview").innerHTML = `
+      <table class="new-agri-preview-table">
+        <thead>
+          <tr>
+            <th>अ.क्र.</th>
+            <th>जिल्हा</th>
+            <th>तालुका</th>
+            <th>गाव</th>
+            <th>गट नंबर</th>
+            <th>क्षेत्र</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${html || '<tr><td colspan="6">जमिनीची नोंद उपलब्ध नाही</td></tr>'}
+        </tbody>
+      </table>
+    `;
 
     $("newAgriTotalArea").textContent = total.toFixed(3);
   }
 
   function makeQR() {
     const target = $("newAgriQR");
+    if (!target) return;
+
     target.innerHTML = "";
 
     const qrData = [
-      "CHAITANY MULTISERVICES - Farmer Information",
-      "हे अधिकृत सरकारी ओळखपत्र नाही.",
-      "नाव: " + value("newAgriNameInput"),
+      "CHAITANY MULTISERVICES",
+      "SAMPLE FARMER INFORMATION",
+      "NOT AN OFFICIAL GOVERNMENT ID",
+      "Name: " + value("newAgriNameInput"),
       "Farmer ID: " + value("newAgriIdInput"),
-      "गाव: " + value("newAgriVillageInput"),
-      "तालुका: " + value("newAgriTalukaInput"),
-      "जिल्हा: " + value("newAgriDistrictInput")
+      "Village: " + value("newAgriVillageInput"),
+      "Taluka: " + value("newAgriTalukaInput"),
+      "District: " + value("newAgriDistrictInput")
     ].join("\n");
 
     if (window.QRCode) {
-      new QRCode(target, {
+      new window.QRCode(target, {
         text: qrData,
         width: 90,
         height: 90,
-        correctLevel: QRCode.CorrectLevel.M
+        correctLevel: window.QRCode.CorrectLevel.M
       });
     } else {
-      target.textContent = "QR Library उपलब्ध नाही";
+      target.textContent = "QR उपलब्ध नाही";
     }
   }
 
   function addLandRow(data = {}) {
+    const body = $("newAgriLandRows");
+    if (!body) return;
+
     const row = document.createElement("tr");
 
     row.innerHTML = `
-      <td><input placeholder="जिल्हा" value="${safe(data.district)}"></td>
-      <td><input placeholder="तालुका" value="${safe(data.taluka)}"></td>
-      <td><input placeholder="गाव" value="${safe(data.village)}"></td>
-      <td><input placeholder="गट नंबर" value="${safe(data.survey)}"></td>
+      <td><input type="text" placeholder="जिल्हा" value="${safe(data.district)}"></td>
+      <td><input type="text" placeholder="तालुका" value="${safe(data.taluka)}"></td>
+      <td><input type="text" placeholder="गाव" value="${safe(data.village)}"></td>
+      <td><input type="text" placeholder="गट नंबर" value="${safe(data.survey)}"></td>
       <td><input type="number" min="0" step="0.001" placeholder="क्षेत्र" value="${safe(data.area)}"></td>
       <td><button type="button" class="new-agri-remove">×</button></td>
     `;
 
-    row.querySelectorAll("input").forEach(input =>
-      input.addEventListener("input", updateLandPreview)
-    );
+    row.querySelectorAll("input").forEach(input => {
+      input.addEventListener("input", updateLandPreview);
+    });
 
     row.querySelector(".new-agri-remove").addEventListener("click", () => {
       row.remove();
       updateLandPreview();
     });
 
-    $("newAgriLandRows").appendChild(row);
+    body.appendChild(row);
     updateLandPreview();
   }
 
   function getData() {
     return {
       name: value("newAgriNameInput"),
-      id: value("newAgriIdInput"),
+      farmerId: value("newAgriIdInput"),
       village: value("newAgriVillageInput"),
       taluka: value("newAgriTalukaInput"),
       district: value("newAgriDistrictInput"),
       mobile: value("newAgriMobileInput"),
       photo: farmerPhoto,
+
       lands: [...document.querySelectorAll("#newAgriLandRows tr")].map(row => {
-        const v = [...row.querySelectorAll("input")].map(x => x.value);
+        const v = [...row.querySelectorAll("input")].map(input => input.value);
+
         return {
-          district:v[0], taluka:v[1], village:v[2],
-          survey:v[3], area:v[4]
+          district: v[0],
+          taluka: v[1],
+          village: v[2],
+          survey: v[3],
+          area: v[4]
         };
       })
     };
@@ -2039,7 +2088,11 @@ db.auth.getSession().then(async({data,error})=>{
       const request = indexedDB.open(dbName, 1);
 
       request.onupgradeneeded = () => {
-        request.result.createObjectStore("farmers", { keyPath:"id" });
+        const db = request.result;
+
+        if (!db.objectStoreNames.contains("farmers")) {
+          db.createObjectStore("farmers", { keyPath: "id" });
+        }
       };
 
       request.onsuccess = () => resolve(request.result);
@@ -2048,31 +2101,41 @@ db.auth.getSession().then(async({data,error})=>{
   }
 
   async function saveData() {
+    let db;
+
     try {
-      const db = await openDB();
+      db = await openDB();
+
       const tx = db.transaction("farmers", "readwrite");
+
+      // id हा database key आहे; Farmer ID वेगळा ठेवला आहे.
       tx.objectStore("farmers").put({
-        id:"current",
-        ...getData()
+        ...getData(),
+        id: "current"
       });
 
       tx.oncomplete = () => {
         db.close();
-        alert("माहिती सेव्ह झाली.");
+        alert("शेतकऱ्याची माहिती सेव्ह झाली.");
       };
 
       tx.onerror = () => {
         db.close();
         alert("माहिती सेव्ह झाली नाही.");
       };
+
     } catch (error) {
+      if (db) db.close();
       alert("सेव्ह करताना अडचण: " + error.message);
     }
   }
 
   async function loadData() {
+    let db;
+
     try {
-      const db = await openDB();
+      db = await openDB();
+
       const tx = db.transaction("farmers", "readonly");
       const request = tx.objectStore("farmers").get("current");
 
@@ -2086,34 +2149,48 @@ db.auth.getSession().then(async({data,error})=>{
         }
 
         $("newAgriNameInput").value = d.name || "";
-        $("newAgriIdInput").value = d.id === "current" ? "" : (d.id || "");
+        $("newAgriIdInput").value = d.farmerId || "";
         $("newAgriVillageInput").value = d.village || "";
         $("newAgriTalukaInput").value = d.taluka || "";
         $("newAgriDistrictInput").value = d.district || "";
         $("newAgriMobileInput").value = d.mobile || "";
 
         farmerPhoto = d.photo || "";
+
         $("newAgriLandRows").innerHTML = "";
 
-        (d.lands || []).forEach(addLandRow);
-        if (!d.lands?.length) addLandRow();
+        (d.lands || []).forEach(land => addLandRow(land));
+
+        if (!d.lands || !d.lands.length) {
+          addLandRow();
+        }
 
         updatePreview();
         alert("माहिती लोड झाली.");
       };
+
+      request.onerror = () => {
+        db.close();
+        alert("माहिती लोड करता आली नाही.");
+      };
+
     } catch (error) {
-      alert("माहिती लोड झाली नाही: " + error.message);
+      if (db) db.close();
+      alert("लोड करताना अडचण: " + error.message);
     }
   }
 
   function clearForm() {
     if (!confirm("सर्व माहिती पुसायची आहे का?")) return;
 
-    document.querySelectorAll("#newAgriMaker input").forEach(input => {
+    document.querySelectorAll(
+      "#agristackSection input"
+    ).forEach(input => {
       input.value = "";
     });
 
     farmerPhoto = "";
+
     $("newAgriLandRows").innerHTML = "";
     addLandRow();
     updatePreview();
@@ -2130,41 +2207,80 @@ db.auth.getSession().then(async({data,error})=>{
       return;
     }
 
+    const front = $("newAgriCard");
+    const back = $("newAgriBackCard");
+
+    if (!front || !back) {
+      alert("कार्डचा HTML विभाग तपासा.");
+      return;
+    }
+
     try {
-      const canvas = await html2canvas($("newAgriCard"), {
-        scale:3,
-        backgroundColor:"#ffffff"
-      });
-
-      const image = canvas.toDataURL("image/png");
       const { jsPDF } = window.jspdf;
+
       const pdf = new jsPDF({
-        orientation:"landscape",
-        unit:"mm",
-        format:[85.6,54]
+        orientation: "landscape",
+        unit: "mm",
+        format: [85.6, 54]
       });
 
-      pdf.addImage(image, "PNG", 0, 0, 85.6, 54);
-      pdf.save("Chaitany_Farmer_Information_Card.pdf");
+      const frontCanvas = await html2canvas(front, {
+        scale: 3,
+        backgroundColor: "#ffffff",
+        useCORS: true
+      });
+
+      pdf.addImage(
+        frontCanvas.toDataURL("image/png"),
+        "PNG", 0, 0, 85.6, 54
+      );
+
+      const backCanvas = await html2canvas(back, {
+        scale: 3,
+        backgroundColor: "#ffffff",
+        useCORS: true
+      });
+
+      pdf.addPage([85.6, 54], "landscape");
+
+      pdf.addImage(
+        backCanvas.toDataURL("image/png"),
+        "PNG", 0, 0, 85.6, 54
+      );
+
+      pdf.save("Chaitany_Farmer_Sample_Card.pdf");
+
     } catch (error) {
       alert("PDF तयार झाली नाही: " + error.message);
     }
   }
 
-  document.addEventListener("DOMContentLoaded", () => {
+  function init() {
+    if (!$("agristackSection")) return;
+
     document.querySelectorAll(
-      "#newAgriMaker input:not([type=file])"
-    ).forEach(input => input.addEventListener("input", updatePreview));
+      "#agristackSection input:not([type=file])"
+    ).forEach(input => {
+      input.addEventListener("input", updatePreview);
+    });
 
     $("newAgriPhotoInput").addEventListener("change", event => {
       const file = event.target.files[0];
+
       if (!file) return;
 
+      if (!file.type.startsWith("image/")) {
+        alert("कृपया फोटो फाइल निवडा.");
+        return;
+      }
+
       const reader = new FileReader();
+
       reader.onload = () => {
         farmerPhoto = reader.result;
         updatePreview();
       };
+
       reader.readAsDataURL(file);
     });
 
@@ -2174,9 +2290,16 @@ db.auth.getSession().then(async({data,error})=>{
     $("newAgriClear").addEventListener("click", clearForm);
     $("newAgriPDF").addEventListener("click", downloadPDF);
 
+    $("newAgriLandRows").innerHTML = "";
     addLandRow();
     updatePreview();
-  });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
+  }
 
 })();
 </script>
